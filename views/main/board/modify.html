@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    수정하기
+
+    <form action="/board/modify" method="POST" >
+    <span>제목</span><input type="text" name="title" id="title" value="{{modify.title}}"></br>
+    <span>작성자</span><input type="text" name="userid" id="userid" value="{{modify.userid}}"></br>
+    <span>내용</span><input type="text" name="content" id="content" value="{{modify.content}}"></br>
+    <span>이미지</span><input type="file" name="board_image" id="board_image" value="{{modify.board_image}}"></br>
+    <span>타입</span><input type="text" name="write_type" id="write_type" value="{{modify.write_type}}"></br>
+    <input type="hidden" name="idx" id="idx" value={{modify.idx}}>
+    <input type="submit" value="수정하기">
+    <a href="/board">목록으로 가기</a>
+    <a href="/board/delete?idx={{idx}}">삭제하기</a>
+</form>
+    
+</body>
+</html>

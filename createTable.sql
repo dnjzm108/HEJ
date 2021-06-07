@@ -13,6 +13,7 @@ user_birth VARCHAR(100) NOT NULL
 );
 
 create table qanda(
+id int(11) primary key not NULL auto_increment,
 write_name VARCHAR(100) NOT NULL,
 gender VARCHAR(100) NOT NULL,
 age VARCHAR(10) NOT NULL,

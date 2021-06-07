@@ -6,8 +6,8 @@ const app = express();
 const router = require('./routers/index');
 const {board,information,user,sequelize} = require('./models');
 
-app.use('/uploads',express.static('uploads')); 
-app.use(express.static('uploads'));
+// app.use('/uploads',express.static('uploads')); 
+// app.use(express.static('uploads'));
 app.use(express.static('public'));
 
 sequelize.sync({force:false})
@@ -19,18 +19,13 @@ sequelize.sync({force:false})
     console.log('접속 에러');
 })
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended:false}));
 app.set('view engine','html');
 nunjucks.configure('views',{
     express:app
 })
 
 
-app.get('/board', async (req,res)=>{
-    let result = await board.findAll();
-    console.log(result);
-    res.json({result});
-})
 
 app.use('/',router)
 

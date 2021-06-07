@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    list menu
+    <a href="/board/write">글작성</a>
+<table>
+    <tr>
+        <td>제목</td>
+        <td>작성자</td>
+        <td>작성일</td>
+        <td>내용</td>
+        <td>조회수</td>
+        <td>타입</td>
+    </tr>
+    {% for item in result %}
+    <tr>
+        <td><a href="/board/view?idx={{item.dataValues.idx}}">{{item.dataValues.title}}</a></td>
+        <td><a href="/board/view?idx={{item.dataValues.idx}}">{{item.dataValues.userid}}</a></td>
+        <td><a href="/board/view?idx={{item.dataValues.idx}}">{{item.dataValues.write_date}}</a></td>
+        <td><a href="/board/view?idx={{item.dataValues.idx}}">{{item.dataValues.content}}</a></td>
+        <td><a href="/board/view?idx={{item.dataValues.idx}}">{{item.dataValues.hit}}</a></td>
+        <td><a href="/board/view?idx={{item.dataValues.idx}}">{{item.dataValues.write_type}}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+</body>
+</html>
