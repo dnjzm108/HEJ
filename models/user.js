@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false
     },
-    username: {
+    user_name: {
       type: DataTypes.STRING(100),
       allowNull: false
     },
@@ -29,9 +29,18 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false
     },
+    userimage:{
+      type:Sequelize.STRING(100),
+      allowNull:true,
+    },
     user_birth: {
       type: DataTypes.STRING(100),
       allowNull: false
+    },
+    userdt:{
+      type:Sequelize.DATE,
+      allowNull:false,
+      defaultValue:Sequelize.NOW,
     }
   }, {
     sequelize,

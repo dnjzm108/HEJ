@@ -6,11 +6,16 @@ const app = express();
 const router = require('./routers/index');
 const {board,information,user,sequelize} = require('./models');
 
+app.use('/uploads',express.static('uploads')); 
+app.use(express.static('uploads'));
+app.use(express.static('public'));
+
 sequelize.sync({force:false})
 .then(()=>{
     console.log('접속이 완료 되었습니다');
 })
-.catch(()=>{
+.catch((e)=>{
+    console.log(e);
     console.log('접속 에러');
 })
 
@@ -19,7 +24,7 @@ app.set('view engine','html');
 nunjucks.configure('views',{
     express:app
 })
-app.use(express.static('public'));
+
 
 app.get('/board', async (req,res)=>{
     let result = await board.findAll();
