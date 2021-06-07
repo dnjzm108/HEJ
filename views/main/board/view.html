@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+ 제목 : {{view.title}} </br>
+작성자 : {{view.userid}}</br>
+작성날짜 : {{view.write_date}}</br>
+내용 : {{view.content}}</br>
+이미지 : {{view.board_image}}</br>
+조회수 : {{view.hit}}</br>
+카테고리 : {{view.write_type}}</br>
+
+<a href="/board/modify?idx={{idx}}">수정하기</a>
+<a href="/board">목록으로 가기</a>
+<a href="/board/delete?idx={{idx}}">삭제하기</a>
+</body>
+</html>
