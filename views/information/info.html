@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information</title>
+    <link rel="stylesheet" href="./css/info/index.css">
+</head>
+
+<body>
+    <h1>INFORMATION</h1>
+    <form action="/info/upload_success" id="info_form" method="POST" enctype="multipart/form-data">
+        <input type="text" name="writer" id="writer" value="writer">
+        <div id="img_input" class="input">
+            <label for="info_image">IMAGE</label>
+            <input multiple="multiple" type="file" name="info_image" id="info_image"><br />
+        </div>
+        <div id="title_input" class="input">
+            <label for="title">TITLE</label>
+            <input type="text" name="title" id="title"><br />
+        </div>
+        <div id="content_input" class="input">
+            <label for="content">CONTENT</label>
+            <textarea name="content" id="content"></textarea>
+        </div>
+        <input type="submit" id="info_submit" value="UPLOAD">
+    </form>
+</body>
+
+</html>

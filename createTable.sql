@@ -1,3 +1,4 @@
+create database HEJ;
 use HEJ;
 
 create table user(
@@ -22,14 +23,14 @@ content VARCHAR(100) NOT NULL
 
 create table board(
 title VARCHAR(100) NOT NULL,
-userid VARCHAR(100) NOT NULL,
-write_date VARCHAR(100) NOT NULL,
-content VARCHAR(100) NOT NULL,
-board_image VARCHAR(100) NOT NULL,
+userid VARCHAR(20) NOT NULL,
+write_date datetime default current_timestamp,
+content text NOT NULL,
+board_image VARCHAR(100),
 hit int(11) not null,
-idx idx int(11) not null auto_increment primary key,
-write_type VARCHAR(100) NOT NULL
-)auto_increment=1 charset=utf8mb4;;
+idx int(11) not null auto_increment primary key,
+write_type VARCHAR(50) NOT NULL
+)auto_increment=1 default charset=utf8mb4;
 
 create table information(
 info_image VARCHAR(100) NOT NULL,

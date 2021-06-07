@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/info/index.css">
+    <link rel="stylesheet" href="/css/info/list.css">
+</head>
+
+<body>
+
+    <div id="wrap" class="w100">
+        <!--MAIN board-->
+        <div id="main" class="center">
+            <div id="board">
+                <table id="list">   
+                    <tr>
+                        <td>No.</td>
+                        <td>Image</td>
+                        <td>Title</td>
+                        <td>Writer</td>
+                        <td>Date</td>
+                    </tr>
+                    {% for item in range(arrayimage.length) %}
+                    <tr>
+                        <td>{{arrayid[item]}}</td>
+                        <td><img id="infoImage" src="{{arrayimage[item]}}"></td>
+                        <td><a href="/info/view?id={{arrayid[item]}}">{{arraytitle[item]}}</a></td>
+                        <td>writer</td>
+                        <td>{{arraydate[item]}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="footer center">
+            <a class="write_btn btn" href="/info">WRITE</a>
+        </div> 
+
+    </div>
+    <!-- <img id="newimage" src="{{newimage}}"> -->
+</body>
+
+</html>
