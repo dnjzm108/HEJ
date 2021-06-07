@@ -7,5 +7,4 @@ router.use('/auth/kakao',controller.kakao_login)
 router.post('/login',controller.login);
 router.use('/',controller.main);
 
-
 module.exports=router;
