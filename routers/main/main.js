@@ -33,7 +33,8 @@ router.post('/board/write',upload.single('img'),controller.board_write_send)
 router.get('/board/write',controller.board_write)
 router.get ('/board',controller.board_list)
 router.get('/auth/kakao/callback',controller.kakao_check)
-router.use('/auth/kakao',controller.kakao_login)
+router.get('/auth/kakao',controller.kakao_login);
+router.get('/kakao',controller.kakao_in);
 router.post('/login',controller.login);
 router.use('/',controller.main);
 
