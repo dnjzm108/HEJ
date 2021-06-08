@@ -3,6 +3,14 @@ const moment = require('moment');
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('information', {
+    authority_level:{
+      type: DataTypes.INTEGER(10),
+      allowNull: false
+    },
+    type:{
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
     info_image: {
       type: DataTypes.STRING(100),
       allowNull: true

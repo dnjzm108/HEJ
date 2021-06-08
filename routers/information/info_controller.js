@@ -9,9 +9,6 @@ let upload_success = async (req, res) => {
     let { title, content, writer } = req.body;
     let info_image = req.file == undefined ? '' : req.file.path;
     let infoResult = await information.create({ title, content, info_image, writer });
-    // let infoList = infoResult.dataValues;
-    // let {title:info_title,content:info_content,info_image:infoImage} = infoResult.dataValues;
-    // let newimage = info_image.replace('public','');
     res.redirect('/info/infolist');
 };
 
@@ -22,7 +19,6 @@ let info_list = async (req, res) => {
         order: [['id', 'DESC']],
         offset: offset,
     });
-    // let newimage = results.dataValues.info_image.replace('public','');
     let arrayimage = []
     let arrayid = []
     let arraytitle = []
@@ -53,7 +49,7 @@ let view = async (req, res) => {
     });
     let infoList = infoView.dataValues;
     let infodate = moment(infoList.date).format("MMM Do YY");
-    let infoimage = infoList.info_image.replace('public', '')
+    let infoimage = infoList.info_image.replace('public', '');
     res.render('./information/view.html', {
         infoList,
         infodate,
