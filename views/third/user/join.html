@@ -9,19 +9,18 @@
         </tr>
         <tr class="">
             <td>아이디:</td>
-            <td><input type="text" id="userid" name="userid" class="" value="{{userid}}" maxlength="20">
+            <td><input type="text" id="userid" name="userid" class=""  maxlength="20">
                 <p id="userid_msg"></p>
             </td>
-        
         </tr>
         <tr class="">
             <td>비밀번호:</td>
-            <td><input type="password" id="userpw" class="" name="userpw" value="{{userpw}}" mlength="6"></td>
+            <td><input type="password" id="userpw" class="" name="userpw" mlength="6"></td>
             <td id="pwd1_msg"> </td>
         </tr>
         <tr class="">
             <td>비밀번호 확인:</td>
-            <td><input type="password" id="userpw_check" class="" name="userpw_check" value="{{userpw}}" minlength="6"></td>
+            <td><input type="password" id="userpw_check" class="" name="userpw_check" minlength="6"></td>
             <td id="pwd2_msg"> </td>
         </tr>
         <tr class="">
@@ -34,20 +33,25 @@
         </tr>
         <tr class="">
             <td>생년월일:</td>
-            <td><input type="text" id="user_birth" name="user_birth" class="" value="{{user_birth}}" required></td>
+            <td><input type="text" id="user_birth" name="user_birth" class=""  required></td>
         </tr>
         <tr class="">
             <td>전화번호:</td>
-            <td><input type="text" id="user_number" class="" name="user_number" value="{{user_number}}" minlength="11" required></td>
+            <td><input type="text" id="user_number" class="" name="user_number" minlength="11" required></td>
             <td id="user_number_msg"></td>
         </tr>
         <tr class="">
             <td>이메일:</td>
-            <td><input type="text" id="user_email" name="user_email" class="" value="{{user_email}}" minlength="6" required></td>
+            <td><input type="text" id="user_email" name="user_email" class=""  minlength="6" required></td>
         </tr>
         <tr class="">
             <td>프로필 이미지</td>
             <td><input type="file" id="userimage" class="" name="userimage" required></td>
+        </tr>
+        <tr class="">
+            <td>주소:</td>
+            <td><input type="text" id="user_address" class="" name="user_address"  minlength="11" required></td>
+           
         </tr>
         <tr class="">
             <td>가입한 날짜:</td>
@@ -55,7 +59,7 @@
         </tr>
     </table>
     <input type="submit" class="" id="login_submit" value="회원가입완료">
-    <a href="/">취소</a>
+    <a href="/user/login">취소</a>
 
 </form>
 

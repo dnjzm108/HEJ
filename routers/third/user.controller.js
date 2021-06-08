@@ -1,88 +1,91 @@
 const { user } = require('../../models/index');
 const moment = require('moment');
+const chash = require('../../chash');
+const token = require('../../jwt');
 
 let index = (req, res)=>{
     res.render('./third/user/index')
-}
+};
 
 let join = (req, res) => {
-    res.render('./third/user/join.html')
-}
+    let flag = req.query.flag;
+    res.render('./third/user/join.html',{flag})
+};
 
 let login = (req, res) => {
-    res.render('./third/user/login.html',);
-    // console.log(req);
-
-}
+    res.render('./third/user/login.html');
+};
 
 let info = async (req, res) => {
-    let userid = req.session.uid; 
-    let userlist = await User.findOne({
+    let userid = req.session.uid1;
+    let userlist = await user.findOne({
         where : {userid}
     });
-    let short = userlist.dataValues;
-    res.render('./third/user/info.html');
-    // ,{
-    //     id:short.id,
-    //     userid:short.userid,
-    //     userpw:short.userpw,
-    //     gender:short.gender,
-    //     user_birth:short.user_birth,
-    //     user_name:short.user_name,
-    //     user_number:short.user_number,
-    //     user_email:short.user_email,
-    //     user_address : short.user_address,
-    //     userdt:moment(short.userdt).format('YYYY년 MM월 DD일 hh:mm:ss a'),
-    // })
-}
+    let result = userlist.dataValues;
+    let obj = {
+        id:result.id,
+        userid:result.userid,
+        userpw:result.userpw,
+        user_name:result.user_name,
+        user_number:result.user_number, 
+        gender:result.gender,
+        user_birth:result.user_birth,
+        userimage:result.userimage,
+        user_email:result.user_email,
+        user_address:result.user_address,
+        userdt:moment(result.userdt).format('YYYY년 MM월 DD일 hh:mm:ss a'),
+    };
+    res.render('./third/user/info.html',obj)
+};
 
 let join_success = async (req,res) => {
-    let {userid,userpw,user_name,user_number,gender,user_email,user_birth} = req.body;
+    let {userid,userpw,user_name,user_number,gender,user_email,user_birth, user_address} = req.body;
     let userimage = req.file == undefined ? '': req.file.filename;
     console.log(userimage);
-    let rst = await user.create({ 
-        userid, userpw, user_name, gender, user_number, userimage , user_email,user_address:"12", user_birth
-    });
 
+    let hash = chash(userpw);
+    
+    console.log('++++++++++++++++++++'+hash);
+    let rst = await user.create({ 
+        userid, userpw:hash, user_name, gender, user_number, userimage , user_email,user_address, user_birth
+    });
     res.render('./third/user/join_success',{userimage, user_name});
 };
 
 let login_check = async (req, res) => {
     let {userid,userpw} = req.body;
 
+    let hash = chash(userpw);
+    let ctoken = token(userpw);
+    console.log("+++++++++++++"+ctoken);
     let result = await user.findOne({
-        where: { userid, userpw }
-    })
+        where: { userid, userpw:hash }
+    });
+    res.cookie('AccessToken',ctoken,{httpOnly:true,secure:true,})
 
-  
-        req.session.uid = userid;  
+        req.session.uid1 = userid;
         req.session.uid2 = userid;
         req.session.isLogin = true;
         req.session.userimage=result.userimage;
-
         req.session.save(() => {
-            res.redirect(`/`);
+            res.redirect('/user/index');
         });
-      
-    };
-
-
+};
 
 let logout = (req, res) => {
     delete req.session.isLogin;
     delete req.session.uid;
     delete req.session.uid2;
     delete req.session.userimage;
-
     req.session.save(() => {
-        res.redirect('/');
+        res.redirect('/user/login');
     })
-}
+};
 
 let userid_check = async (req,res)=>{
     let userid = req.query.userid;
     console.log(userid)
-    let result = await User.findOne({
+    let result = await user.findOne({
         where:{ userid }
     })
     let flag = false
@@ -90,44 +93,39 @@ let userid_check = async (req,res)=>{
         flag = true;
     }else{
         flag = false;
-    }   
-
+    }
     res.json({
         login: flag,
         userid
     })
-}
+};
 
 let info_modify = async (req,res)=>{
     let id = req.query.id;
-    let result = await User.findOne({where:{id}})
+    let result = await user.findOne({where:{id}})
     let short = result.dataValues;
-    console.log(id,'++++++++++++',result)
-    res.render('./user/info_modify.html',{
+    res.render('./third/user/info_modify.html',{
         id,
         userid:short.userid,
         userpw:short.userpw,
+        gender:short.gender,
+        user_birth:short.user_birth,
+        userimage:short.userimage,
         user_name:short.user_name,
         user_number:short.user_number,
         user_email:short.user_email,
+        user_address:short.user_address,
         userdt:short.userdt,
-    })
-}
+    });
+};
 
 let info_after_modify = async (req,res)=> { //DB 업데이트, findOne 해오기 
-    let id= req.body.id;
-    let userid = req.body.userid;
-    let userpw = req.body.userpw;
-    let user_name = req.body.user_name;
-    let user_number = req.body.user_number;
-    let user_email = req.body.user_email;
-    let userdt = req.body.userdt;
+    let {id, userid, userpw, gender, user_birth, user_name,user_number, user_email, user_address, userdt}= req.body;
+    let userimage = req.file == undefined ? '':req.file.filename;
 
-    await User.update({
-        userid,userpw,user_name,user_number,user_email,userdt,
-    },{where:{id}});
-
-    let result = await User.findOne({
+    await user.update({
+        userid, userpw, gender, user_birth, userimage, user_name, user_number, user_email, user_address, userdt},{where:{id}});
+    let result = await user.findOne({
         where:{id,}
     })
     req.session.userimage=userimage;
@@ -136,9 +134,14 @@ let info_after_modify = async (req,res)=> { //DB 업데이트, findOne 해오기
             id:result.id,
             userid:result.userid,
             userpw:result.userpw,
+            gender:result.gender,
+            user_birth:result.user_birth,
+            userimage:result.userimage,
             user_name:result.user_name,
             user_number:result.user_number,
             user_email:result.user_email,
+            user_address:result.user_address,
+            userdt:result.userdt,
         });
     });
 };

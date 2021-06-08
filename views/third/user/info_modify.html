@@ -2,60 +2,63 @@
 
 
 <h1>내 정보 변경</h1>
-    <form id="info_modify" method="post" action="/user/info_aftermodify" >
-        <table>
-            <tr>
-                <td style="display: none">번호</td>
-                <td><input type="text" name="id" class="" value="{{id}}" style="display:none"></td>
-            </tr>
-            <tr class="">
-                <td>아이디:</td>
-                <td>{{userid}}</td>
-            </tr>
-            <tr class="">
-                <td>비밀번호:</td>
-                <td><input type="password" id="pwd1" class=""  name="userpw" value="{{userpw}}" minlength="6"></td>
-                <td id="pwd1_msg"> </td>
-            </tr>
-            <tr class="">
-                <td>비밀번호 확인:</td>
-                <td><input type="password" id="pwd2" class=""  name="userpw_check" value="{{userpw}}" minlength="6"></td>
-                <td id="pwd2_msg"> </td>
-            </tr>
-            <tr class="">
-                <td>성별:</td>
-                <td>{{gender}}</td>
-            </tr>
-            <tr class="">
-                <td>생년월일:</td>
-                <td>{{user_birth}}</td>
-            <tr class="">
-                <td>프로필 이미지: </td>
-                <td><img id="userimage" src="http://localhost:3000/{{userimage}}"></td>
-            </tr>
-            </tr>
-            <tr class="">
-                <td>이름:</td>
-                <td><input type="text" name="user_name" class=""  value="{{user_name}}" minlength="5"></td>
-            </tr>
-                    
-            <tr class="">
-                <td>전화번호:</td>
-                <td><input type="text" id="user_number" class=""  name="user_number" value="{{user_number}}" minlength="11"
-                        maxlength="11"></td>
-                <td id="user_number_msg"></td>
-            </tr>
-            <tr class="">
-                <td>이메일:</td>
-                <td><input type="text" name="user_email" class=""  value="{{user_email}}" minlength="6"></td>
-            </tr>
-            <tr class="">
-                <td>가입한 날짜:</td>
-                <td>{{userdt}}</td>
-            </tr>
-        </table>
-        <input type="submit" class="" value="수정완료">
-        <a href="/user/info">취소</a>
-      
-    </form>
-{% include "../../layout/bottom.html" %}
+<form id="info_modify" method="post" action="/user/info_after_modify">
+    <table>
+        <tr>
+            <td style="display: none">번호</td>
+            <td><input type="text" name="id" class="" value="{{id}}" style="display:none"></td>
+        </tr>
+        <tr class="">
+            <td>아이디:</td>
+            <td>{{userid}}</td>
+        </tr>
+        <tr class="">
+            <td>비밀번호:</td>
+            <td><input type="password" id="pwd1" class="" name="userpw" value="{{userpw}}" minlength="6"></td>
+            <td id="pwd1_msg"> </td>
+        </tr>
+        <tr class="">
+            <td>비밀번호 확인:</td>
+            <td><input type="password" id="pwd2" class="" name="userpw_check" value="{{userpw}}" minlength="6"></td>
+            <td id="pwd2_msg"> </td>
+        </tr>
+        <tr class="">
+            <td>성별:</td>
+            <td>{{gender}}</td>
+        </tr>
+        <tr class="">
+            <td>생년월일:</td>
+            <td>{{user_birth}}</td>
+        <tr class="">
+            <td>프로필 이미지: </td>
+            <td><img id="userimage" src="http://localhost:3000/{{userimage}}"></td>
+        </tr>
+        </tr>
+        <tr class="">
+            <td>이름:</td>
+            <td>{{user_name}}</td>
+        </tr>
+
+        <tr class="">
+            <td>전화번호:</td>
+            <td><input type="text" id="user_number" class="" name="user_number" value="{{user_number}}" minlength="11" maxlength="11"></td>
+            <td id="user_number_msg"></td>
+        </tr>
+        <tr class="">
+            <td>이메일:</td>
+            <td><input type="text" name="user_email" class="" value="{{user_email}}" minlength="6"></td>
+        </tr>
+        <tr class="">
+            <td>주소:</td>
+            <td><input type="text" name="user_address" class="" value="{{user_address}}"></td>
+        </tr>
+        <tr class="">
+            <td>가입한 날짜:</td>
+            <td>{{userdt}}</td>
+        </tr>
+    </table>
+    <input type="submit" class="" value="수정완료">
+    <a href="/user/info">취소</a>
+
+</form>
+{% include "../layout/bottom.html" %}

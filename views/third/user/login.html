@@ -19,6 +19,26 @@
 
         <input type="submit" class="join_button" value="로그인">
         <a href="/user/join">회원가입</a>
+        <a href="/">메인으로가기</a>
     </form>
+
+    {% if flag == '0' %}
+<script type="text/javascript">
+
+
+    alert('아이디와 패스워드를 확인해주세요.')
+    const id = document.querySelector('#userid');
+    const pw = document.querySelector('#userpw');
+    id.setAttribute('style','background:lightsalmon');
+    pw.setAttribute('style','background:lightsalmon');
+
+    id.addEventListener('focus',()=>{
+        id.setAttribute('style','background:#fff;');
+    })
+    pw.addEventListener('focus',()=>{
+        pw.setAttribute('style','background:#fff;');
+    })
+</script>
+{% endif %}
 
     {% include "../layout/bottom.html" %}

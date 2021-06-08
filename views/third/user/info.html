@@ -1,50 +1,54 @@
 {% include "../layout/top.html" %}
 
-        <h1>내 정보</h1>
-        <table>
-            <tr >
-                <td>아이디:</td>
-                <td >{{userid}}</td>
-            </tr>
-            <tr>
-                <td>비밀번호:</td>
-                <td>{{userpw}}</td>
-            </tr>
-            <tr >
-                <td>이름:</td>
-                <td>{{user_name}}</td>
-            </tr>
-            <tr >
-                <td>성별:</td>
-                <td>{{gender}}</td>
-            </tr>
-            <tr >
-                <td>생년월일:</td>
-                <td>{{user_birth}}</td>
-            </tr>
-            <tr class="">
-                <td>프로필 이미지: </td>
-                <td><img id="userimage" src="http://localhost:3000/{{userimage}}"></td>
-            </tr>
-            <tr>
-                <td>전화번호:</td>
-                <td>{{user_number}}}</td>
-            </tr>
-            <tr>
-                <td>이메일:</td>
-                <td>{{user_email}</td>
-            </tr>
-            <tr>
-                <td>주소:</td>
-                <td>{{user_address}}</td>
-            </tr>
-            <tr>
-                <td>가입한 날짜: </td>
-                <td>{{userdt}}</td>
-            </tr>
-        </table>
+    <h1>내 정보</h1>
+    <table>
+    <tr>
+        <td>번호</td>
+        <td >{{id}}</td>
+    </tr>
+    <tr >
+        <td>아이디:</td>
+        <td >{{userid}}</td>
+    </tr>
+    <tr>
+        <td>비밀번호:</td>
+        <td>{{userpw}}</td>
+    </tr>
+    <tr >
+        <td>이름:</td>
+        <td>{{user_name}}</td>
+    </tr>
+    <tr >
+        <td>성별:</td>
+        <td>{{gender}}</td>
+    </tr>
+    <tr >
+        <td>생년월일:</td>
+        <td>{{user_birth}}</td>
+    </tr>
+    <tr class="">
+        <td>프로필 이미지: </td>
+        <td><img id="userimage" src="http://localhost:3000/{{userimage}}"></td>
+    </tr>
+    <tr>
+        <td>전화번호:</td>
+        <td>{{user_number}}</td>
+    </tr>
+    <tr>
+        <td>이메일:</td>
+        <td>{{user_email}}</td>
+    </tr>
+    <tr>
+        <td>주소:</td>
+        <td>{{user_address}}</td>
+    </tr>
+    <tr>
+        <td>가입한 날짜: </td>
+        <td>{{userdt}}</td>
+    </tr>
+    </table>
 
-        <a href="/info_modify?id={{id}}">수정</a>
-        <a href="/">메인페이지</a>
+    <a href="/user/info_modify?id={{id}}">수정</a>
+    <a href="/user/index">이전 페이지</a>
 
 {% include "../layout/bottom.html" %}

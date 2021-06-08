@@ -6,6 +6,7 @@ const app = express();
 const session = require('express-session');
 const router = require('./routers/index');
 const {board,information,user,sequelize} = require('./models');
+const cookieParser=require('cookie-parser');
 
 // app.use('/uploads',express.static('uploads')); 
 // app.use(express.static('uploads'));
@@ -16,6 +17,8 @@ app.use(session({
     saveUninitialized:false,
 }))
 app.use(express.static('public'));
+app.use(cookieParser());
+
 
 sequelize.sync({force:false})
 .then(()=>{
