@@ -3,6 +3,12 @@ rest key  d71e574bb53209815ff9a1eedf9d85dd
 URL  http://localhost:3000/auth/kakao/callback
 secretn key  hLAJzSnEQyKo2fujTV2saFCGixSySbHg
 */
+/*
+google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
+client id : 271562730452-rufsjg41rp8hhbno7686je73714i5dpu.apps.googleusercontent.com
+client password : wMc8se_eBobJrH2EN-r3JF6z
+
+*/
 const axios = require('axios');
 const qs = require('qs');
 const { board, information, user, sequelize, qanda } = require('../../models');
