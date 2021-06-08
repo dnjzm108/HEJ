@@ -1,0 +1,24 @@
+{% include "../layout/top.html" %}
+
+<table>
+    <form action="/user/login_check" method="post">
+        <table id="login_table">
+            <tr class="">
+                <td>아이디:</td>
+                <td>
+                    <input type="text" id="userid" class="" name="userid">
+                </td>
+            </tr>
+            <tr class="">
+                <td>비밀번호:</td>
+                <td>
+                    <input type="password" id="userpw" class="" name="userpw">
+                </td>
+            </tr>
+        </table>
+       
+            <input type="submit" class="join_button" value="로그인">
+            <a href="/user/login">회원가입</a>
+    </form>
+
+{% include "../layout/bottom.html" %}
