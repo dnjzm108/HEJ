@@ -36,6 +36,7 @@ router.get('/auth/kakao/callback',controller.kakao_check)
 router.get('/auth/kakao',controller.kakao_login);
 router.get('/kakao',controller.kakao_in);
 router.post('/login',controller.login);
+router.get('/test',controller.test);
 router.use('/',controller.main);
 
 module.exports=router;
