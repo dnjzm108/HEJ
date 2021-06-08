@@ -1,0 +1,63 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+#wrap{
+    background: url('https://www.sciencetimes.co.kr/wp-content/uploads/2020/08/GettyImages-1203186824-scaled.jpg') no-repeat;
+    background-size: 100%;
+    width: 100vw;
+    height: 100vh;
+}
+#header{
+    width: 100vw;
+    height: 10wh;
+}
+#middle{
+    width: 100vw;
+    height: 70wh;
+}
+.planet{
+    width: 10vw;
+    height: 10wh;
+    position:relative
+}
+.rel{
+    position:relative
+}
+#planet1{
+    top: 60vh;
+    left: 3vw;
+}
+#planet2{
+    top: 40vh;
+    left: 9vw;
+}
+#planet3{
+    top: 20vh;
+    left: 16vw;
+}
+#planet4{
+    top: 20vh;
+    left: 23vw;
+}
+#planet5{
+    top: 40vh;
+    left: 30vw;
+}
+#planet6{
+    top: 60vh;
+    left: 37vw;
+}
+
+
+
+#bottum{
+    width: 100vw;
+    height: 20vh;
+}
