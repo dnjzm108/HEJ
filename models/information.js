@@ -5,11 +5,11 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('information', {
     authority_level:{
       type: DataTypes.INTEGER(10),
-      allowNull: false
+      allowNull: true
     },
     type:{
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
     },
     info_image: {
       type: DataTypes.STRING(100),

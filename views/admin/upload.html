@@ -10,20 +10,33 @@
 
 <body>
     <h1>INFORMATION</h1>
-    <form action="/info/upload_success" id="info_form" method="POST" enctype="multipart/form-data">
+    <form action="/admin/upload_success" id="info_form" method="POST" enctype="multipart/form-data">
+
         <input type="text" name="writer" id="writer" value="writer">
+
+        <div id="typeof" class="input">
+            <select id="type" name="type">
+                <option value="notice">NOTICE</option>
+                <option value="about">ABOUT US</option>
+                <option value="popup">POPUP</option>
+            </select>
+        </div>
+
         <div id="img_input" class="input">
             <label for="info_image">IMAGE</label>
             <input multiple="multiple" type="file" name="info_image" id="info_image"><br />
         </div>
+
         <div id="title_input" class="input">
             <label for="title">TITLE</label>
             <input type="text" name="title" id="title"><br />
         </div>
+
         <div id="content_input" class="input">
             <label for="content">CONTENT</label>
             <textarea name="content" id="content"></textarea>
         </div>
+
         <input type="submit" id="info_submit" value="UPLOAD">
     </form>
 </body>

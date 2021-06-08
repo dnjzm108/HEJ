@@ -3,12 +3,10 @@ const nunjucks = require('nunjucks');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const app = express();
-const session = require(express-session);
+const session = require('express-session');
 const router = require('./routers/index');
 const {board,information,user,sequelize} = require('./models');
 
-// app.use('/uploads',express.static('uploads')); 
-// app.use(express.static('uploads'));
 app.use(session({
     secret:'aa',
     resave:true,

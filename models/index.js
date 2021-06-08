@@ -12,9 +12,9 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 let models = initModels(sequelize)
-
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.admin = models.admin;
 db.board = models.board;
 db.information = models.information;
 db.qanda = models.qanda;
