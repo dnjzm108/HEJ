@@ -11,7 +11,6 @@ ul,li{
 #wrap{
     width: 100%;
     height: 100%;
-    background:#000
 }
     #header{
     width: 100%;
@@ -39,7 +38,9 @@ ul,li{
 .line:hover{
     background: #ffffff;
     color: #0000;
-
+}
+.line:hover > div > a{
+    color: #fff;
 }
 .line{
     width: 1500px;
@@ -51,10 +52,9 @@ ul,li{
 .line>div{
     width: 800px;
     height: 300px;
-    margin: 0 auto;
-    padding: 0 300px;
+    margin: 48px auto;
     box-sizing: border-box;
-
+    text-align: center;
 }
 .line>div>h1{
     color: black;
@@ -63,8 +63,8 @@ ul,li{
     width: 200px;
     height: 50px;
     display: inline-block;
-    color: black;
-    background: blue;
+    color: #000;
+    background: #000;
     border-radius: 25px;
     margin: 200px auto 0;
     text-align: center;

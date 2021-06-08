@@ -32,9 +32,7 @@ nunjucks.configure('views',{
     express:app
 })
 
-
-
-app.use('/',router)
+app.use('/',router);
 
 app.listen(3000,()=>{
     console.log('server start port:3000');
