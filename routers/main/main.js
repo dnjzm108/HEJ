@@ -38,5 +38,4 @@ router.get('/kakao',controller.kakao_in);
 router.post('/login',controller.login);
 router.use('/',controller.main);
 
-
 module.exports=router;
