@@ -26,49 +26,47 @@
         </tr>
         <tr class="">
             <td>성별:</td>
-            <td> 남자<input type="radio" name="gender" class="" value="1"> 여자<input type="radio" name="gender" class=""
-                    value="0"></td>
+            <td> 남자<input type="radio" name="gender" id="usergender_M" class="user_gender" value="1" required> 여자<input type="radio" id="usergender_F" name="gender" class="user_gender" value="0"></td>
         </tr>
         <tr class="">
             <td>이름:</td>
-            <td><input type="text" id="user_name" name="user_name" class="" maxlength="5"></td>
+            <td><input type="text" id="user_name" name="user_name" class="" maxlength="5" required></td>
         </tr>
         <tr class="">
             <td>생년월일:</td>
-            <td><input type="text" id="user_birth" name="user_birth" class="" value="{{user_birth}}"></td>
+            <td><input type="text" id="user_birth" name="user_birth" class="" value="{{user_birth}}" required></td>
         </tr>
         <tr class="">
             <td>전화번호:</td>
-            <td><input type="text" id="user_number" class="" name="user_number" value="{{user_number}}" minlength="11"
-                    maxlength="11"></td>
+            <td><input type="text" id="user_number" class="" name="user_number" value="{{user_number}}" minlength="11" required></td>
             <td id="user_number_msg"></td>
         </tr>
         <tr class="">
             <td>이메일:</td>
-            <td><input type="text" id="user_email" name="user_email" class="" value="{{user_email}}" minlength="6"></td>
+            <td><input type="text" id="user_email" name="user_email" class="" value="{{user_email}}" minlength="6" required></td>
         </tr>
         <tr class="">
             <td>프로필 이미지</td>
-            <td><input type="file" id="userimage" class="" name="userimage"></td>
+            <td><input type="file" id="userimage" class="" name="userimage" required></td>
         </tr>
         <tr class="">
             <td>가입한 날짜:</td>
             <td>{{userdt}}</td>
         </tr>
     </table>
-    <input type="submit" class="" id= "login_submit" value="회원가입완료">
+    <input type="submit" class="" id="login_submit" value="회원가입완료">
     <a href="/">취소</a>
 
 </form>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script type="text/javascript">
-    let user_name = document.querySelector('#user_name')
-    let userimage = document.querySelector('#userimage')
-    let user_number = document.querySelector('#user_number')
-    let user_email = document.querySelector('#user_email')
-    let user_birth = document.querySelector('#user_birth')
-    console.log("1111");
+    let user_name = document.querySelector('#user_name');
+    let userimage = document.querySelector('#userimage');
+    let user_number = document.querySelector('#user_number');
+    let user_email = document.querySelector('#user_email');
+    let user_birth = document.querySelector('#user_birth');
+    let user_gender = document.querySelectorAll('.user_gender');
     // P A S S W O R D     C H E C K //
     let pwd1 = document.querySelector('#userpw');
     let pwd2 = document.querySelector('#userpw_check');
@@ -77,7 +75,6 @@
     const userid_msg = document.querySelector('#userid_msg');
     const userid = document.querySelector('#userid');
     const common = document.querySelectorAll('.common');
-    console.log("1111");
     //  B L O C K I N G      N U L L + P A S S W O R D     C H E C K //    
     btn.addEventListener('click', () => {
         if (userid.value == '') {
@@ -92,6 +89,8 @@
             alert('비밀번호 6자리 이상을 입력해주세요.');
             pwd2.value = '';
             pwd2.setAttribute('style', 'background:#FFC8C8');
+        } else if(user_gender[0].checked && user_gender[1].checked){
+            alert('성별을 선택해주세요.');
         } else if (user_name.value == '') {
             alert('이름을 입력해주세요.');
             user_name.setAttribute('style', 'background:#FFC8C8');
@@ -125,7 +124,7 @@
         if (pwd2.value.length >= 6) { pwd2.setAttribute('style', 'background:#D2F4FF;') }
     });
     user_name.addEventListener('focusout', () => {
-        if (username.value != '') { user_name.setAttribute('style', 'background:#D2F4FF;') }
+        if (user_name.value != '') { user_name.setAttribute('style', 'background:#D2F4FF;') }
     });
     user_number.addEventListener('focusout', () => {
         if (user_number.value.length == 11) { user_number.setAttribute('style', 'background:#D2F4FF;') }

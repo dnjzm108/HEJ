@@ -1,13 +1,18 @@
 const { user } = require('../../models/index');
 const moment = require('moment');
 
+let index = (req, res)=>{
+    res.render('./third/user/index')
+}
+
 let join = (req, res) => {
     res.render('./third/user/join.html')
 }
 
 let login = (req, res) => {
-    let flag = req.query.flag;
-    res.render('./third/user/login.html',{flag,});
+    res.render('./third/user/login.html',);
+    // console.log(req);
+
 }
 
 let info = async (req, res) => {
@@ -16,18 +21,19 @@ let info = async (req, res) => {
         where : {userid}
     });
     let short = userlist.dataValues;
-    res.render('./third/user/info.html',{
-        id:short.id,
-        userid:short.userid,
-        userpw:short.userpw,
-        gender:short.gender,
-        user_birth:short.user_birth,
-        user_name:short.user_name,
-        user_number:short.user_number,
-        user_email:short.user_email,
-        user_address : short.user_address,
-        userdt:moment(short.userdt).format('YYYY년 MM월 DD일 hh:mm:ss a'),
-    })
+    res.render('./third/user/info.html');
+    // ,{
+    //     id:short.id,
+    //     userid:short.userid,
+    //     userpw:short.userpw,
+    //     gender:short.gender,
+    //     user_birth:short.user_birth,
+    //     user_name:short.user_name,
+    //     user_number:short.user_number,
+    //     user_email:short.user_email,
+    //     user_address : short.user_address,
+    //     userdt:moment(short.userdt).format('YYYY년 MM월 DD일 hh:mm:ss a'),
+    // })
 }
 
 let join_success = async (req,res) => {
@@ -42,27 +48,25 @@ let join_success = async (req,res) => {
 };
 
 let login_check = async (req, res) => {
-    let userid = req.body.userid;
-    let userpw = req.body.userpw;
+    let {userid,userpw} = req.body;
 
-    let result = await User.findOne({
+    let result = await user.findOne({
         where: { userid, userpw }
     })
-    //로그인 실패했을떄
-    if (result == null) {
-        res.redirect('/user/login?flag=0')
-    } else {//로그인 성공했을 떄
 
-        req.session.uid = userid;  //server에 login userid 저장 
+  
+        req.session.uid = userid;  
         req.session.uid2 = userid;
         req.session.isLogin = true;
         req.session.userimage=result.userimage;
 
         req.session.save(() => {
-            res.redirect(`/board/main_board`);
+            res.redirect(`/`);
         });
+      
     };
-};
+
+
 
 let logout = (req, res) => {
     delete req.session.isLogin;
@@ -140,6 +144,7 @@ let info_after_modify = async (req,res)=> { //DB 업데이트, findOne 해오기
 };
 
 module.exports = {
+    index,
     join,
     login,
     info,
