@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     gender: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
     },
     user_email: {
       type: DataTypes.STRING(100),
