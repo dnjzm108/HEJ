@@ -1,23 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/main/view.css">
 </head>
-<body>
-    
- 제목 : {{view.title}} </br>
-작성자 : {{view.userid}}</br>
-작성날짜 : {{view.write_date}}</br>
-내용 : {{view.content}}</br>
-이미지 : {{view.board_image}}</br>
-조회수 : {{view.hit}}</br>
-카테고리 : {{view.write_type}}</br>
 
-<a href="/board/modify?idx={{idx}}">수정하기</a>
-<a href="/board">목록으로 가기</a>
-<a href="/board/delete?idx={{idx}}">삭제하기</a>
+<body>
+    <div id="wrap">
+        <div id="header">
+            제목 : {{view.title}} </br>
+            작성자 : {{view.userid}}</br>
+            작성날짜 : {{view.write_date}}</br>
+            이미지 : {{view.board_image}}</br>
+            조회수 : {{view.hit}}</br>
+            카테고리 : {{view.write_type}}</br>
+            내용 : {{view.content}}</br>
+        </div>
+
+        <a class="tag" href="/board/modify?idx={{idx}}">수정하기</a>
+        <a class="tag" href="/board">목록으로 가기</a>
+        <a class="tag" href="/board/delete?idx={{idx}}">삭제하기</a>
+
+        <div id="middle">
+            <div id="comment">댓글
+                <ul>
+                    {% for item in see %}
+                    <li>{{item.dataValues.userid}}님</li>
+                    <li id="modi">{{item.dataValues.content}} <input type="button" id="modify" value="수정하기"> <a
+                            href="/comment/delete?id={{item.dataValues.id}}&idx={{idx}}">삭제</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <span>댓글</span>
+            <form action="/board/comment" method="POST">
+                <input type="hidden" name="userid" value="{{userid}}">
+                <input type="hidden" name="idx" value="{{idx}}">
+                <input id="write" type="text" name="content" style="width: 500px; height: 50px;">
+                <input id="btn" type="submit" value="댓글달기">
+            </form>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        const modi = document.querySelectorAll('#modi');
+        console.log(modi);
+        console.log(modi.Text);
+        console.log(modi.value);
+        function test() {
+            console.log(this);
+        }
+        modi.addEventListener('click', test)
+    </script>
+    <!--  
+<script type="text/javascript">
+const comment =document.querySelector('#comment');
+const write = document.querySelector('#write');
+const btn = document.querySelector('#btn');
+
+
+function send(){
+   let div = document.createElement('div');
+   div.innerHTML=write.value;
+   comment.appendChild (div) 
+}
+btn.addEventListener('click',send);
+-->
+    </script>
 </body>
+
 </html>

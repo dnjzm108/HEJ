@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+#wrap{
+    width: 100%;
+    text-align: center;
+}
+
+#header{
+    width: 800px;
+    height: 400px;
+    margin: 100px auto 30px;
+    border: 1px solid #000000;
+    padding: 50px;
+    box-sizing: border-box;
+}
+#middle{
+    width: 800px;
+    height: 600px;
+    margin: 30px auto ;
+    border: 1px solid #000000;
+}
+.tag{
+    margin: 0 10px;
+}
+#comment{
+    width: 800px; 
+    height: 500px; 
+    background-color: bisque;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학원소개</title>
+    <style>
+        a {
+            display: inline-block;
+            width: auto;
+            height: 50px;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            color: #000;
+        }
+
+        #infom {
+            margin-top: 50px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+
+        #infom>h1{
+            margin-bottom: 30px;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/info/index.css">
+    <link rel="stylesheet" href="/css/info/list.css">
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="main" class="center">
+            <div id="infom">
+                <h1>INFORMATION</h1>
+                <div id="atags">
+                    <a href="/admin/information/intro">인사말</a>
+                    <a href="/admin/information/history">연혁</a>
+                    <a href="/admin/information/popup">교직원소개</a>
+                    <a href="/admin/information/facility">시설소개</a>
+                    <a href="/admin/information/location">오시는 길</a>
+                </div>
+            </div>
+            <div id="content">
+                {% for item in range(arrayimage.length) %}
+                <h2>{{arraytitle[item]}}</h2>
+                <div>{{arraycontent[item]}}</div>
+                {% endfor %}
+            </div>
+            <a href="/admin/upload?title=information">WRITE</a>
+        </div>
+    </div>
+</body>
+
+</html>

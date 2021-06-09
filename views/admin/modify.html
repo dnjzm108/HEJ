@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modify</title>
+    <link rel="stylesheet" href="./css/info/index.css">
+</head>
+<body>
+    <h1>MODIFY</h1>
+    <form action="/admin/modify_success" id="modify_form" method="POST">
+        <input type="text" name="writer" id="writer" value="{{moList.writer}}">
+        <div id="title_input" class="input">
+            <label for="title">TITLE</label>
+            <input type="text" name="title" id="title" value="{{moList.title}}"><br />
+        </div>
+        <div id="content_input" class="input">
+            <label for="content">CONTENT</label>
+            <textarea name="content" id="content">{{moList.content}}</textarea>
+        </div>
+        <textarea style="display: none;" id="modifyId" name="modifyId">{{moList.id}}</textarea>
+        <input type="submit" id="modify_submit" value="MODIFY">
+    </form>
+</body>
+</html>

@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+#wrap{
+    width: 100%;
+    text-align: center;
+}
+
+#subject{
+    margin-top: 50px;
+}
+#header{
+    width: 800px;
+    height: 600px;
+    margin: 50px auto;
+    border: 1px solid #000000;
+    padding: 50px;
+    box-sizing: border-box;
+}

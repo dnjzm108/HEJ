@@ -3,9 +3,16 @@ rest key  d71e574bb53209815ff9a1eedf9d85dd
 URL  http://localhost:3000/auth/kakao/callback
 secretn key  hLAJzSnEQyKo2fujTV2saFCGixSySbHg
 */
+/*
+google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
+client id : 271562730452-rufsjg41rp8hhbno7686je73714i5dpu.apps.googleusercontent.com
+client password : wMc8se_eBobJrH2EN-r3JF6z
+
+*/
 const axios = require('axios');
 const qs = require('qs');
-const { board, information, user, sequelize, qanda } = require('../../models');
+const session = require('express-session')
+const {board,information, user, sequelize, qanda,comment} = require('../../models');
 
 
 const kakao = {
@@ -25,12 +32,12 @@ let kakao_check = async (req, res) => {
     try {
         token = await axios({
             method: 'POST',
-            url: 'https://kauth.kakao.com/ouath/token',
+            url: 'https://kauth.kakao.com/oauth/token',
             headers: {
-                "content-type": 'application/x-www-form-urlencoded',
-            },
+                'content-type': 'application/x-www-form-urlencoded'
+            }, // npm install qs
             data: qs.stringify({
-                grant_type: 'authorization_code',
+                grant_type: 'authorization_code', // 특정 스트링 
                 client_id: kakao.clientID,
                 client_secret: kakao.clientSecret,
                 redirectUri: kakao.redirectUri,
@@ -52,17 +59,58 @@ let kakao_check = async (req, res) => {
     } catch (err) {
         res.json(err.data)
     }
-
-    console.log(user);
-    req.session.kakao=user.data;
-
-    res.redirect('/kakao')
+    const authData = {
+        ...token.data,
+        ...user.data,
+    }
+    session.authData = {["kakao"] :authData};
+    res.redirect('/');
 }
+
+let info = (req,res)=>{
+    const {authData} = session;
+    const provider = Object.keys(authData)[0]
+    
+    let userinfo = {}
+    switch (provider){
+        case "kakao" :
+            userinfo = {
+                userid:authData[provider].properties.nickname,
+            }
+            break
+    }
+    let {nickname} = session.authData.kakao.properties;
+    res.render('./main/info.html',{
+        nickname : userinfo.userid
+    })
+}
+let kakao_logout = async (req,res)=>{
+    const {access_token} = session.authData.kakao;
+    let unlink;
+    try{
+        unlink = await axios({
+            mehtod : 'POST',
+            url : 'https://kapi.kakao.com/v1/user/unlink',
+            headers:{
+                Authorization:`Bearer ${access_token}`
+            }
+        })
+    }catch(err){
+        res.json(err.data)
+    }
+    const {id} = unlink.data;
+    if(session.authData["kakao"].id==id){
+        delete session.authData;
+    }
+
+    res.redirect('/?msg=로그아웃 되었습니다.')
+}
+
 
 let main = (req, res) => {
     let id = req.query.id;
     let pw = req.query.pw;
-    res.render('./main/board/main.html', {
+    res.render('./main/test.html', {
         id, pw
     })
 }
@@ -86,12 +134,10 @@ let board_write = (req, res) => {
 }
 let board_write_send = async (req, res) => {
     let { title, userid, content, board_image, write_type } = req.body;
-    console.log(title, userid, content, board_image, write_type);
     let write = await board.create({
         title, userid, content, board_image, write_type,
         hit: 0,
     })
-    console.log(write);
     res.redirect('/board')
 }
 let board_view = async (req, res) => {
@@ -103,9 +149,28 @@ let board_view = async (req, res) => {
     let hitNum = await board.update({
         hit: view.hit + 1
     }, { where: { idx } });
+    let see =  await comment.findAll({
+        where : {idx}
+    });
+    let userid = session.authData.kakao.properties.nickname;
     res.render('./main/board/view.html', {
-        view, idx
+        view,idx,userid,see
     })
+}
+
+let comment_send = async (req,res)=>{
+    let {userid,content,idx} = req.body;
+    let result = await comment.create({
+        userid,content,idx
+    })
+    res.redirect(`/board/view?idx=${idx}`);
+}
+let comment_delete = async (req,res)=>{
+    let {id,idx} = req.query;
+    let result = await comment.destroy({
+        where:{id}
+    })
+    res.redirect(`/board/view?idx=${idx}`)
 }
 
 let board_modify = async (req, res) => {
@@ -130,6 +195,8 @@ let board_delete = async (req, res) => {
     let result = await board.destroy({ where: { idx } });
     res.redirect('/board');
 }
+
+
 
 let qanda_list = async (req, res) => {
     let result = await qanda.findAll({});
@@ -180,6 +247,9 @@ let qanda_delete = async (req, res) => {
     let result = await qanda.destroy({ where: { id } });
     res.redirect('/qanda/list');
 }
+let test = (req,res) => {
+    res.render('./main/test.html');
+}
 
 module.exports = {
     main,
@@ -200,5 +270,10 @@ module.exports = {
     qanda_view,
     qanda_modify,
     qanda_modify_send,
-    qanda_delete
+    qanda_delete,
+    test,
+    info,
+    kakao_logout,
+    comment_send,
+    comment_delete
 }
