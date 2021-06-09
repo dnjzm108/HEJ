@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('./info_controller');
+const controller = require('./admin_controller');
 const multer = require('multer');
 const path = require('path');
+const auth = require('../../middleware/auth');
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -15,12 +16,16 @@ const upload = multer({
     }),
 });
 
+router.use('/information',controller.Information);
+
+router.post('/login_success',controller.login_success);
 router.post('/modify_success',controller.modify_success);
 router.get('/modify',controller.modify);
 router.get('/delete',controller.postDel);
 router.get('/view',controller.view);
-router.get('/infolist',controller.info_list);
 router.post('/upload_success',upload.single('info_image'),controller.upload_success);
-router.use('/',controller.info);
+router.get('/upload',controller.upload);
+router.get('/main',auth,controller.admin_main);
+router.use('/',controller.admin_login);
 
 module.exports = router;

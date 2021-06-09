@@ -4,6 +4,23 @@
     margin-top: 30px;
 }
 
+#main > h1{
+    height: 50px;
+}
+
+#content{
+    text-align: center;
+    height: 500px;
+}
+
+#content > h2{
+    height: 30px;
+}
+
+#content > div{
+    line-height: 50px;
+}
+
 #list{
     width: 100%;
 }
