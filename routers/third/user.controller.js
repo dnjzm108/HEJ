@@ -24,7 +24,7 @@ let info = async (req, res) => {
         where : {userid}
     });
     let result = userlist.dataValues;
-    let userimage2 = `/uploads/user_image/${result.userimage}`
+    let userimage2 = result.userimage;
     let obj = {
         id:result.id,
         userid:result.userid,
