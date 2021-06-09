@@ -1,0 +1,78 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+#wrap{
+    width: 100%;
+    text-align: center;
+}
+#box{
+    width: 500px;
+    height: 500px;
+    margin: 200px auto;
+    padding: 50px 100px;
+    box-sizing: border-box;
+    border: 1px solid #000000;
+}
+#local_in{
+    width: 50px;
+    height: 30px;
+    margin: 10px 5px;
+}
+#join_in{
+    width: 50px;
+    height: 30px;
+    margin: 10px 5px;
+}
+.kakao{
+    display: block; 
+    width: 180px;
+    height: 30px;
+    border: 1px solid #666;
+    background: yellow;
+    margin : 10px auto;
+    color: #000000;
+    cursor: pointer;
+    border-radius : 15px;
+    text-align: center;
+    line-height: 30px;
+}
+#google_in{
+    width: 130px;
+    height: 30px;
+   margin: 20px auto;
+}
+#google_out{
+    display: block; 
+    width: 180px;
+    height: 30px;
+    border: 1px solid #666;
+    background: #ffff;
+    margin : 10px auto;
+    color: #000000;
+    cursor: pointer;
+    border-radius : 15px;
+    text-align: center;
+    line-height: 30px;
+}
+#face_in{
+    display: block; 
+    width: 180px;
+    height: 30px;
+    border: 1px solid #666;
+    background: blue;
+    margin : 10px auto;
+    cursor: pointer;
+    border-radius : 15px;
+    text-align: center;
+    line-height: 30px;
+}
+#face{ 
+    color: #000000;
+}

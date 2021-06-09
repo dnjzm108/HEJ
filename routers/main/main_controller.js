@@ -64,7 +64,7 @@ let kakao_check = async (req, res) => {
         ...user.data,
     }
     session.authData = {["kakao"] :authData};
-    res.redirect('/kakao');
+    res.redirect('/');
 }
 
 let info = (req,res)=>{
@@ -103,14 +103,14 @@ let kakao_logout = async (req,res)=>{
         delete session.authData;
     }
 
-    res.redirect('/kakao?msg=로그아웃 되었습니다.')
+    res.redirect('/?msg=로그아웃 되었습니다.')
 }
 
 
 let main = (req, res) => {
     let id = req.query.id;
     let pw = req.query.pw;
-    res.render('./main/board/main.html', {
+    res.render('./main/test.html', {
         id, pw
     })
 }
