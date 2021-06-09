@@ -4,7 +4,9 @@ const chash = require('../../chash');
 const token = require('../../jwt');
 
 let index = (req, res)=>{
-    res.render('./third/user/index')
+    let {uid1:userid} = req.session;
+    console.log(userid);
+    res.render('./third/user/index',{userid})
 };
 
 let join = (req, res) => {
@@ -22,6 +24,7 @@ let info = async (req, res) => {
         where : {userid}
     });
     let result = userlist.dataValues;
+    let userimage2 = `/uploads/user_image/${result.userimage}`
     let obj = {
         id:result.id,
         userid:result.userid,
@@ -30,7 +33,7 @@ let info = async (req, res) => {
         user_number:result.user_number, 
         gender:result.gender,
         user_birth:result.user_birth,
-        userimage:result.userimage,
+        userimage: userimage2,
         user_email:result.user_email,
         user_address:result.user_address,
         userdt:moment(result.userdt).format('YYYY년 MM월 DD일 hh:mm:ss a'),
@@ -39,16 +42,17 @@ let info = async (req, res) => {
 };
 
 let join_success = async (req,res) => {
-    let {userid,userpw,user_name,user_number,gender,user_email,user_birth, user_address} = req.body;
+    let {userid,userpw,user_name,user_number,gender,user_email,user_birth, user_address1,user_address2,user_address3} = req.body;
     let userimage = req.file == undefined ? '': req.file.filename;
-    console.log(userimage);
-
     let hash = chash(userpw);
+    let user_address = user_address1 +user_address2 +user_address3;
     
     console.log('++++++++++++++++++++'+hash);
     let rst = await user.create({ 
         userid, userpw:hash, user_name, gender, user_number, userimage , user_email,user_address, user_birth
     });
+    console.log(user_address);
+
     res.render('./third/user/join_success',{userimage, user_name});
 };
 
@@ -64,9 +68,10 @@ let login_check = async (req, res) => {
     res.cookie('AccessToken',ctoken,{httpOnly:true,secure:true,})
 
         req.session.uid1 = userid;
-        req.session.uid2 = userid;
+        // req.session.uid2 = userid;
         req.session.isLogin = true;
-        req.session.userimage=result.userimage;
+        // req.session.userimage=result.userimage;
+        req.session.userimage = '1623203467710.png';
         req.session.save(() => {
             res.redirect('/user/index');
         });
@@ -104,13 +109,14 @@ let info_modify = async (req,res)=>{
     let id = req.query.id;
     let result = await user.findOne({where:{id}})
     let short = result.dataValues;
+    let userimage = `${short.userimage}`
     res.render('./third/user/info_modify.html',{
         id,
         userid:short.userid,
         userpw:short.userpw,
         gender:short.gender,
         user_birth:short.user_birth,
-        userimage:short.userimage,
+        userimage:userimage,
         user_name:short.user_name,
         user_number:short.user_number,
         user_email:short.user_email,
@@ -119,10 +125,11 @@ let info_modify = async (req,res)=>{
     });
 };
 
-let info_after_modify = async (req,res)=> { //DB 업데이트, findOne 해오기 
+let info_after_modify = async (req,res)=> { //DB 업데이트, findOne 해오기   
+    console.log(req.file);
     let {id, userid, userpw, gender, user_birth, user_name,user_number, user_email, user_address, userdt}= req.body;
-    let userimage = req.file == undefined ? '':req.file.filename;
-
+    let userimage = req.file == undefined ? req.body.userimage1 :`/uploads/user_image/${req.file.filename}`;
+    console.log('modify : ',userimage);
     await user.update({
         userid, userpw, gender, user_birth, userimage, user_name, user_number, user_email, user_address, userdt},{where:{id}});
     let result = await user.findOne({

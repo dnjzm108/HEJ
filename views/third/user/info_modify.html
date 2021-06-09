@@ -2,7 +2,7 @@
 
 
 <h1>내 정보 변경</h1>
-<form id="info_modify" method="post" action="/user/info_after_modify">
+<form id="info_modify" method="post" action="/user/info_after_modify" enctype="multipart/form-data">
     <table>
         <tr>
             <td style="display: none">번호</td>
@@ -17,6 +17,7 @@
             <td><input type="password" id="pwd1" class="" name="userpw" value="{{userpw}}" minlength="6"></td>
             <td id="pwd1_msg"> </td>
         </tr>
+
         <tr class="">
             <td>비밀번호 확인:</td>
             <td><input type="password" id="pwd2" class="" name="userpw_check" value="{{userpw}}" minlength="6"></td>
@@ -31,7 +32,9 @@
             <td>{{user_birth}}</td>
         <tr class="">
             <td>프로필 이미지: </td>
-            <td><img id="userimage" src="http://localhost:3000/{{userimage}}"></td>
+            <input type="hidden" name="userimage1" value="{{userimage}}">
+            <td><input type="file" name="userimage"></td>
+            <td><img id="userimage" src="{{userimage}}"></td>
         </tr>
         </tr>
         <tr class="">
