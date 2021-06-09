@@ -3,8 +3,15 @@ rest key  d71e574bb53209815ff9a1eedf9d85dd
 URL  http://localhost:3000/auth/kakao/callback
 secretn key  hLAJzSnEQyKo2fujTV2saFCGixSySbHg
 */
+/*
+google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
+client id : 271562730452-rufsjg41rp8hhbno7686je73714i5dpu.apps.googleusercontent.com
+client password : wMc8se_eBobJrH2EN-r3JF6z
+
+*/
 const axios = require('axios');
 const qs = require('qs');
+const session = require('express-session')
 const { board, information, user, sequelize, qanda } = require('../../models');
 
 
@@ -25,12 +32,12 @@ let kakao_check = async (req, res) => {
     try {
         token = await axios({
             method: 'POST',
-            url: 'https://kauth.kakao.com/ouath/token',
+            url: 'https://kauth.kakao.com/oauth/token',
             headers: {
-                "content-type": 'application/x-www-form-urlencoded',
-            },
+                'content-type': 'application/x-www-form-urlencoded'
+            }, // npm install qs
             data: qs.stringify({
-                grant_type: 'authorization_code',
+                grant_type: 'authorization_code', // 특정 스트링 
                 client_id: kakao.clientID,
                 client_secret: kakao.clientSecret,
                 redirectUri: kakao.redirectUri,
@@ -52,10 +59,9 @@ let kakao_check = async (req, res) => {
     } catch (err) {
         res.json(err.data)
     }
-
+    console.log(token);
     console.log(user);
-    req.session.kakao=user.data;
-
+    req.session.kakao = user.data;
     res.redirect('/kakao')
 }
 
@@ -180,6 +186,9 @@ let qanda_delete = async (req, res) => {
     let result = await qanda.destroy({ where: { id } });
     res.redirect('/qanda/list');
 }
+let test = (req,res) => {
+    res.render('./main/test.html');
+}
 
 module.exports = {
     main,
@@ -200,5 +209,6 @@ module.exports = {
     qanda_view,
     qanda_modify,
     qanda_modify_send,
-    qanda_delete
+    qanda_delete,
+    test
 }
