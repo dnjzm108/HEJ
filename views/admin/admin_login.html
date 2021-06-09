@@ -22,10 +22,12 @@
                 <input style="margin-top: 30px;" id="admin_submit" type="submit" value="LOGIN">
             </div>
         </form>
+        {% if flag=='0' %}
+        <script type="text/javascript">
+            alert('{{msg}}');
+        </script>
+        {% endif %}
     </div>
-    <script type="text/javascript">
-    
-    </script>
 </body>
 
 </html>

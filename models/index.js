@@ -19,5 +19,9 @@ db.board = models.board;
 db.information = models.information;
 db.qanda = models.qanda;
 db.user = models.user;
+db.admin = models.admin;
+db.popup = models.popup;
+db.hired = models.hired;
+db.education = models.education;
 
 module.exports = db;

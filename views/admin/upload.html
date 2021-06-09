@@ -9,17 +9,28 @@
 </head>
 
 <body>
-    <h1>INFORMATION</h1>
+    <h1>UPLOAD</h1>
     <form action="/admin/upload_success" id="info_form" method="POST" enctype="multipart/form-data">
 
         <input type="text" name="writer" id="writer" value="writer">
 
         <div id="typeof" class="input">
+            {% if title=='information' %}
             <select id="type" name="type">
-                <option value="notice">NOTICE</option>
-                <option value="about">ABOUT US</option>
-                <option value="popup">POPUP</option>
+                <option value="intro">인사말</option>
+                <option value="history">연혁</option>
+                <option value="popup">교직원소개</option>
+                <option value="facility">시설소개</option>
+                <option value="location">오시는 길</option>
             </select>
+            {% endif %}
+            
+            {% if title =='hired' %}
+            <select id="type" name="type">
+                <option value="interview">취업자 인터뷰</option>
+                <option value="portfolio">포트폴리오</option>
+            </select>
+            {% endif %}
         </div>
 
         <div id="img_input" class="input">
@@ -37,8 +48,25 @@
             <textarea name="content" id="content"></textarea>
         </div>
 
-        <input type="submit" id="info_submit" value="UPLOAD">
+        <input type="button" id="info_submit" value="UPLOAD">
     </form>
 </body>
+<script type="text/javascript">
+    const info_submit = document.querySelector('#info_submit');
+    const info_form = document.querySelector('#info_form');
 
+    info_submit.addEventListener('click',()=>{
+    let texttitle = document.querySelector('#title').value;
+    let textcontent = document.querySelector('#content').value;
+        if(texttitle == ''){
+            alert('Enter the subject.');
+            return
+        }
+        if(textcontent == ''){
+            alert('Enter the content');
+            return
+        }
+        info_form.submit();
+    })
+</script>
 </html>

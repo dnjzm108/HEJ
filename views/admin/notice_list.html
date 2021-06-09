@@ -28,7 +28,7 @@
                     <tr>
                         <td>{{arrayid[item]}}</td>
                         <td><img id="infoImage" src="{{arrayimage[item]}}"></td>
-                        <td><a href="/admin/view?id={{arrayid[item]}}">{{arraytitle[item]}}</a></td>
+                        <td><a href="/admin/view?id={{arrayRealId[item]}}">{{arraytitle[item]}}</a></td>
                         <td>writer</td>
                         <td>{{arraydate[item]}}</td>
                     </tr>
@@ -43,6 +43,7 @@
                 {% endfor %}
             </div>
             <a class="write_btn btn" href="/admin/upload">WRITE</a>
+            <a class="main_btn btn" href="/admin/main">MAIN</a>
         </div> 
     </div>
     
