@@ -21,6 +21,12 @@ email VARCHAR(100) NOT NULL,
 pone_number VARCHAR(100) NOT NULL,
 content VARCHAR(100) NOT NULL
 );
+create table comment(
+    id int(11) primary key not NULL auto_increment,
+    userid VARCHAR(20) NOT NULL,
+    content VARCHAR(100) NOT NULL,
+    writen int(11)
+)charset=utf8mb4;
 
 create table board(
 title VARCHAR(100) NOT NULL,

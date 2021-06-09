@@ -19,5 +19,6 @@ db.board = models.board;
 db.information = models.information;
 db.qanda = models.qanda;
 db.user = models.user;
+db.comment = models.comment;
 
 module.exports = db;
