@@ -2,19 +2,7 @@ const Sequelize = require('sequelize');
 const moment = require('moment');
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('information', {
-    type:{
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
-    info_image: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
-    title: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
+  return sequelize.define('popup', {
     content: {
       type: DataTypes.STRING(100),
       allowNull: false
@@ -33,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'information',
+    tableName: 'popup',
     timestamps: false
   });
 };

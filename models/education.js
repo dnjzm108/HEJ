@@ -2,12 +2,12 @@ const Sequelize = require('sequelize');
 const moment = require('moment');
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('information', {
+  return sequelize.define('education', {
     type:{
       type: DataTypes.STRING(100),
       allowNull: true
     },
-    info_image: {
+    ed_image: {
       type: DataTypes.STRING(100),
       allowNull: true
     },
@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'information',
+    tableName: 'education',
     timestamps: false
   });
 };

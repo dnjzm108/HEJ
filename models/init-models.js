@@ -4,6 +4,10 @@ var _information = require("./information");
 var _qanda = require("./qanda");
 var _user = require("./user");
 var _comment =require("./comment");
+var _admin = require("./admin");
+var _popup = require("./popup");
+var _hired = require("./hired");
+var _education = require("./education");
 
 function initModels(sequelize) {
   var board = _board(sequelize, DataTypes);
@@ -12,6 +16,10 @@ function initModels(sequelize) {
   var user = _user(sequelize, DataTypes);
   var comment = _comment(sequelize, DataTypes);
 
+  var admin = _admin(sequelize, DataTypes);
+  var popup = _popup(sequelize,DataTypes);
+  var hired = _hired(sequelize,DataTypes);
+  var education = _education(sequelize,DataTypes);
 
   return {
     board,
@@ -19,6 +27,10 @@ function initModels(sequelize) {
     qanda,
     user,
     comment,
+    admin,
+    popup,
+    hired,
+    education,
   };
 }
 module.exports = initModels;

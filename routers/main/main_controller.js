@@ -64,7 +64,6 @@ let kakao_check = async (req, res) => {
         ...user.data,
     }
     session.authData = {["kakao"] :authData};
-    console.log(session.authData);
     res.redirect('/kakao');
 }
 
@@ -135,12 +134,10 @@ let board_write = (req, res) => {
 }
 let board_write_send = async (req, res) => {
     let { title, userid, content, board_image, write_type } = req.body;
-    console.log(title, userid, content, board_image, write_type);
     let write = await board.create({
         title, userid, content, board_image, write_type,
         hit: 0,
     })
-    console.log(write);
     res.redirect('/board')
 }
 let board_view = async (req, res) => {
@@ -152,20 +149,28 @@ let board_view = async (req, res) => {
     let hitNum = await board.update({
         hit: view.hit + 1
     }, { where: { idx } });
-    let see =  await comment.findAll({});
+    let see =  await comment.findAll({
+        where : {idx}
+    });
     let userid = session.authData.kakao.properties.nickname;
     res.render('./main/board/view.html', {
-        view, idx,userid,see
+        view,idx,userid,see
     })
 }
 
 let comment_send = async (req,res)=>{
     let {userid,content,idx} = req.body;
     let result = await comment.create({
-        userid,content
+        userid,content,idx
     })
-    console.log(result);
     res.redirect(`/board/view?idx=${idx}`);
+}
+let comment_delete = async (req,res)=>{
+    let {id,idx} = req.query;
+    let result = await comment.destroy({
+        where:{id}
+    })
+    res.redirect(`/board/view?idx=${idx}`)
 }
 
 let board_modify = async (req, res) => {
@@ -269,5 +274,6 @@ module.exports = {
     test,
     info,
     kakao_logout,
-    comment_send
+    comment_send,
+    comment_delete
 }

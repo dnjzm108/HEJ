@@ -1,28 +1,21 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('comment', {
-    userid: {
+  return sequelize.define('admin', {
+    adminid: {
       type: DataTypes.STRING(100),
       allowNull: false
     },
-    content: {
+    adminpw: {
       type: DataTypes.STRING(100),
       allowNull: false
     },
-    id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-    },
-    idx: {
+    authority_level: {
       type: DataTypes.INTEGER(10),
-      allowNull: true
+      allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'comment',
-    timestamps: false,
-
+    tableName:'admin',
+    timestamps: false
   });
 };

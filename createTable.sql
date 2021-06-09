@@ -25,7 +25,7 @@ create table comment(
     id int(11) primary key not NULL auto_increment,
     userid VARCHAR(20) NOT NULL,
     content VARCHAR(100) NOT NULL,
-    writen int(11)
+    idx int(11)
 )charset=utf8mb4;
 
 create table board(
@@ -44,3 +44,5 @@ info_image VARCHAR(100) NOT NULL,
 title VARCHAR(100) NOT NULL,
 conent VARCHAR(100) NOT NULL
 );
+
+alter database HEJ default character set UTF8;

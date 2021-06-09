@@ -23,8 +23,8 @@
 <div  id="comment" style="width: 500px; height: 500px; background-color: bisque;">댓글
 <ul>
     {% for item in see %}
-    <li>{{item.dataValues.userid}}</li>
-    <li>{{item.dataValues.content}}</li>
+    <li>{{item.dataValues.userid}}님</li>
+    <li id="modi">{{item.dataValues.content}}  <input type="button" id="modify" value="수정하기"> <a href="/comment/delete?id={{item.dataValues.id}}&idx={{idx}}">삭제</a></li>
     {% endfor %}
 </ul>
 </div>
@@ -36,6 +36,17 @@
    <input id="write" type="text" name="content" style="width: 500px; height: 50px;" >
    <input id="btn" type="submit" value="댓글달기">
 </form>
+
+<script type="text/javascript">
+const modi = document.querySelectorAll('#modi');
+console.log(modi);
+console.log(modi.Text);
+console.log(modi.value);
+function test(){
+    console.log(this);
+}
+modi.addEventListener('click',test)
+</script>
 <!--  
 <script type="text/javascript">
 const comment =document.querySelector('#comment');
