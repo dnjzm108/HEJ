@@ -53,15 +53,16 @@
         </tr>
         <tr class="">
             <td>주소:</td>
-            <td>{{user_address}}</td>
+            <td><input type="text" name="user_address" class="" size= "60" value="{{user_address}}" ></td>
         </tr>
         <tr>
             <td>주소변경:</td>
             <td><input type="text" id="addressInput" class="" name="addressInput" placeholder="주소를 입력해주세요." >
-                <button id="addressSearch">주소검색하기</button>
+                <!-- <button id="addressSearch">주소검색하기</button> -->
+                <p id= "addressSearch" >주소검색하기</p>
             </td>
         </tr>
-        <tr  class="">
+        <tr  class=""> 
             <td>
                 <ul id="addressList"></ul>
             </td>
@@ -92,11 +93,10 @@
     async function getAddress() {
         const addressInput = document.querySelector('#addressInput');
         const addressList = document.querySelector('#addressList');
-        console.log(addressInput.value);
         if (addressInput.value.length == 0) {
             alert('주소를 입력해주세요.');
             addressInput.focus();
-            return ;
+            return false;
         } //주소창 결과값이 아무것도 입력되지 않았을때 얼럴트창이뜨고 커서가 주소창으로 옴겨짐.
 
         let options = {
@@ -107,6 +107,7 @@
         }
         let result = await fetch('https://dapi.kakao.com/v2/local/search/address.json?analyze_type=similar&page=1&size=10&query=' + addressInput.value, options)
         let json = await result.json();
+        console.log(json)
 
         addressList.innerHTML = '';
         if (json.documents.length == 0) {
@@ -155,11 +156,7 @@
 
             document.querySelector('#addressNumber').value = zone_no;
             document.querySelector('#address1').value = `${address_name} ${buliding_name}`;
-
-
         }
     }
-
-
 </script>
 {% include "../layout/bottom.html" %}

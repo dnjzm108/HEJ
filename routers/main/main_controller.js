@@ -152,7 +152,17 @@ let board_view = async (req, res) => {
     let see =  await comment.findAll({
         where : {idx}
     });
-    let userid = session.authData.kakao.properties.nickname;
+    let userid;
+    if(session.authData.kakao != null){
+     userid = session.authData.kakao.properties.nickname;
+    }else if(session.authData.local != null ){
+        userid = session.authData.local.userid
+    }else if(session.authData.google != null ){
+        userid = session.authData.google.userid
+    }else if(session.authData.fecebook != null){
+        userid = session.authData.fecebook.userid
+    }
+    
     res.render('./main/board/view.html', {
         view,idx,userid,see
     })

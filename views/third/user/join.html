@@ -34,7 +34,7 @@
         </tr>
         <tr class="">
             <td>생년월일:</td>
-            <td><input type="text" id="user_birth" name="user_birth" class="" required></td>
+            <td><input type="date" id="user_birth" name="user_birth" class="" required></td>
         </tr>
         <tr class="">
             <td>주소:</td>
@@ -177,6 +177,7 @@
     }
 
     async function getAddress() {
+       
         const addressInput = document.querySelector('#addressInput');
         const addressList = document.querySelector('#addressList');
         console.log(addressInput.value);

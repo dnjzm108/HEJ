@@ -1,6 +1,11 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('user', {
+    authority_level: {
+      type: DataTypes.INTEGER,
+      allowNull:false,
+      defaultValue:1
+    },
     userid: {
       type: DataTypes.STRING(30),
       allowNull: false,
