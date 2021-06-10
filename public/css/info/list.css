@@ -8,17 +8,18 @@
     height: 50px;
 }
 
-#content{
+#content_wrap{
     text-align: center;
     height: 500px;
 }
 
-#content > h2{
+#content_wrap > h2{
     height: 30px;
+    margin-bottom: 30px;
 }
 
-#content > div{
-    line-height: 50px;
+#content_wrap > pre{
+    line-height: 20px;
 }
 
 #list{
@@ -38,10 +39,9 @@ tr:nth-child(1){
 }
 
 tr:nth-child(1) > td:nth-child(1){width: 100px;}
-tr:nth-child(1) > td:nth-child(2){width: 100px;}
-tr:nth-child(1) > td:nth-child(3){width: 600px;}
-tr:nth-child(1) > td:nth-child(4){width: 150px;}
-tr:nth-child(1) > td:nth-child(5){width: 120px;}
+tr:nth-child(1) > td:nth-child(2){width: 600px;}
+tr:nth-child(1) > td:nth-child(3){width: 150px;}
+tr:nth-child(1) > td:nth-child(4){width: 120px;}
 tr:nth-child(10) > td{border-bottom: none;}
 
 td{

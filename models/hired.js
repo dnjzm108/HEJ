@@ -7,16 +7,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: true
     },
-    hired_image: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
     title: {
       type: DataTypes.STRING(100),
       allowNull: false
     },
     content: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.TEXT,
       allowNull: false
     },
     writer:{

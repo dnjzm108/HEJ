@@ -8,6 +8,14 @@
     <title>INFOVIEW</title>
     <link rel="stylesheet" href="/css/info/index.css">
     <link rel="stylesheet" href="/css/info/view.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let content = document.querySelector('#content');
+            let pre = document.querySelector('#pre');
+            pre.innerHTML = `${content.value}`
+        });
+
+    </script>
 </head>
 
 <body>
@@ -24,17 +32,16 @@
         </div>
 
         <div id="content_wrap" class="center">
-            <div id="content">
-            {{infoList.content}}
-            <img id="content_img" src="{{infoimage}}">
+            <pre id="pre"></pre>
         </div>
+        <textarea style="display: none;" id="content">{{infoList.content}}</textarea>
 
         <div id="footer" class="center">
-            <a href="/admin/infolist">MENU</a>
-            <a href="/admin/delete?id={{infoList.id}}">DELETE</a>
-            <a href="/admin/modify?id={{infoList.id}}">MODIFY</a>
+            <a href="/admin/education">MENU</a>
+            <a href="/admin/delete?id={{infoList.id}}&table=education">DELETE</a>
+            <a href="/admin/modify?id={{infoList.id}}&table=education">MODIFY</a>
         </div>
-        </div>
+    </div>
     </div>
 </body>
 

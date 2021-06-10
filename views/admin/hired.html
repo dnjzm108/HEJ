@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFORMATION</title>
+    <link rel="stylesheet" href="/css/info/index.css">
+    <link rel="stylesheet" href="/css/info/list.css">
+    <style>
+        a {
+            display: inline-block;
+            width: auto;
+            height: 50px;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            color: #000;
+        }
+
+        #infom {
+            margin-top: 50px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+
+        #infom>h1{
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="wrap" class="w100">
+        <div id="main" class="center">
+            <div id="infom">
+                <h1>HIRED</h1>
+                <div id="atags">
+                    <a href="/admin/hired/interview">인터뷰</a>
+                    <a href="/admin/hired/portfolio">포트폴리오</a>
+                </div>
+            </div>
+
+            <div id="board">
+                <table id="list">
+                    <tr>
+                        <td>No.</td>
+                        <td>Title</td>
+                        <td>Writer</td>
+                        <td>Date</td>
+                    </tr>
+                    {% for item in range(hiredid.length) %}
+                    <tr>
+                        <td>{{hiredid[item]}}</td>
+                        <td><a style="color: #fff;" href="/admin/view?id={{hiredRealId[item]}}&table=hired">{{hiredtitle[item]}}</a></td>
+                        <td>writer</td>
+                        <td>{{hireddate[item]}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="footer center">
+            <div id="pagenation">
+                {% for item in pagination %}
+                <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
+                {% endfor %}
+            </div>
+            <a class="write_btn btn" href="/admin/upload?title=hired">WRITE</a>
+            <a class="main_btn btn" href="/admin/main">MAIN</a>
+        </div> 
+    </div>
+</body>
+</html>
