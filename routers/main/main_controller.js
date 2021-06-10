@@ -183,6 +183,14 @@ let comment_delete = async (req,res)=>{
     res.redirect(`/board/view?idx=${idx}`)
 }
 
+let comment_modify = async (req,res)=>{
+    let {content,id} = req.body;
+    let result = await comment.update({
+        content
+    },{where:{id}});
+    res.redirect('/borad');
+}
+
 let board_modify = async (req, res) => {
     let idx = req.query.idx;
     let result = await board.findAll({
@@ -205,8 +213,6 @@ let board_delete = async (req, res) => {
     let result = await board.destroy({ where: { idx } });
     res.redirect('/board');
 }
-
-
 
 let qanda_list = async (req, res) => {
     let result = await qanda.findAll({});
@@ -285,5 +291,6 @@ module.exports = {
     info,
     kakao_logout,
     comment_send,
-    comment_delete
+    comment_delete,
+    comment_modify,
 }

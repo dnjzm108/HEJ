@@ -35,6 +35,7 @@ router.get('/board/write',login_check,controller.board_write)
 router.get ('/board',controller.board_list)
 router.post('/board/comment',controller.comment_send)
 router.get('/comment/delete',controller.comment_delete)
+router.post('/board/comment/modify',controller.comment_modify);
 
 router.get('/auth/kakao/unlink',controller.kakao_logout)
 router.get('/auth/kakao/callback',controller.kakao_check)

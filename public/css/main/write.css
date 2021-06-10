@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+#wrap{
+    width: 100%;
+    text-align: center;
+}
+
+#header{
+    width: 800px;
+    height: 800px;
+    margin: 100px auto 30px;
+    border: 1px solid #000000;
+    padding: 50px;
+    box-sizing: border-box;
+}
+.w500{
+    width: 500px;
+}
+#cont{
+    width: 500px;
+    height: 400px;
+}
+#content{
+    width: 500px;
+    height: 400px;
+}
