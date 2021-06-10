@@ -5,15 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/main/write.css">
 </head>
 <body>
+    <div id="wrap">
+        <div id="header">
     <form action="/board/write" method="POST" >
-    <span>제목</span><input type="text" name="title" id="title"></br>
-    <span>작성자</span><input type="text" name="userid" id="userid"></br>
-    <span>내용</span><input type="text" name="content" id="content"></br>
-    <span>이미지</span><input type="file" name="board_image" id="board_image"></br>
-    <span>타입</span><input type="text" name="write_type" id="write_type"></br>
+    <span>제목</span></br>
+    <input  class="w500" type="text" name="title" id="title"></br>
+    <span>작성자</span></br>
+    <input class="w500"  type="text" name="userid" id="userid"></br>
+    <span>이미지</span></br>
+    <input class="w500"  type="file" name="board_image" id="board_image"></br>
+    <span>타입</span></br>
+    <input type="text" name="write_type" id="write_type"></br>
+    <span>내용</span></br>
+    <input id="cont" type="text" name="content" id="content"></br>
     <input type="submit" value="저장">
+</div>
+</div>
 </form>
     
 </body>
