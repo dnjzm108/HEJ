@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information</title>
+    <link rel="stylesheet" href="./css/info/index.css">
+</head>
+
+<body>
+    <h1>UPLOAD</h1>
+    <form action="/admin/popup_upload_success" id="info_form" method="POST" enctype="multipart/form-data">
+        <input type="text" name="writer" id="writer" value="writer">
+
+        <div id="img_input" class="input">
+            <label for="image">IMAGE</label>
+            <input type="file" name="image" id="image"><br />
+        </div>
+
+        <div id="visibility" class="input">
+            <label for="visible">VISIBLE</label>
+            <input id="visible" type="radio" class="visibility" name="visibility" value="1">
+            <label for="invisible">INVISIBLE</label>
+            <input id="invisible" type="radio" class="visibility" name="visibility" value="0">
+        </div>
+
+        <input type="button" id="info_submit" value="UPLOAD">
+    </form>
+    <script type="text/javascript">
+        const info_submit = document.querySelector('#info_submit');
+        const info_form = document.querySelector('#info_form');
+        const chk_radio = document.getElementsByName('visibility');
+
+
+        info_submit.addEventListener('click', () => {
+            let image = document.querySelector('#image').value;
+            if (image == '') {
+                alert('INSERT IMAGE')
+                return
+            }
+            let sel_type = null;
+            for (var i = 0; i < chk_radio.length; i++) {
+                if (chk_radio[i].checked == true) {
+                    sel_type = chk_radio[i].value;
+                }
+            }
+            if (sel_type == null) {
+                alert("서비스유형을 선택하세요.");
+                return
+            }
+            info_form.submit();
+        })
+    </script>
+</body>
+
+</html>

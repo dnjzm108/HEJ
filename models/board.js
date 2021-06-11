@@ -3,20 +3,20 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('board', {
     title: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
     },
     userid: {
       type: DataTypes.STRING(20),
-      allowNull: false
+      allowNull: true
     },
     write_date: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.fn('current_timestamp')
+      type:Sequelize.DATE,
+      allowNull:false,
+      defaultValue:Sequelize.NOW,
     },
     content: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: true
     },
     board_image: {
       type: DataTypes.STRING(100),
@@ -24,17 +24,17 @@ module.exports = function(sequelize, DataTypes) {
     },
     hit: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     idx: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       primaryKey: true
     },
-    write_type: {
+    type: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,

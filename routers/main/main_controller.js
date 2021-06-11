@@ -11,8 +11,9 @@ client password : wMc8se_eBobJrH2EN-r3JF6z
 */
 const axios = require('axios');
 const qs = require('qs');
+const moment = require('moment');
 const session = require('express-session')
-const {board,information, user, sequelize, qanda,comment} = require('../../models');
+const { board, information, user, sequelize, qanda, comment } = require('../../models');
 
 
 const kakao = {
@@ -63,43 +64,43 @@ let kakao_check = async (req, res) => {
         ...token.data,
         ...user.data,
     }
-    session.authData = {["kakao"] :authData};
+    session.authData = { ["kakao"]: authData };
     res.redirect('/');
 }
 
-let info = (req,res)=>{
-    const {authData} = session;
+let info = (req, res) => {
+    const { authData } = session;
     const provider = Object.keys(authData)[0]
-    
+
     let userinfo = {}
-    switch (provider){
-        case "kakao" :
+    switch (provider) {
+        case "kakao":
             userinfo = {
-                userid:authData[provider].properties.nickname,
+                userid: authData[provider].properties.nickname,
             }
             break
     }
-    let {nickname} = session.authData.kakao.properties;
-    res.render('./main/info.html',{
-        nickname : userinfo.userid
+    let { nickname } = session.authData.kakao.properties;
+    res.render('./main/info.html', {
+        nickname: userinfo.userid
     })
 }
-let kakao_logout = async (req,res)=>{
-    const {access_token} = session.authData.kakao;
+let kakao_logout = async (req, res) => {
+    const { access_token } = session.authData.kakao;
     let unlink;
-    try{
+    try {
         unlink = await axios({
-            mehtod : 'POST',
-            url : 'https://kapi.kakao.com/v1/user/unlink',
-            headers:{
-                Authorization:`Bearer ${access_token}`
+            mehtod: 'POST',
+            url: 'https://kapi.kakao.com/v1/user/unlink',
+            headers: {
+                Authorization: `Bearer ${access_token}`
             }
         })
-    }catch(err){
+    } catch (err) {
         res.json(err.data)
     }
-    const {id} = unlink.data;
-    if(session.authData["kakao"].id==id){
+    const { id } = unlink.data;
+    if (session.authData["kakao"].id == id) {
         delete session.authData;
     }
 
@@ -124,18 +125,34 @@ let login = (req, res) => {
 }
 
 let board_list = async (req, res) => {
-    let result = await board.findAll({});
+    let result = await board.findAll({ raw: true });
+    //    let arr = []
+    //       result.forEach(v => {
+    //          arr.push(v.dataValues.write_date);
+    //      });
+    //      console.log(result);
+    //      console.log(arr);
+    //      let dt = moment(arr).format('YYYY년 MM월 DD일')
+    //      console.log(dt);
+    let arr = result.map(v => {
+        return {
+            ...v,
+            write_date: moment(v.write_date).format('YYYY년 MM월 DD일 hh:mm a')
+        }
+    })
     res.render('./main/board/list.html', {
-        result
+        result: arr
     })
 }
 let board_write = (req, res) => {
     res.render('./main/board/write.html')
 }
 let board_write_send = async (req, res) => {
-    let { title, userid, content, board_image, write_type } = req.body;
+    let { title, userid, content, type } = req.body;
+    let board_image = req.file == undefined ? '' : `/uploads/board/${req.file.filename}`;
+    console.log(board_image);
     let write = await board.create({
-        title, userid, content, board_image, write_type,
+        title, userid, content, board_image, type,
         hit: 0,
     })
     res.redirect('/board')
@@ -145,50 +162,55 @@ let board_view = async (req, res) => {
     let result = await board.findAll({
         where: { idx }
     })
+   
     let view = result[0].dataValues;
     let hitNum = await board.update({
         hit: view.hit + 1
     }, { where: { idx } });
-    let see =  await comment.findAll({
-        where : {idx}
+    let see = await comment.findAll({
+        where: { idx }
     });
+    let dt = moment(view.write_date).format('YYYY년 MM월 DD일 hh:mm a')
     let userid;
-    if(session.authData.kakao != null){
-     userid = session.authData.kakao.properties.nickname;
-    }else if(session.authData.local != null ){
+    if (session.authData.kakao != null) {
+        userid = session.authData.kakao.properties.nickname;
+    } else if (session.authData.local != null) {
         userid = session.authData.local.userid
-    }else if(session.authData.google != null ){
+    } else if (session.authData.google != null) {
         userid = session.authData.google.userid
-    }else if(session.authData.fecebook != null){
+    } else if (session.authData.fecebook != null) {
         userid = session.authData.fecebook.userid
     }
-    
+
     res.render('./main/board/view.html', {
-        view,idx,userid,see
+        view, idx, userid, see,dt
     })
 }
 
-let comment_send = async (req,res)=>{
-    let {userid,content,idx} = req.body;
+let comment_send = async (req, res) => {
+    let { userid, content, idx } = req.body;
     let result = await comment.create({
-        userid,content,idx
+        userid, content, idx
     })
     res.redirect(`/board/view?idx=${idx}`);
 }
-let comment_delete = async (req,res)=>{
-    let {id,idx} = req.query;
+let comment_delete = async (req, res) => {
+    let { id, idx } = req.query;
     let result = await comment.destroy({
-        where:{id}
+        where: { id }
     })
     res.redirect(`/board/view?idx=${idx}`)
 }
 
-let comment_modify = async (req,res)=>{
-    let {content,id} = req.body;
+let comment_modify = async (req, res) => {
+    let { id,content } = req.body;
+    console.log(id);
+    console.log(content);
     let result = await comment.update({
         content
-    },{where:{id}});
-    res.redirect('/borad');
+    }, { where: { id } });
+    console.log('result:'+result);
+    //res.redirect('/board');
 }
 
 let board_modify = async (req, res) => {
@@ -202,9 +224,13 @@ let board_modify = async (req, res) => {
     })
 }
 let board_modify_send = async (req, res) => {
-    let { title, userid, content, board_image, write_type, idx } = req.body;
+    let { title, userid, content, type, idx,board_image1} = req.body;
+    let board_image = req.file == undefined ? board_image1 : `/uploads/board/${req.file.filename}`;
+    console.log('modify : '+ board_image);
+    console.log('dkdk'+board_image);
+    console.log('aaa');
     let modify = await board.update({
-        title, userid, content, board_image, write_type
+        title, userid, content, board_image, type
     }, { where: { idx } });
     res.redirect(`/board/view?idx=${idx}`);
 }
@@ -263,7 +289,7 @@ let qanda_delete = async (req, res) => {
     let result = await qanda.destroy({ where: { id } });
     res.redirect('/qanda/list');
 }
-let test = (req,res) => {
+let test = (req, res) => {
     res.render('./main/test.html');
 }
 

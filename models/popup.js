@@ -3,12 +3,16 @@ const moment = require('moment');
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('popup', {
-    content: {
+    image: {
       type: DataTypes.STRING(100),
       allowNull: false
     },
     writer:{
       type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    visibility:{
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     date:{

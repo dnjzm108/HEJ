@@ -35,7 +35,12 @@ let info = async (req, res) => {
     } else {
         gender = "여자"
     };
+<<<<<<< HEAD
     res.render('./third/user/info.html', {
+=======
+    console.log(result.userdt);
+    let obj = {
+>>>>>>> 4591218cdbf0b661a9d77d6a506f541b5c107f75
         id: result.id,
         userid: result.userid,
         userpw: result.userpw,

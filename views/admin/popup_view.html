@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFOVIEW</title>
+    <link rel="stylesheet" href="/css/info/index.css">
+    <link rel="stylesheet" href="/css/info/view.css">
+</head>
+
+<body>
+    <div id="wrap" class="w100">
+        <div id="info_header" class="center">
+            <h1>POPUP</h1>
+        </div>
+        <div id="content_header" class="center">
+            <ul>
+                <li>{{popupList.writer}}</li>
+                <li>{{popupDate}}</li>
+            </ul>
+        </div>
+
+        <div id="content_wrap" class="center">
+            <img style="width: 400px; height: 200px;" src="{{popupImage}}">
+        </div>
+
+        <div id="footer" class="center">
+            <a href="/admin/popup">MENU</a>
+            <a href="/admin/delete?id={{popupList.id}}&table=popup">DELETE</a>
+            <a href="/admin/modify?id={{popupList.id}}&table=popup">MODIFY</a>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
