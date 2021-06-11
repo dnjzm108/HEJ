@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/main/list.css">
 </head>
+
 <body>
+    <div id="wrap">
+        <h2 id="subject"> Q&A list</h2>
+        <div id="header">
+            <a href="/qanda/write">글 쓰러가기</a>
+            <table>
+                <tr>
+                    <td>작성자</td>
+                    <td>성별</td>
+                    <td>나이</td>
+                    <td>이메일</td>
+                    <td>번호</td>
+                    <td>내용</td>
+                </tr>
+                {% for item in result %}
+                <tr>
+                    <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.write_name}}</a></td>
+                    <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.gender}}</a></td>
+                    <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.age}}</a></td>
+                    <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.email}}</a></td>
+                    <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.pone_number}}</a></td>
+                    <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.content}}</a></td>
+                </tr>
+                {% endfor %}
 
-    Q&A list
-<table>
-    <tr>
-        <td>작성자</td>
-        <td>성별</td>
-        <td>나이</td>
-        <td>이메일</td>
-        <td>번호</td>
-        <td>내용</td>
-    </tr>
-    {% for item in result %}
-    <tr>
-        <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.write_name}}</a></td>
-        <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.gender}}</a></td>
-        <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.age}}</a></td>
-        <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.email}}</a></td>
-        <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.pone_number}}</a></td>
-        <td><a href="/qanda/view?id={{item.dataValues.id}}">{{item.dataValues.content}}</a></td>
-    </tr>
-    {% endfor %}
-
-    <a href="/qanda/write">글 쓰러가기</a>
-</table>
-
+            </table>
+        </div>
+    </div>
 
 </body>
+
 </html>

@@ -33,7 +33,7 @@ let info = async (req, res) => {
     } else {
         gender = "여자"
     };
-    console.log(gender);
+    console.log(result.userdt);
     let obj = {
         id: result.id,
         userid: result.userid,

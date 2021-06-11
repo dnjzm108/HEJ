@@ -13,7 +13,7 @@
     수정하기
     <div id="wrap">
         <div id="header">
-            <form action="/board/modify" method="POST">
+            <form action="/board/modify" method="POST" enctype="multipart/form-data">
                 <span>제목</span>
                 </br>
                 <input class="w500" type="text" name="title" id="title" value="{{modify.title}}">
@@ -24,11 +24,13 @@
                 </br>
                 <span>이미지</span>
                 </br>
-                <input class="w500" type="file" name="board_image" id="board_image" value="{{modify.board_image}}">
+                <input type="hidden" name="board_image1" value="{{modify.board_image}}">
+                <img src="{{modify.board_image}}" style="width: 150px; height: 150px;">
+                <input type="file" name="board_image" id="board_image">
                 </br>
                 <span>타입</span>
                 </br>
-                <input type="text" name="write_type" id="write_type" value="{{modify.write_type}}">
+                Q&A<input type="radio" name="type" value="Q&A">게시판<input type="radio" name="type" value="게시판">공지사항<input type="radio" name="type" value="공지사항"></br>
                 </br>
                 <span>내용</span>
                 </br>
