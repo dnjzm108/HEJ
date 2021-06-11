@@ -49,8 +49,8 @@
                     {% for item in popupList %}
                     <tr>
                         <td>{{item.id}}</td>
-                        <td><img id="infoImage" src="{{item.image}}"></td>
-                        <td><a style="color: #fff;" href="/admin/view?id={{item.id}}&table=education">{{item.title}}</a></td>
+                        <td><a style="color: #fff;" href="/admin/popup_view?id={{item.id}}&table=popup"><img id="infoImage" src="{{item.image}}"></a></td>
+                        <td>{{item.visibility}}</td>
                         <td>writer</td>
                         <td>{{item.date}}</td>
                     </tr>

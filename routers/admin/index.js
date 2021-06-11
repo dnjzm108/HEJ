@@ -16,9 +16,11 @@ const upload = multer({
     }),
 });
 
-router.get('/popup_upload',upload.single('image'),controller.popup_upload);
+router.get('/popup_view',controller.popup_view);
+router.post('/popup_upload_success',upload.single('image'),controller.popup_upload_success);
+router.get('/popup_upload',controller.popup_upload);
 router.use('/popup',controller.popup);
-router.use('/education',controller.education);
+router.use('/education',controller.educationT);
 router.use('/hired/:localUrl',controller.hired);
 router.use('/hired',controller.hired);
 router.use('/information/:localUrl',controller.Information);

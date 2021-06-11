@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,8 +11,7 @@
 
 <body>
     <h1>UPLOAD</h1>
-    <form action="/admin/upload_success" id="info_form" method="POST" enctype="multipart/form-data">
-
+    <form action="/admin/popup_upload_success" id="info_form" method="POST" enctype="multipart/form-data">
         <input type="text" name="writer" id="writer" value="writer">
 
         <div id="img_input" class="input">
@@ -19,14 +19,11 @@
             <input type="file" name="image" id="image"><br />
         </div>
 
-        <div id="title_input" class="input">
-            <label for="title">TITLE</label>
-            <input type="text" name="title" id="title"><br />
-        </div>
-
         <div id="visibility" class="input">
-            <label for=""
-            <input type="radio" name="visibility" value="1">
+            <label for="visible">VISIBLE</label>
+            <input id="visible" type="radio" class="visibility" name="visibility" value="1">
+            <label for="invisible">INVISIBLE</label>
+            <input id="invisible" type="radio" class="visibility" name="visibility" value="0">
         </div>
 
         <input type="button" id="info_submit" value="UPLOAD">
@@ -34,16 +31,23 @@
     <script type="text/javascript">
         const info_submit = document.querySelector('#info_submit');
         const info_form = document.querySelector('#info_form');
-    
-        info_submit.addEventListener('click',()=>{
-        let texttitle = document.querySelector('#title').value;
-        let textcontent = document.querySelector('#content').value;
-            if(texttitle == ''){
-                alert('Enter the subject.');
+        const chk_radio = document.getElementsByName('visibility');
+
+
+        info_submit.addEventListener('click', () => {
+            let image = document.querySelector('#image').value;
+            if (image == '') {
+                alert('INSERT IMAGE')
                 return
             }
-            if(textcontent == ''){
-                alert('Enter the content');
+            let sel_type = null;
+            for (var i = 0; i < chk_radio.length; i++) {
+                if (chk_radio[i].checked == true) {
+                    sel_type = chk_radio[i].value;
+                }
+            }
+            if (sel_type == null) {
+                alert("서비스유형을 선택하세요.");
                 return
             }
             info_form.submit();

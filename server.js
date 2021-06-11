@@ -36,6 +36,6 @@ nunjucks.configure('views',{
 
 app.use('/',router);
 
-app.listen(3001,()=>{
+app.listen(3000,()=>{
     console.log('server start port:3000');
 })

@@ -31,9 +31,14 @@
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            let content = document.querySelector('#content');
-            let pre = document.querySelector('#pre');
-            pre.innerHTML = `${content.value}`
+            let idArr= document.querySelector('#idArr').value;
+            idArr = idArr.split(','); 
+            idArr.splice(idArr.length-1,1); 
+            idArr.forEach(v=>{
+                let content = document.querySelector('#content'+v);
+                let pre = document.querySelector('#pre'+v);
+                pre.innerHTML = `${content.value}`
+            })
         });
 
     </script>
@@ -55,16 +60,22 @@
                 </div>
             </div>
             <div id="content_wrap">
-                {% for item in range(infoid.length) %}
-                <h2>{{infotitle[item]}}</h2>
-                <pre id="pre"></pre>
-                <textarea id="content" style="display: none;">{{infocontent[item]}}</textarea>
+                <input type="hidden" value="{{idArr}}" id="idArr">
+                {% for item in infoList %}
+                <h2>{{item.title}}</h2>
+                <pre id="pre{{item.id}}"></pre>
+                <textarea id="content{{item.id}}" style="display: none;">{{item.content}}</textarea>
                 {% endfor %}
             </div>
             <a href="/admin/upload?title=information">WRITE</a>
             <a class="main_btn btn" href="/admin/main">MAIN</a>
         </div>
     </div>
+    <!-- <script>
+        let content = document.querySelector('#content');
+        let pre = document.querySelector('#pre');
+        pre.innerHTML = `${content.value}`
+    </script> -->
 </body>
 
 </html>

@@ -1,6 +1,7 @@
-const { information, admin, hired: hiredTd, education: educationTd, popup:popupTd } = require('../../models/index');
+const { information, admin, hired: hiredTd, education, popup:popupTd } = require('../../models/index');
 const moment = require('moment');
 const ctoken = require('../../jwt');
+const search = require('../../serach');
 
 
 /*========================ADMIN MAIN PAGE========================*/
@@ -41,21 +42,9 @@ let upload = (req, res) => {
 };
 
 let upload_success = async (req, res) => {
-    let { localUrl, title, content, writer, type } = req.body;
-    // let image = req.file == undefined ? '' : req.file.path;
-    console.log(localUrl)
+    let { localUrl, title, content, writer, type, visibility } = req.body;
 
-    switch (localUrl) {
-        case 'information':
-            await information.create({ title, content, writer, type });
-            break;
-        case 'hired':
-            await hiredTd.create({ title, content, writer, type });
-            break;
-        case 'education':
-            await educationTd.create({ title, content, writer, type });
-            break;
-    }
+    await search[localUrl].create({ title, content, writer, type });
     if(type != null){
         res.redirect(`/admin/${localUrl}/${type}`);
     }
@@ -67,21 +56,8 @@ let upload_success = async (req, res) => {
 
 let view = async (req, res) => {
     let { id, table } = req.query;
-
-    let infoView
-    switch(table){
-        case 'education':
-            infoView = await educationTd.findOne({where:{id}});
-        break;
-        case 'hired':
-            infoView = await hiredTd.findOne({where:{id}});
-        break;
-        case 'information':
-            infoView = await information.findOne({where:{id}});
-        break;
-    }
+    let infoView = await search[table].findOne({where:{id}})
     let infoList = infoView.dataValues;
-    console.log(infoList)
     let infodate = moment(infoList.date).format("MMM Do YY");
     res.render('./admin/view.html', {
         infoList,
@@ -91,47 +67,26 @@ let view = async (req, res) => {
 
 let postDel = async (req, res) => {
     let {id,table} = req.query;
-    switch(table){
-        case 'information':
-            await information.destroy({where: {id}})
-        case 'education':
-            await educationTd.destroy({where: {id}})
-        break;
-        case 'hired':
-            await hiredTd.destroy({where: {id}})
-        break;
-    }
+    await search[table].destroy({where:{id}})
     res.redirect(`/admin/${table}`);
 };
 
 let modify = async (req, res) => {
     let {id , table } = req.query;
 
-    let modify_result
-    switch(table){
-        case 'education':
-            modify_result = await educationTd.findOne({where:{id}});
-        break;
-        case 'hired':
-            modify_result = await hiredTd.findOne({where:{id}});
-        break;
-    }
+    let modify_result = await search[table].findOne({where:{id}});
     let moList = modify_result.dataValues;
     res.render('./admin/modify.html', {
         moList,
+        table,
     });
 };
 
+/* 고쳐야함 */
 let modify_success = async (req, res) => {
-    let { title, content, modifyId } = req.body;
-    try {
-        let infolist = await information.update({ title, content }, {
-            where: { id: modifyId }
-        })
-    } catch (e) {
-        console.log(e)
-    }
-    res.redirect(`/admin/view?id=${modifyId}`);
+    let { title, content, modifyId ,table } = req.body;
+    await search[table].update({title, content},{where:{id:modifyId}});
+    res.redirect(`/admin/view?id=${modifyId}&table=${table}`);
 };
 
 
@@ -140,31 +95,46 @@ let modify_success = async (req, res) => {
 let Information = async (req, res) => {
     //let localUrl = req.originalUrl.replace('/admin/information/', '');
     let { localUrl } = req.params;
+    // let infoid = [];
+    // let infotitle = [];
+    // let infodate = [];
+    // let infocontent = [];
+    // let infoRealId = [];
+    // let resultsall = await information.findAll({
+    //     where: { type: `${localUrl}` }
+    // });
+    // console.log(resultsall)
+    // resultsall.forEach(ele => {
+    //     resultsall--;
+    //     infoid.push(resultsall);
+    //     infotitle.push(ele.dataValues.title);
+    //     infodate.push(moment(ele.dataValues.date).format("MMM Do YY"));
+    //     infocontent.push(ele.dataValues.content);
+    //     infoRealId.push(ele.dataValues.id);
+    // });
+    // res.render('./admin/information.html', {
+    //     infoid,
+    //     infotitle,
+    //     infodate,
+    //     infocontent,
+    //     infoRealId,
+    //     localUrl,
+    // });
 
-    let infoid = [];
-    let infotitle = [];
-    let infodate = [];
-    let infocontent = [];
-    let infoRealId = [];
-    let resultsall = await information.findAll({
-        where: { type: `${localUrl}` }
+    let resultsall = await search['information'].findAll({where:{type:`${localUrl}`},raw:true});
+    
+    let infoList = resultsall.map(v=>{
+        return {...v,
+            date:moment(v.date).format("MMM Do YY"),
+            visibility:v.visibility == 0 ? "invisible" : "visible"
+        }
     });
-    resultsall.forEach(ele => {
-        resultsall--;
-        infoid.push(resultsall);
-        infotitle.push(ele.dataValues.title);
-        infodate.push(moment(ele.dataValues.date).format("MMM Do YY"));
-        infocontent.push(ele.dataValues.content);
-        infoRealId.push(ele.dataValues.id);
-    });
-    res.render('./admin/information.html', {
-        infoid,
-        infotitle,
-        infodate,
-        infocontent,
-        infoRealId,
-        localUrl,
-    });
+
+    let idArr =''; 
+    infoList.forEach(v=>{
+        idArr+=v.id+','
+    })
+    res.render('./admin/information.html',{infoList, idArr})
 }
 
 /*============================== 취업정보 =============================== */
@@ -217,17 +187,17 @@ let hired = async (req, res) => {
 };
 
 /*======================== 교육과정 ============================*/
-let education = async (req, res) => {
+let educationT = async (req, res) => {
     let page = (req.query.id == undefined) ? 1 : req.query.id;
     let offset = (req.query.id == undefined) ? 0 : 9 * (page - 1);
     let page_hired = [];
-    let resultsall = await educationTd.findAll({})
+    let resultsall = await education.findAll({})
     let totalrecord = resultsall.length;
     let total_page = Math.ceil(totalrecord / 9);
     for (i = 1; i <= total_page; i++) {
         page_hired.push(i);
     };
-    let result = await educationTd.findAll({
+    let result = await education.findAll({
         raw:true,
         limit: 9,
         order: [['id', 'DESC']],
@@ -241,11 +211,9 @@ let education = async (req, res) => {
     })
     let edList = result.map(v => {
         return {...v,
-            // image:v.image.replace('public',''),
             date:moment(v.date).format("MMM Do YY")
         }
     });
-    console.log(edList)
     res.render('./admin/education.html', {
         edList,
         pagination:page_hired,
@@ -257,17 +225,37 @@ let popup = async(req,res)=>{
     let result = await popupTd.findAll({raw:true});
     let popupList = result.map(v=>{
         return {...v,
-            // image:v.image.replace('public',''),
-            date:moment(v.date).format("MMM Do YY")}
-    });
+            image:v.image.replace('public',''),
+            date:moment(v.date).format("MMM Do YY"),
+            visibility:v.visibility == 0 ? "invisible" : "visible"
+        }
+    })
     res.render('./admin/popup.html',{
         popupList
     })
 };
 
-let popup_upload = async (req,res)=>{
-    let { image } = req.body;
-    let result = await popupTd.create({})
+let popup_upload = (req,res)=>{
+    res.render('./admin/popup_upload')
+}
+
+let popup_upload_success = async(req,res)=>{
+    let { writer, visibility } = req.body;
+    let image = req.file == undefined ? '' : req.file.path;
+    let result = await popupTd.create({image,writer,visibility});
+    res.redirect('/admin/popup');
+}
+
+let popup_view = async (req,res)=>{
+    let {id} = req.query;
+    let popupView = await popupTd.findOne({
+        where:{id}
+    })
+    let popupList = popupView.dataValues;
+    let popupDate = moment(popupList.date).format('MMM Do YY');
+    let popupImage = popupList.image.replace('public','');
+    console.log(popupImage)
+    res.render('./admin/popup_view.html',{popupList,popupDate,popupImage})
 }
 
 module.exports = {
@@ -282,7 +270,9 @@ module.exports = {
     login_success,
     Information,
     hired,
-    education,
+    educationT,
     popup,
     popup_upload,
+    popup_upload_success,
+    popup_view,
 }
