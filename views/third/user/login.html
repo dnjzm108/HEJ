@@ -1,44 +1,153 @@
-{% include "../layout/top.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-<table>
-    <form action="/user/login_check" method="post">
-        <table id="login_table">
-            <tr class="">
-                <td>아이디:</td>
-                <td>
-                    <input type="text" id="userid" class="" name="userid">
-                </td>
-            </tr>
-            <tr class="">
-                <td>비밀번호:</td>
-                <td>
-                    <input type="password" id="userpw" class="" name="userpw">
-                </td>
-            </tr>
-        </table>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    <meta name="google-signin-client_id"
+        content="271562730452-rufsjg41rp8hhbno7686je73714i5dpu.apps.googleusercontent.com">
+    <link rel="stylesheet" href="/css/third/login.css">
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v10.0&appId=4064419383640755"
+        nonce="SiOBIhLG"></script>
+    <script type="text/javascript">
 
-        <input type="submit" class="join_button" value="로그인">
-        <a href="/user/join">회원가입</a>
-        <a href="/">메인으로가기</a>
-    </form>
 
-    {% if flag == '0' %}
+        async function  onSignIn(googleUser) {
+            let profile = googleUser.getBasicProfile();
+            console.log(profile);
+            let userid = await profile.getId()
+            let username = profile.getName()
+            console.log('image url:' + profile.getImageUrl());
+            console.log('email:' + profile.getEmail());
+        
+            google22(userid,username)  
+    
+          
+        }
+        
+        function signOut() {
+            let auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out');
+            })
+            auth2.disconnect();
+            google_out()
+        }
+        
+        async function google22(id,name){
+            let options = {method: "get"}
+            let url =`google?userid=${id}&username=${name}`
+     let result = await fetch(url, options);
+        }
+        async function google_out(){
+            let options = {method: "get"}
+            let url =`google_out`
+     let result = await fetch(url, options);
+        }
+    </script>
+</head>
+<div id="wrap">
+    <div id="box">
+        <table>
+            <form action="/user/login_check" method="post">
+                <table id="login_table">
+                    <tr class="">
+                        <td>아이디:</td>
+                        <td>
+                            <input type="text" id="userid" class="" name="userid" required>
+                        </td>
+                    </tr>
+                    <tr class="">
+                        <td>비밀번호:</td>
+                        <td>
+                            <input type="password" id="userpw" class="" name="userpw" required>
+                        </td>
+                    </tr>
+                </table>
+
+                <input id="local_in" type="submit" class="join_button" value="로그인">
+                <a id="join_in" href="/user/join">회원가입</a>
+            </form>
+
+            <!-- google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
+client id : 271562730452-rufsjg41rp8hhbno7686je73714i5dpu.apps.googleusercontent.com
+client password : wMc8se_eBobJrH2EN-r3JF6z -->
+
+            <a id="kakao_in" class="kakao" href="/auth/kakao">카카오 로그인</a>
+            <a id="kakao out" class="kakao" href="/auth/kakao/unlink">카카오 로그아웃</a>
+
+            <div id="google_in">
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </div>
+            <a href="#" id="google_out" onclick="signOut()">google out</a>
+
+            <ul id="face_in">
+                <li onclick="fnFbCustomLogin()">
+                    <a href="javascript:void(0)">
+                        <span id="face">페이스북 로그인</span>
+                    </a>
+                </li>
+            </ul>
+
+            <a href="/kakao/info">내정보 보기</a>
+            <a href="/test">메인으로</a>
+
+    </div>
+    <div>
+        {{msg}}
+    </div>
+
+</div>
+<script>
+    function statusChangeCallback(res) {
+        statusChangeCallback(response);
+    }
+
+    function fnFbCustomLogin() {
+        FB.login(function (response) {
+            if (response.status === 'connected') {
+                FB.api('/me', 'get', { fields: 'name,email' }, function (r) {
+                    console.log(r);
+                })
+            } else if (response.status === 'not_authorized') {
+                // 사람은 Facebook에 로그인했지만 앱에는 로그인하지 않았습니다.
+                alert('앱에 로그인해야 이용가능한 기능입니다.');
+            } else {
+                // 그 사람은 Facebook에 로그인하지 않았으므로이 앱에 로그인했는지 여부는 확실하지 않습니다.
+                alert('페이스북에 로그인해야 이용가능한 기능입니다.');
+            }
+        }, { scope: 'public_profile,email' });
+    }
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '4064419383640755', // 내 앱 ID를 입력한다.
+            cookie: true,
+            xfbml: true,
+            version: 'v10.0'
+        });
+        FB.AppEvents.logPageView();
+    };
+/*
+                        instagram id: 480919806523168
+                        secret code : 06c4ae9c966ae9c13159d6fa35c3fbe1
+                        인증코드 :https://localhost:3000/?code=AQDyUG6hwsEOdJpy9iPfeEmFWJXXlzi_2KvkvWjW2UeKuBOmYd2R8f-eSxdZjT1hfzolXZKABtbtwELoinlFH8asI79OINoSMgxOdJ6tMo3gEJlduwybiaiQEqN8XqfZDNxMPcJKbdWRV59a48Eblmha94xbRxuo_FOzB02e_m5wuCGPxCusEHGSpYCdU6X4V5tAeHwD7R6Eu_B2z7HkuX8I0F7LFaTNl6aAo9KTqyngww#_
+                        토큰 : IGQVJVel91cjlnczFONEhFSlNZAUUd6cjNJZAUM3SndUbUNBSXEyWGF3UVczZAzlUMExHQmZASQlFpajVudjJWbG41dzRpY1dIbUZAXLS1qWE5yYmRMUUNDSy0xMUUtUWktUWE4WnBhR2RvUXEycmJFQ2FOWQZDZD
+                        */
+</script>
+{% if flag == '0' %}
 <script type="text/javascript">
 
 
     alert('아이디와 패스워드를 확인해주세요.')
     const id = document.querySelector('#userid');
     const pw = document.querySelector('#userpw');
-    id.setAttribute('style','background:lightsalmon');
-    pw.setAttribute('style','background:lightsalmon');
-
-    id.addEventListener('focus',()=>{
-        id.setAttribute('style','background:#fff;');
-    })
-    pw.addEventListener('focus',()=>{
-        pw.setAttribute('style','background:#fff;');
-    })
+    id.focus();
 </script>
 {% endif %}
 
-    {% include "../layout/bottom.html" %}
+{% include "../layout/bottom.html" %}

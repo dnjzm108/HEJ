@@ -1,32 +1,38 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('user', {
+    authority_level: {
+      type: DataTypes.INTEGER,
+      allowNull:false,
+      defaultValue:1
+    },
     userid: {
-      type: DataTypes.STRING(100),
-      allowNull: false
+      type: DataTypes.STRING(30),
+      allowNull: false,
+      unique:true,
     },
     userpw: {
       type: DataTypes.STRING(100),
       allowNull: false
     },
     user_name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(10),
       allowNull: false
     },
     gender: {
-      type: DataTypes.STRING(100),
-      allowNull: true
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     },
     user_email: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     user_address: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     user_number: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(12),
       allowNull: false
     },
     userimage:{
@@ -34,7 +40,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull:true,
     },
     user_birth: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(10),
       allowNull: false
     },
     userdt:{

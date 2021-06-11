@@ -9,7 +9,9 @@ const mysql2 = require('mysql2');
 const mysql = require('mysql');
 const {board,information,user,sequelize} = require('./models');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
+app.use(cors());
 app.use(session({
     secret:'aa',
     resave:true,
@@ -19,7 +21,7 @@ app.use(session({
 app.use(express.static('public'));
 app.use(cookieParser());
 
-sequelize.sync({force:false})
+sequelize.sync({force:true})
 .then(()=>{
     console.log('접속이 완료 되었습니다');
 })

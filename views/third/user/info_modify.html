@@ -2,7 +2,7 @@
 
 
 <h1>내 정보 변경</h1>
-<form id="info_modify" method="post" action="/user/info_after_modify">
+<form id="info_modify" method="post" action="/user/info_after_modify" enctype="multipart/form-data">
     <table>
         <tr>
             <td style="display: none">번호</td>
@@ -17,6 +17,7 @@
             <td><input type="password" id="pwd1" class="" name="userpw" value="{{userpw}}" minlength="6"></td>
             <td id="pwd1_msg"> </td>
         </tr>
+
         <tr class="">
             <td>비밀번호 확인:</td>
             <td><input type="password" id="pwd2" class="" name="userpw_check" value="{{userpw}}" minlength="6"></td>
@@ -31,7 +32,9 @@
             <td>{{user_birth}}</td>
         <tr class="">
             <td>프로필 이미지: </td>
-            <td><img id="userimage" src="http://localhost:3000/{{userimage}}"></td>
+            <input type="hidden" name="userimage1" value="{{userimage}}">
+            <td><img id="userimage" src="{{userimage}}"></td>
+            <td><input type="file" name="userimage"></td>
         </tr>
         </tr>
         <tr class="">
@@ -50,7 +53,24 @@
         </tr>
         <tr class="">
             <td>주소:</td>
-            <td><input type="text" name="user_address" class="" value="{{user_address}}"></td>
+            <td><input type="text" name="user_address" class="" size= "60" value="{{user_address}}" ></td>
+        </tr>
+        <tr>
+            <td>주소변경:</td>
+            <td><input type="text" id="addressInput" class="" name="addressInput" placeholder="주소를 입력해주세요." >
+                <!-- <button id="addressSearch">주소검색하기</button> -->
+                <p id= "addressSearch" >주소검색하기</p>
+            </td>
+        </tr>
+        <tr  class=""> 
+            <td>
+                <ul id="addressList"></ul>
+            </td>
+        </tr>
+        <tr  class="">
+            <td><input type="text" name="user_address1" id="addressNumber" size="10" placeholder="우편번호"></td>
+            <td><input type="text" name="user_address2" id="address1" size="40" placeholder="주소"></td>
+            <td><input type="text" name="user_address3" id="address2" placeholder="상세주소"></td>
         </tr>
         <tr class="">
             <td>가입한 날짜:</td>
@@ -61,4 +81,82 @@
     <a href="/user/info">취소</a>
 
 </form>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', init);
+    function init() {
+        const searchBtn = document.querySelector('#addressSearch');
+        searchBtn.addEventListener('click', getAddress);
+    }
+
+    async function getAddress() {
+        const addressInput = document.querySelector('#addressInput');
+        const addressList = document.querySelector('#addressList');
+        if (addressInput.value.length == 0) {
+            alert('주소를 입력해주세요.');
+            addressInput.focus();
+            return false;
+        } //주소창 결과값이 아무것도 입력되지 않았을때 얼럴트창이뜨고 커서가 주소창으로 옴겨짐.
+
+        let options = {
+            method: 'GET',
+            headers: {
+                "Authorization": "KakaoAK 82ff941469e77067f4ed407f2d33553d"
+            }
+        }
+        let result = await fetch('https://dapi.kakao.com/v2/local/search/address.json?analyze_type=similar&page=1&size=10&query=' + addressInput.value, options)
+        let json = await result.json();
+        console.log(json)
+
+        addressList.innerHTML = '';
+        if (json.documents.length == 0) {
+            addressList.innerHTML = '<li>결과값이 존재하지 않습니다.</li>';
+            return false;
+        }
+
+        json.documents.forEach(v => {
+            console.log(v.address_name);
+            const li = document.createElement('li')
+            li.innerHTML = v.address_name;
+            li.dataset.x = v.x;
+            li.dataset.y = v.y; //첫번째 인자값의 요소에 있는 y를 dataset y 값에 넣겟다.
+            li.addEventListener('click', getAddressDetail);
+            addressList.appendChild(li);
+        })
+    }
+
+    async function getAddressDetail() {
+        let x = this.dataset.x;
+        let y = this.dataset.y;
+
+        let options = {
+            method: 'GET',
+            headers: {
+                "Authorization": "KakaoAK 82ff941469e77067f4ed407f2d33553d"
+            }
+        }
+
+        //https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&y=37.5397559555383&x=127.123313958545
+        let url = `https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&x=${x}&y=${y}`
+        let result = await fetch(url, options) // 요청의 결과값만 반환해줌
+        let json = await result.json();     // 응답의 body영역을 읽기위해 body영역의 타입이 application/json 타입으로 오기떄문
+
+        console.log(json);
+
+        if (json.documents[0].road_address == null) {
+            let address_name = json.documents[0].address.address_name;
+            document.querySelector('#address1').value = `${address_name} `;
+
+
+        } else {
+            let address_name = json.documents[0].road_address.address_name;
+            let buliding_name = json.documents[0].road_address.building_name;
+            let zone_no = json.documents[0].road_address.zone_no;
+
+            document.querySelector('#addressNumber').value = zone_no;
+            document.querySelector('#address1').value = `${address_name} ${buliding_name}`;
+        }
+    }
+</script>
 {% include "../layout/bottom.html" %}

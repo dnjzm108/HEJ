@@ -17,6 +17,11 @@ a{
 #header{
     width: 100vw;
     height: 10wh;
+    text-align: center;
+}
+#header>a{
+    font-weight: bold;
+    color: black;
 }
 #middle{
     width: 100vw;

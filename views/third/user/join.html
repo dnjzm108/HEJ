@@ -9,7 +9,7 @@
         </tr>
         <tr class="">
             <td>아이디:</td>
-            <td><input type="text" id="userid" name="userid" class=""  maxlength="20">
+            <td><input type="text" id="userid" name="userid" class="" maxlength="20">
                 <p id="userid_msg"></p>
             </td>
         </tr>
@@ -25,7 +25,8 @@
         </tr>
         <tr class="">
             <td>성별:</td>
-            <td> 남자<input type="radio" name="gender" id="usergender_M" class="user_gender" value="1" required> 여자<input type="radio" id="usergender_F" name="gender" class="user_gender" value="0"></td>
+            <td> 남자<input type="radio" name="gender" id="usergender_M" class="user_gender" value="1" required> 여자<input
+                    type="radio" id="usergender_F" name="gender" class="user_gender" value="0"></td>
         </tr>
         <tr class="">
             <td>이름:</td>
@@ -33,29 +34,36 @@
         </tr>
         <tr class="">
             <td>생년월일:</td>
-            <td><input type="text" id="user_birth" name="user_birth" class=""  required></td>
+            <td><input type="date" id="user_birth" name="user_birth" class="" required></td>
+        </tr>
+        <tr class="">
+            <td>주소:</td>
+            <td><input type="text" id="addressInput" class="" name="addressInput" placeholder="주소를 입력해주세요." required>
+                <button id="addressSearch">주소검색하기</button>
+            </td>
+        </tr>
+        <tr  class="">
+            <td>
+                <ul id="addressList"></ul>
+            </td>
+        </tr>
+        <tr  class="">
+            <td><input type="text" name="user_address1" id="addressNumber" size="10" placeholder="우편번호"></td>
+            <td><input type="text" name="user_address2" id="address1" size="40" placeholder="주소"></td>
+            <td><input type="text" name="user_address3" id="address2" placeholder="상세주소"></td>
+        </tr>
+        <tr class="">
+            <td>이메일:</td>
+            <td><input type="text" id="user_email" name="user_email" class="" minlength="6" required></td>
+        </tr>
+        <tr class="">
+            <td>프로필 이미지</td>
+            <td><input type="file" id="userimage" class="" name="userimage"></td>
         </tr>
         <tr class="">
             <td>전화번호:</td>
             <td><input type="text" id="user_number" class="" name="user_number" minlength="11" required></td>
             <td id="user_number_msg"></td>
-        </tr>
-        <tr class="">
-            <td>이메일:</td>
-            <td><input type="text" id="user_email" name="user_email" class=""  minlength="6" required></td>
-        </tr>
-        <tr class="">
-            <td>프로필 이미지</td>
-            <td><input type="file" id="userimage" class="" name="userimage" required></td>
-        </tr>
-        <tr class="">
-            <td>주소:</td>
-            <td><input type="text" id="user_address" class="" name="user_address"  minlength="11" required></td>
-           
-        </tr>
-        <tr class="">
-            <td>가입한 날짜:</td>
-            <td>{{userdt}}</td>
         </tr>
     </table>
     <input type="submit" class="" id="login_submit" value="회원가입완료">
@@ -93,15 +101,15 @@
             alert('비밀번호 6자리 이상을 입력해주세요.');
             pwd2.value = '';
             pwd2.setAttribute('style', 'background:#FFC8C8');
-        } else if(user_gender[0].checked && user_gender[1].checked){
+        } else if (user_gender[0].checked && user_gender[1].checked) {
             alert('성별을 선택해주세요.');
         } else if (user_name.value == '') {
             alert('이름을 입력해주세요.');
             user_name.setAttribute('style', 'background:#FFC8C8');
         } else if (user_birth.value == '') {
             alert('생년월일을 입력해주세요.');
-            user_birth.setAttribute('style', 'background:#FFC8C8'); 
-        }else if (user_number.value == '') {
+            user_birth.setAttribute('style', 'background:#FFC8C8');
+        } else if (user_number.value == '') {
             alert('핸드폰번호를 입력해주세요.');
             user_number.setAttribute('style', 'background:#FFC8C8');
         } else if (user_number.value.length < 11) {
@@ -154,6 +162,92 @@
             userid_msg.style.color = 'red'
         }
     }
+
+    // A D D R E S S _ A P I
+    /*
+          https://dapi.kakao.com/v2/local/search/address.json?analyze_type=similar&page=1&size=10&query=
+          headers ->  Authorization: KakaoAK {REST_API_KEY}
+          REST_API_KET : 82ff941469e77067f4ed407f2d33553d
+     
+      */
+    document.addEventListener('DOMContentLoaded', init);
+    function init() {
+        const searchBtn = document.querySelector('#addressSearch');
+        searchBtn.addEventListener('click', getAddress);
+    }
+
+    async function getAddress() {
+       
+        const addressInput = document.querySelector('#addressInput');
+        const addressList = document.querySelector('#addressList');
+        console.log(addressInput.value);
+        if (addressInput.value.length == 0) {
+            alert('주소를 입력해주세요.');
+            addressInput.focus();
+            return false;
+        } //주소창 결과값이 아무것도 입력되지 않았을때 얼럴트창이뜨고 커서가 주소창으로 옴겨짐.
+
+        let options = {
+            method: 'GET',
+            headers: {
+                "Authorization": "KakaoAK 82ff941469e77067f4ed407f2d33553d"
+            }
+        }
+        let result = await fetch('https://dapi.kakao.com/v2/local/search/address.json?analyze_type=similar&page=1&size=10&query=' + addressInput.value, options)
+        let json = await result.json();
+
+        addressList.innerHTML = '';
+        if (json.documents.length == 0) {
+            addressList.innerHTML = '<li>결과값이 존재하지 않습니다.</li>';
+            return false;
+        }
+
+        json.documents.forEach(v => {
+            console.log(v.address_name);
+            const li = document.createElement('li')
+            li.innerHTML = v.address_name;
+            li.dataset.x = v.x;
+            li.dataset.y = v.y; //첫번째 인자값의 요소에 있는 y를 dataset y 값에 넣겟다.
+            li.addEventListener('click', getAddressDetail);
+            addressList.appendChild(li);
+        })
+    }
+
+    async function getAddressDetail() {
+        let x = this.dataset.x;
+        let y = this.dataset.y;
+
+        let options = {
+            method: 'GET',
+            headers: {
+                "Authorization": "KakaoAK 82ff941469e77067f4ed407f2d33553d"
+            }
+        }
+
+        //https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&y=37.5397559555383&x=127.123313958545
+        let url = `https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&x=${x}&y=${y}`
+        let result = await fetch(url, options) // 요청의 결과값만 반환해줌
+        let json = await result.json();     // 응답의 body영역을 읽기위해 body영역의 타입이 application/json 타입으로 오기떄문
+
+        console.log(json);
+
+        if (json.documents[0].road_address == null) {
+            let address_name = json.documents[0].address.address_name;
+            document.querySelector('#address1').value = `${address_name} `;
+
+
+        } else {
+            let address_name = json.documents[0].road_address.address_name;
+            let buliding_name = json.documents[0].road_address.building_name;
+            let zone_no = json.documents[0].road_address.zone_no;
+
+            document.querySelector('#addressNumber').value = zone_no;
+            document.querySelector('#address1').value = `${address_name} ${buliding_name}`;
+
+
+        }
+    }
 </script>
+
 
 {% include "../layout/bottom.html" %}
