@@ -5,6 +5,8 @@ const axios = require('axios');
 const app = express();
 const session = require('express-session');
 const router = require('./routers/index');
+const mysql2 = require('mysql2');
+const mysql = require('mysql');
 const {board,information,user,sequelize} = require('./models');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -28,7 +30,7 @@ sequelize.sync({force:false})
     console.log('접속 에러');
 })
 
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({extended:false,}));
 app.set('view engine','html');
 nunjucks.configure('views',{
     express:app

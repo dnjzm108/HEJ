@@ -1,6 +1,7 @@
-const { information, admin } = require('../../models/index');
+const { information, admin, hired: hiredTd, education, popup:popupTd } = require('../../models/index');
 const moment = require('moment');
 const ctoken = require('../../jwt');
+const search = require('../../serach');
 
 
 /*========================ADMIN MAIN PAGE========================*/
@@ -36,167 +37,226 @@ let login_success = async (req, res) => {
 /*========================WRITE PAGE========================*/
 let upload = (req, res) => {
     let { title } = req.query;
+    console.log(title)
     res.render('./admin/upload.html', { title });
 };
 
 let upload_success = async (req, res) => {
-    let { title, content, writer, type } = req.body;
-    let info_image = req.file == undefined ? '' : req.file.path;
-    let infoResult = await information.create({ title, content, info_image, writer, type });
-    res.redirect('/admin/main');
+    let { localUrl, title, content, writer, type, visibility } = req.body;
+
+    await search[localUrl].create({ title, content, writer, type });
+    if(type != null){
+        res.redirect(`/admin/${localUrl}/${type}`);
+    }
+    res.redirect(`/admin/${localUrl}`)
     /* 각각의 board로 redirect 될 수 있도록 */
 };
 
 /*========================VIEW PAGE========================*/
 
 let view = async (req, res) => {
-    let { id } = req.query;
-    let infoView = await information.findOne({
-        where: {
-            id: id
-        }
-    });
+    let { id, table } = req.query;
+    let infoView = await search[table].findOne({where:{id}})
     let infoList = infoView.dataValues;
     let infodate = moment(infoList.date).format("MMM Do YY");
-    let infoimage = infoList.info_image.replace('public', '');
     res.render('./admin/view.html', {
         infoList,
         infodate,
-        infoimage,
     });
 };
 
 let postDel = async (req, res) => {
-    try {
-        let id = req.query.id;
-        await information.destroy({
-            where: { id: id }
-        })
-        res.redirect('/admin/notice_list');
-    } catch (error) { console.log(error) }
+    let {id,table} = req.query;
+    await search[table].destroy({where:{id}})
+    res.redirect(`/admin/${table}`);
 };
 
 let modify = async (req, res) => {
-    let modify_id = req.query.id;
-    let modify_result = await information.findAll({
-        where: { id: modify_id }
-    })
-    let moList = modify_result[0].dataValues;
+    let {id , table } = req.query;
+
+    let modify_result = await search[table].findOne({where:{id}});
+    let moList = modify_result.dataValues;
     res.render('./admin/modify.html', {
         moList,
+        table,
     });
 };
 
+/* 고쳐야함 */
 let modify_success = async (req, res) => {
-    let { title, content, modifyId } = req.body;
-    try {
-        let infolist = await information.update({ title, content }, {
-            where: { id: modifyId }
-        })
-    } catch (e) {
-        console.log(e)
-    }
-    res.redirect(`/admin/view?id=${modifyId}`);
+    let { title, content, modifyId ,table } = req.body;
+    await search[table].update({title, content},{where:{id:modifyId}});
+    res.redirect(`/admin/view?id=${modifyId}&table=${table}`);
 };
 
 
-
-
-
-
-
+/*========================= 학원소개 ==========================*/
 
 let Information = async (req, res) => {
-    let localUrl = req.originalUrl.replace('/admin/information/', '');
+    //let localUrl = req.originalUrl.replace('/admin/information/', '');
+    let { localUrl } = req.params;
+    // let infoid = [];
+    // let infotitle = [];
+    // let infodate = [];
+    // let infocontent = [];
+    // let infoRealId = [];
+    // let resultsall = await information.findAll({
+    //     where: { type: `${localUrl}` }
+    // });
+    // console.log(resultsall)
+    // resultsall.forEach(ele => {
+    //     resultsall--;
+    //     infoid.push(resultsall);
+    //     infotitle.push(ele.dataValues.title);
+    //     infodate.push(moment(ele.dataValues.date).format("MMM Do YY"));
+    //     infocontent.push(ele.dataValues.content);
+    //     infoRealId.push(ele.dataValues.id);
+    // });
+    // res.render('./admin/information.html', {
+    //     infoid,
+    //     infotitle,
+    //     infodate,
+    //     infocontent,
+    //     infoRealId,
+    //     localUrl,
+    // });
 
-    let arrayimage = []
-    let arrayid = []
-    let arraytitle = []
-    let arraydate = []
-    let arraycontent = []
-    let arrayRealId = []
-    let resultsall = await information.findAll({
-        where: { type: `${localUrl}` }
+    let resultsall = await search['information'].findAll({where:{type:`${localUrl}`},raw:true});
+    
+    let infoList = resultsall.map(v=>{
+        return {...v,
+            date:moment(v.date).format("MMM Do YY"),
+            visibility:v.visibility == 0 ? "invisible" : "visible"
+        }
     });
-    resultsall.forEach(ele => {
-        resultsall--;
-        arrayimage.push(ele.dataValues.info_image.replace('public', ''));
-        arrayid.push(resultsall);
-        arraytitle.push(ele.dataValues.title);
-        arraydate.push(moment(ele.dataValues.date).format("MMM Do YY"));
-        arraycontent.push(ele.dataValues.content);
-        arrayRealId.push(ele.dataValues.id);
-    });
-    res.render('./admin/information.html', {
-        arrayimage,
-        arrayid,
-        arraytitle,
-        arraydate,
-        arraycontent,
-        arrayRealId,
-        localUrl,
-    });
+
+    let idArr =''; 
+    infoList.forEach(v=>{
+        idArr+=v.id+','
+    })
+    res.render('./admin/information.html',{infoList, idArr})
 }
 
-// let notice_list = async (req, res) => {
-//     let page = (req.query.id == undefined) ? 1 : req.query.id;
-//     let offset = (req.query.id == undefined) ? 0 : 9 * (page - 1);
-//     let page_array = [];
+/*============================== 취업정보 =============================== */
 
-//     let resultsall = await information.findAll({
-//         where:{
-//             type:'notice'
-//         }
-//     })
-//         .then((resultall) => {
-//             let totalrecord = resultall.length+1;
-//             return totalrecord;
-//         }).catch((error) => {
-//             console.log(error);
-//         });
+let hired = async (req, res) => {
+    let {localUrl} = req.params;
 
-//     let results = await information.findAll({
-//         limit: 9,
-//         order: [['id', 'DESC']],
-//         offset: offset,
-//         where:{
-//             type:'notice'
-//         }
-//     }).then((result) => {
+    let page = (req.query.id == undefined) ? 1 : req.query.id;
+    let offset = (req.query.id == undefined) ? 0 : 9 * (page - 1);
+    let page_hired = [];
 
-//         let total_page = Math.ceil(resultsall / 9);
-//         for (i = 1; i <= total_page; i++) {
-//             page_array.push(i);
-//         };
-//         let arrayimage = []
-//         let arrayid = []
-//         let arraytitle = []
-//         let arraydate = []
-//         let arraycontent = []
-//         let arrayRealId = []
-//         result.forEach(ele => {
-//             ele.num = resultsall - offset;
-//             resultsall--;
-//             arrayimage.push(ele.dataValues.info_image.replace('public', ''));
-//             arrayid.push(resultsall);
-//             arraytitle.push(ele.dataValues.title);
-//             arraydate.push(moment(ele.dataValues.date).format("MMM Do YY"));
-//             arraycontent.push(ele.dataValues.content);
-//             arrayRealId.push(ele.dataValues.id);
-//         });
-//         res.render('./admin/notice_list.html', {
-//             pagination:page_array,
-//             arrayimage,
-//             arrayid,
-//             arraytitle,
-//             arraydate,
-//             arraycontent,
-//             arrayRealId,
-//         });
-//     }).catch((error) => {
-//         console.log(error);
-//     })
-// };
+    let resultsall = await hiredTd.findAll({ where: { type: localUrl } })
+    let totalrecord = resultsall.length;
+
+
+    let results = await hiredTd.findAll({
+        limit: 9,
+        order: [['id', 'DESC']],
+        offset: offset,
+        where: {type: localUrl}
+    });
+    console.log('resultsladjfakdjfh;',results)
+        let total_page = Math.ceil(totalrecord / 9);
+        for (i = 1; i <= total_page; i++) {
+            page_hired.push(i);
+        };
+        let hiredid = []
+        let hiredtitle = []
+        let hireddate = []
+        let hiredcontent = []
+        let hiredRealId = []
+        results.forEach(ele => {
+            ele.num = totalrecord - offset;
+            totalrecord--;
+            hiredid.push(ele.num);
+            hiredtitle.push(ele.dataValues.title);
+            hireddate.push(moment(ele.dataValues.date).format("MMM Do YY"));
+            hiredcontent.push(ele.dataValues.content);
+            hiredRealId.push(ele.dataValues.id);
+        });
+        res.render('./admin/hired.html', {
+            pagination: page_hired,
+            hiredid,
+            hiredtitle,
+            hireddate,
+            hiredcontent,
+            hiredRealId,
+            localUrl,
+        });
+};
+
+/*======================== 교육과정 ============================*/
+let educationT = async (req, res) => {
+    let page = (req.query.id == undefined) ? 1 : req.query.id;
+    let offset = (req.query.id == undefined) ? 0 : 9 * (page - 1);
+    let page_hired = [];
+    let resultsall = await education.findAll({})
+    let totalrecord = resultsall.length;
+    let total_page = Math.ceil(totalrecord / 9);
+    for (i = 1; i <= total_page; i++) {
+        page_hired.push(i);
+    };
+    let result = await education.findAll({
+        raw:true,
+        limit: 9,
+        order: [['id', 'DESC']],
+        offset: offset,
+    });
+    let newid = [];
+    result.forEach(ele=>{
+        ele.num = totalrecord - offset;
+        totalrecord--;
+        newid.push(ele.num);
+    })
+    let edList = result.map(v => {
+        return {...v,
+            date:moment(v.date).format("MMM Do YY")
+        }
+    });
+    res.render('./admin/education.html', {
+        edList,
+        pagination:page_hired,
+        newid,
+    });
+};
+
+let popup = async(req,res)=>{
+    let result = await popupTd.findAll({raw:true});
+    let popupList = result.map(v=>{
+        return {...v,
+            image:v.image.replace('public',''),
+            date:moment(v.date).format("MMM Do YY"),
+            visibility:v.visibility == 0 ? "invisible" : "visible"
+        }
+    })
+    res.render('./admin/popup.html',{
+        popupList
+    })
+};
+
+let popup_upload = (req,res)=>{
+    res.render('./admin/popup_upload')
+}
+
+let popup_upload_success = async(req,res)=>{
+    let { writer, visibility } = req.body;
+    let image = req.file == undefined ? '' : req.file.path;
+    let result = await popupTd.create({image,writer,visibility});
+    res.redirect('/admin/popup');
+}
+
+let popup_view = async (req,res)=>{
+    let {id} = req.query;
+    let popupView = await popupTd.findOne({
+        where:{id}
+    })
+    let popupList = popupView.dataValues;
+    let popupDate = moment(popupList.date).format('MMM Do YY');
+    let popupImage = popupList.image.replace('public','');
+    console.log(popupImage)
+    res.render('./admin/popup_view.html',{popupList,popupDate,popupImage})
+}
 
 module.exports = {
     admin_main,
@@ -209,4 +269,10 @@ module.exports = {
     admin_login,
     login_success,
     Information,
+    hired,
+    educationT,
+    popup,
+    popup_upload,
+    popup_upload_success,
+    popup_view,
 }

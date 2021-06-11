@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDUCATION</title>
+    <link rel="stylesheet" href="/css/info/index.css">
+    <link rel="stylesheet" href="/css/info/list.css">
+    <style>
+        a {
+            display: inline-block;
+            width: auto;
+            height: 50px;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            color: #000;
+        }
+
+        #infom {
+            margin-top: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+        }
+
+        #infom>h1{
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap" class="w100">
+        <div id="main" class="center">
+            <div id="infom">
+                <h1>POPUP</h1>
+            </div>
+            <div id="board">
+                <table id="list">   
+                    <tr>
+                        <td>No.</td>
+                        <td>Image</td>
+                        <td>Title</td>
+                        <td>Writer</td>
+                        <td>Date</td>
+                    </tr>
+                    {% for item in popupList %}
+                    <tr>
+                        <td>{{item.id}}</td>
+                        <td><a style="color: #fff;" href="/admin/popup_view?id={{item.id}}&table=popup"><img id="infoImage" src="{{item.image}}"></a></td>
+                        <td>{{item.visibility}}</td>
+                        <td>writer</td>
+                        <td>{{item.date}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="footer center">
+            <div id="pagenation">
+                {% for item in pagination %}
+                <a href="/admin/education?id={{item}}">{{item}}</a>
+                {% endfor %}
+            </div>
+            <a class="write_btn btn" href="/admin/popup_upload">WRITE</a>
+            <a class="main_btn btn" href="/admin/main">MAIN</a>
+        </div> 
+    </div>
+</body>
+</html>

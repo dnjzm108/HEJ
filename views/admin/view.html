@@ -5,9 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFOVIEW</title>
+    <title>VIEW</title>
     <link rel="stylesheet" href="/css/info/index.css">
     <link rel="stylesheet" href="/css/info/view.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let content = document.querySelector('#content');
+            let pre = document.querySelector('#pre');
+            pre.innerHTML = `${content.value}`
+        });
+
+    </script>
 </head>
 
 <body>
@@ -17,23 +25,19 @@
         </div>
         <div id="content_header" class="center">
             <ul>
-
                 <li>{{infoList.writer}}</li>
                 <li>{{infodate}}</li>
             </ul>
         </div>
-
         <div id="content_wrap" class="center">
-            <div id="content">
-            {{infoList.content}}
-            <img id="content_img" src="{{infoimage}}">
+            <pre id="pre"></pre>
         </div>
+        <textarea style="display: none;" id="content">{{infoList.content}}</textarea>
 
         <div id="footer" class="center">
-            <a href="/admin/infolist">MENU</a>
-            <a href="/admin/delete?id={{infoList.id}}">DELETE</a>
-            <a href="/admin/modify?id={{infoList.id}}">MODIFY</a>
-        </div>
+            <a href="/admin/education">MENU</a>
+            <a href="/admin/delete?id={{infoList.id}}&table=education">DELETE</a>
+            <a href="/admin/modify?id={{infoList.id}}&table=education">MODIFY</a>
         </div>
     </div>
 </body>

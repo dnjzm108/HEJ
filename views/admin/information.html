@@ -25,10 +25,23 @@
             margin-bottom: 20px;
         }
 
-        #infom>h1{
+        #infom>h1 {
             margin-bottom: 30px;
         }
     </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let idArr= document.querySelector('#idArr').value;
+            idArr = idArr.split(','); 
+            idArr.splice(idArr.length-1,1); 
+            idArr.forEach(v=>{
+                let content = document.querySelector('#content'+v);
+                let pre = document.querySelector('#pre'+v);
+                pre.innerHTML = `${content.value}`
+            })
+        });
+
+    </script>
     <link rel="stylesheet" href="/css/info/index.css">
     <link rel="stylesheet" href="/css/info/list.css">
 </head>
@@ -46,15 +59,23 @@
                     <a href="/admin/information/location">오시는 길</a>
                 </div>
             </div>
-            <div id="content">
-                {% for item in range(arrayimage.length) %}
-                <h2>{{arraytitle[item]}}</h2>
-                <div>{{arraycontent[item]}}</div>
+            <div id="content_wrap">
+                <input type="hidden" value="{{idArr}}" id="idArr">
+                {% for item in infoList %}
+                <h2>{{item.title}}</h2>
+                <pre id="pre{{item.id}}"></pre>
+                <textarea id="content{{item.id}}" style="display: none;">{{item.content}}</textarea>
                 {% endfor %}
             </div>
             <a href="/admin/upload?title=information">WRITE</a>
+            <a class="main_btn btn" href="/admin/main">MAIN</a>
         </div>
     </div>
+    <!-- <script>
+        let content = document.querySelector('#content');
+        let pre = document.querySelector('#pre');
+        pre.innerHTML = `${content.value}`
+    </script> -->
 </body>
 
 </html>
