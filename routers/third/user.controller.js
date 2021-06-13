@@ -197,25 +197,32 @@ let info_after_modify = async (req, res) => { //DB 업데이트, findOne 해오�
 };
 
 let find_info = async(req,res)=>{
-    let {find} =req.query;
-    res.render('./third/user/find_info.html',{find});
+    let {flag} =req.query;
+    res.render('./third/user/find_info.html',{flag});
 }
 
 let find_check = async(req,res)=>{
-    let {find} = req.query;
-    let {user_name,user_email}=req.body;
+    let {AccessToken} = req.cookies;
+    console.log(AccessToken);
+    let [header,payload,sign] = AccessToken.split('.');
+    
+
+    let {flag} = req.query;
+    let {user_name,user_email,check}=req.body;
     let result = await user.findOne({
         where:{user_name, user_email}
     })
-    let {userid,userpw} = result.dataValues;
+    let {userid} = result.dataValues;
+    let {userpw,exp} = JSON.parse(Buffer.from(payload,'base64').toString());
+    flag = false;
 
-    // if (result != null & find == '0'){
+    if (flag=="1"){
         res.redirect(`/user/find_success?check=0&userid=${userid}&userpw=${userpw}`)
-    // }else if(find== '1'){
-    //     res.redirect('/user/find_success?check=1')
-    // }else{
-    //     return;
-    // }
+        console.log("1111",flag);
+    }else {
+        res.redirect(`/user/find_success?check=1&userid=${userid}&userpw=${userpw}`)
+        console.log("2222",flag);
+    }
 }
 
 let find_success = async(req,res)=>{
@@ -228,7 +235,7 @@ let find_success = async(req,res)=>{
     
     // let userid = result.dataValues.userid;
     // let userpw = result.datavalues.userpw;
-    res.render('./third/user/find_success.html', {check,userid})
+    res.render('./third/user/find_success.html', {check,userid,userpw})
 
 }
 
