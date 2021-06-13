@@ -210,7 +210,7 @@ let comment_modify = async (req, res) => {
         content
     }, { where: { id } });
     console.log('result:'+result);
-    //res.redirect('/board');
+    res.redirect('/board');
 }
 
 let board_modify = async (req, res) => {
