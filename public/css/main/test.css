@@ -14,6 +14,19 @@ a{
     width: 100vw;
     height: 100vh;
 }
+.circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    background: url('https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20140821_151%2Floveholic89_1408613885685htfGh_JPEG%2F%25B7%25CE%25C4%25CF2.jpg&type=sc960_832') no-repeat;
+    background-size: 100%;
+    /* border: 1px solid #ffffff; */
+    /* border-radius: 50%; */
+    transform: translate(-50%, -50%);
+    /* opacity: 0.5; */
+}
 #header{
     width: 100vw;
     height: 10wh;

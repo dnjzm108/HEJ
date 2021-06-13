@@ -23,5 +23,16 @@
         </div>
         <div id="bottum"></div>
     </div>
+    <div class="circle"></div>
+    <script>
+           const circle = document.querySelector(".circle");
+        
+        document.addEventListener("mousemove", (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            circle.style.left = mouseX + 'px';
+            circle.style.top = mouseY +100+ 'px';
+        });
+    </script>
 </body>
 </html>
