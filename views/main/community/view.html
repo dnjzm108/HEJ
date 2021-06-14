@@ -17,19 +17,19 @@
             작성자 : {{view.userid}}</br>
             작성날짜 : {{dt}}</br>
             내용 : {{view.content}}</br>
-            이미지 : <img src="{{view.board_image}}" style="width: 100px;height: 100px;"></br>
+            이미지 : <img src="{{view.community_image}}" style="width: 100px;height: 100px;"></br>
             조회수 : {{view.hit}}</br>
             카테고리 : {{view.type}}</br>
         </div>
         {% if view.userid == userid %}
-        <a class="tag" href="/board/modify?idx={{idx}}">수정하기</a>
-        <a class="tag" href="/board/delete?idx={{idx}}">삭제하기</a>
+        <a class="tag" href="/community/modify?idx={{idx}}">수정하기</a>
+        <a class="tag" href="/community/delete?idx={{idx}}">삭제하기</a>
         {% endif %}
-        <a class="tag" href="/board">목록으로 가기</a>
+        <a class="tag" href="/community">목록으로 가기</a>
         <div id="middle">
             <div id="comment">댓글
                 <ul>
-                    <form id="modi_form" action="/board/comment/modify" method="POST">
+                    <form id="modi_form" action="/community/comment/modify" method="POST">
                         {% for item in see %}
                         <li>{{item.dataValues.userid}}님</li>
                         <li id="modi{{item.dataValues.id}}" class="lie">
@@ -47,7 +47,7 @@
             </div>
 
             <span>댓글</span>
-            <form action="/board/comment" method="POST">
+            <form action="/community/comment" method="POST">
                 <input type="hidden" name="userid" value="{{userid}}">
                 <input type="hidden" name="idx" value="{{idx}}">
                 <input id="write" type="text" name="content" style="width: 500px; height: 50px;">
@@ -89,7 +89,7 @@
 
         function getData() {
             console.log('aaaaa');
-            axios.get('http://localhost:3000/board')
+            axios.get('http://localhost:3000/community')
                 .then((res) => {
                     const root = document.querySelector('#root');
                     const div = document.createElement('div');

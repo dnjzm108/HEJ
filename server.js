@@ -7,7 +7,7 @@ const session = require('express-session');
 const router = require('./routers/index');
 const mysql2 = require('mysql2');
 const mysql = require('mysql');
-const {board,information,user,sequelize} = require('./models');
+const {community,information,user,sequelize} = require('./models');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 

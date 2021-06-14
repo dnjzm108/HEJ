@@ -8,7 +8,7 @@ const login_check = require('../../middleware/login');
 const upload = multer({
     storage:multer.diskStorage({
         destination:function(req,file,callback){
-            callback(null,'public/uploads/board/')
+            callback(null,'public/uploads/community/')
         },
         filename:function(req,file,callback){
             callback(null,new Date().valueOf()+ path.extname(file.originalname))
@@ -25,16 +25,16 @@ router.get('/qanda/modify',controller.qanda_modify);
 router.post('/qanda/modify',controller.qanda_modify_send);
 router.get('/qanda/delete',controller.qanda_delete);
 
-router.get('/board/delete',controller.board_delete)
-router.get('/board/view',login_check,controller.board_view)
-router.post('/board/modify',upload.single('board_image'),controller.board_modify_send)
-router.get('/board/modify',controller.board_modify)
-router.post('/board/write',upload.single('board_image'),controller.board_write_send)
-router.get('/board/write',login_check,controller.board_write)
-router.get ('/board',controller.board_list)
-router.post('/board/comment',controller.comment_send)
+router.get('/community/delete',controller.community_delete)
+router.get('/community/view',login_check,controller.community_view)
+router.post('/community/modify',upload.single('community_image'),controller.community_modify_send)
+router.get('/community/modify',controller.community_modify)
+router.post('/community/write',upload.single('community_image'),controller.community_write_send)
+router.get('/community/write',login_check,controller.community_write)
+router.get ('/community',controller.community_list)
+router.post('/community/comment',controller.comment_send)
 router.get('/comment/delete',controller.comment_delete)
-router.post('/board/comment/modify',controller.comment_modify);
+router.post('/community/comment/modify',controller.comment_modify);
 
 router.get('/auth/kakao/unlink',controller.kakao_logout)
 router.get('/auth/kakao/callback',controller.kakao_check)
