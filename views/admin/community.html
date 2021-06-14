@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMMUNITY</title>
+</head>
+<body>
+    <div id="wrap">
+        <div id="main" class="center">
+            <div id="infom">
+                <h1>COMMUNITY</h1>
+                <div id="atags">
+                    <a href="/admin/community/notice">공지사항</a>
+                    <a href="/admin/community/history">게시판</a>
+                    <a href="/admin/community/popup">Q and A</a>
+                </div>
+            </div>
+            <div id="content_wrap">
+                <input type="hidden" value="{{idArr}}" id="idArr">
+                {% for item in commList %}
+                <!-- <h2>{{item.title}}</h2>
+                <pre id="pre{{item.id}}"></pre>
+                <textarea id="content{{item.id}}" style="display: none;">{{item.content}}</textarea>
+                <table id="list"> -->
+                    <tr>
+                        <td>No.</td>
+                        <td>User</td>
+                        <td>Authority_level</td>
+                        <td>Date</td>
+                    </tr>
+                    <tr>
+                        <td>{{item.id}}</td>
+                        <td><a style="color: #fff" href="/admin/user_view?id={{item.id}}&table=user">{{item.userid}}</a></td>
+                        <td>{{item.authority_level}}</td>
+                        <td>{{item.userdt}}</td>
+                    </tr>
+                </table>
+                {% endfor %}
+            </div>
+            <a href="/admin/upload?title=community">WRITE</a>
+            <a class="main_btn btn" href="/admin/main">MAIN</a>
+        </div>
+    </div>
+</body>
+</html>

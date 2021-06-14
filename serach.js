@@ -1,4 +1,4 @@
-const { information, admin, hired: hiredTd, education, popup: popupTd } = require('./models/index');
+const { information, admin, hired: hiredTd, education, popup: popupTd , user } = require('./models/index');
 
 let table;
 
