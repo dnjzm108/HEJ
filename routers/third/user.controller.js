@@ -18,7 +18,8 @@ let join = (req, res) => {
 
 let login = (req, res) => {
     let { flag } = req.query;
-    res.render('./third/user/login.html', { flag });
+    let { uid1: userid } = req.session;
+    res.render('./third/user/login.html', { flag , session:session.authData, userid });
 };
 
 let info = async (req, res) => {
@@ -112,18 +113,13 @@ let login_check = async (req, res) => {
     req.session.isLogin = true;
     req.session.userimage = '1623203467710.png';
     req.session.save(() => {
-        res.redirect('/user/index');
+        res.redirect('/user/login');
     });
 };
 
 let logout = (req, res) => {
-    delete req.session.isLogin;
-    delete req.session.uid;
-    delete req.session.uid2;
-    delete req.session.userimage;
-    req.session.save(() => {
+    delete session.authData;
         res.redirect('/user/login');
-    })
 };
 
 let userid_check = async (req, res) => {
@@ -166,13 +162,15 @@ let info_modify = async (req, res) => {
 
 let info_after_modify = async (req, res) => { //DB 업데이트, findOne 해오기   
     let { id, userpw, gender, user_birth, user_name, user_number, user_email, user_address, user_address1, user_address2, user_address3, userdt } = req.body;
+   
+    let hash = chash(userpw);
     let userimage = req.file == undefined ? req.body.userimage1 : `/uploads/user_image/${req.file.filename}`;
 
     let user_addressnew = user_address1 + user_address2 + user_address3;
     let user_addressnew2 = user_addressnew == '' ? user_address : user_addressnew;
 
     await user.update({
-        userpw, gender, user_birth, userimage, user_name, user_number, user_email, user_addressnew2, userdt
+        userpw:hash, gender, user_birth, userimage, user_name, user_number, user_email, user_addressnew2, userdt
     }, { where: { id } });
     let result = await user.findOne({
         where: { id, }
@@ -191,6 +189,7 @@ let info_after_modify = async (req, res) => { //DB 업데이트, findOne 해오�
             user_email: result.user_email,
             user_address: result.user_address,
             userdt: result.userdt,
+            checked:"1",
         });
 
     });
@@ -202,53 +201,40 @@ let find_info = async(req,res)=>{
 }
 
 let find_check = async(req,res)=>{
-    let {AccessToken} = req.cookies;
-    console.log(AccessToken);
-    let [header,payload,sign] = AccessToken.split('.');
-    
 
-    let {flag} = req.query;
-    let {user_name,user_email,check}=req.body;
+    let {check} = req.query;
+    let {user_name,user_email,}=req.body;
     let result = await user.findOne({
         where:{user_name, user_email}
     })
-    let {userid} = result.dataValues;
-    let {userpw,exp} = JSON.parse(Buffer.from(payload,'base64').toString());
     flag = false;
-
-    if (flag=="1"){
-        res.redirect(`/user/find_success?check=0&userid=${userid}&userpw=${userpw}`)
-        console.log("1111",flag);
+    let {userid,userpw} = result.dataValues;
+    console.log("hiiiiiiiiiiiiiiii",userpw);
+    const test =JSON.parse(Buffer.from(userpw,'base64').toString()); 
+    if (check=="0"){
+        res.render("./third/user/find_success.html",{
+            userid,userpw:test,check:'0'
+        })
     }else {
-        res.redirect(`/user/find_success?check=1&userid=${userid}&userpw=${userpw}`)
-        console.log("2222",flag);
+        res.render("./third/user/find_success.html",{
+            userid,userpw:test,check:'1'
+        })
     }
-}
-
-let find_success = async(req,res)=>{
-    let {check, userid,userpw} = req.query;
-    console.log(check,userid,userpw)
-    // let {user_name,user_email}=req.body;
-    // let result = await user.findOne({
-    //     where:{user_name, user_email}
-    // })
-    
-    // let userid = result.dataValues.userid;
-    // let userpw = result.datavalues.userpw;
-    res.render('./third/user/find_success.html', {check,userid,userpw})
-
 }
 
 let google =(req,res)=>{
     let {userid,username} = req.query;
-    console.log(userid,username);
     let authData = {userid:userid,username:username}
-    session.authData = {["google"]: authData}
+    session.authData = {["google"]: authData};
+    let result = JSON.stringify(session.authData)
+    console.log( '세션:'+result);
+    res.redirect('/');
 }
 let google_out = (req,res)=>{
-    if(session.authData["google"] != null ){
+    if(session.authData.google){
         delete session.authData;
 }
+res.redirect('/user/login');
 }
 module.exports = {
     index,
@@ -264,7 +250,6 @@ module.exports = {
     info_pwcheck,
     find_info,
     find_check,
-    find_success,
     google,
     google_out
 }
