@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,34 +8,40 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/main/list.css">
 </head>
+
 <body>
 
-   
+
     <div id="wrap">
-       <h2 id="subject"> list menu</h2>
+        <h2 id="subject"> list menu</h2>
         <div id="header">
-    <a href="/board/write">글작성</a>
-<table>
-    <tr>
-        <td>제목</td>
-        <td>작성자</td>
-        <td>작성일</td>
-        <td>내용</td>
-        <td>조회수</td>
-        <td>타입</td>
-    </tr>
-    {% for item in result %}
-    <tr>
-        <td><a href="/board/view?idx={{item.idx}}">{{item.title}}</a></td>
-        <td><a href="/board/view?idx={{item.idx}}">{{item.userid}}</a></td>
-        <td><a href="/board/view?idx={{item.idx}}">{{item.write_date}}</a></td>
-        <td><a href="/board/view?idx={{item.idx}}">{{item.content}}</a></td>
-        <td><a href="/board/view?idx={{item.idx}}">{{item.hit}}</a></td>
-        <td><a href="/board/view?idx={{item.idx}}">{{item.type}}</a></td>
-    </tr>
-    {% endfor %}
-</table>
-</div>
-</div>
+            <a href="/board/write">글작성</a>
+            <table>
+                <tr>
+                    <td>제목</td>
+                    <td>작성자</td>
+                    <td>작성일</td>
+                    <td>내용</td>
+                    <td>조회수</td>
+                    <td>타입</td>
+                </tr>
+                {% for item in result %}
+                <tr>
+                    <td><a href="/board/view?idx={{item.idx}}">{{item.title}}</a></td>
+                    <td><a href="/board/view?idx={{item.idx}}">{{item.userid}}</a></td>
+                    <td><a href="/board/view?idx={{item.idx}}">{{item.write_date}}</a></td>
+                    <td><a href="/board/view?idx={{item.idx}}">{{item.content}}</a></td>
+                    <td><a href="/board/view?idx={{item.idx}}">{{item.hit}}</a></td>
+                    <td><a href="/board/view?idx={{item.idx}}">{{item.type}}</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+           
+        </div>
+        <a href="/user/login">login 하러 가기</a>
+        <a href="/">메인 페이지 가기</a>
+    </div>
+   
 </body>
+
 </html>

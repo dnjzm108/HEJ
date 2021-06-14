@@ -123,6 +123,7 @@ let login = (req, res) => {
     console.log('id:' + id, 'pw:' + pw, 'pw_check:' + pw_check);
     res.redirect(`/?id=${id}&pw=${pw}`);
 }
+// board start
 
 let board_list = async (req, res) => {
     let result = await board.findAll({ raw: true });
@@ -145,7 +146,17 @@ let board_list = async (req, res) => {
     })
 }
 let board_write = (req, res) => {
-    res.render('./main/board/write.html')
+    let userid;
+    if (session.authData.kakao != null) {
+        userid = session.authData.kakao.properties.nickname;
+    } else if (session.authData.local != null) {
+        userid = session.authData.local.userid
+    } else if (session.authData.google != null) {
+        userid = session.authData.google.userid
+    }
+    res.render('./main/board/write.html',{
+        userid
+    })
 }
 let board_write_send = async (req, res) => {
     let { title, userid, content, type } = req.body;
@@ -187,32 +198,6 @@ let board_view = async (req, res) => {
     })
 }
 
-let comment_send = async (req, res) => {
-    let { userid, content, idx } = req.body;
-    let result = await comment.create({
-        userid, content, idx
-    })
-    res.redirect(`/board/view?idx=${idx}`);
-}
-let comment_delete = async (req, res) => {
-    let { id, idx } = req.query;
-    let result = await comment.destroy({
-        where: { id }
-    })
-    res.redirect(`/board/view?idx=${idx}`)
-}
-
-let comment_modify = async (req, res) => {
-    let { id,content } = req.body;
-    console.log(id);
-    console.log(content);
-    let result = await comment.update({
-        content
-    }, { where: { id } });
-    console.log('result:'+result);
-    res.redirect('/board');
-}
-
 let board_modify = async (req, res) => {
     let idx = req.query.idx;
     let result = await board.findAll({
@@ -239,6 +224,35 @@ let board_delete = async (req, res) => {
     let result = await board.destroy({ where: { idx } });
     res.redirect('/board');
 }
+//  board end
+
+//comment start
+let comment_send = async (req, res) => {
+    let { userid, content, idx } = req.body;
+    let result = await comment.create({
+        userid, content, idx
+    })
+    res.redirect(`/board/view?idx=${idx}`);
+}
+let comment_delete = async (req, res) => {
+    let { id, idx } = req.query;
+    let result = await comment.destroy({
+        where: { id }
+    })
+    res.redirect(`/board/view?idx=${idx}`)
+}
+
+let comment_modify = async (req, res) => {
+    let { id,content } = req.body;
+    console.log(id);
+    console.log(content);
+    let result = await comment.update({
+        content
+    }, { where: { id } });
+    console.log('result:'+result);
+    res.redirect('/board');
+}
+//comment end
 
 let qanda_list = async (req, res) => {
     let result = await qanda.findAll({});

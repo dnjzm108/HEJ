@@ -41,16 +41,20 @@ a{
     height: 70wh;
 }
 .planet{
-    width: 10vw;
-    height: 10wh;
-    position:relative
+    width: 5vw;
+    height: 5wh;
+    position:relative;
+    transition: all ease 150s;
 }
 .rel{
     position:relative
 }
 #planet1{
     top: 60vh;
-    left: 3vw;
+    left: 3vw; 
+}
+.planet:hover{
+    transform: rotate( 10000deg );
 }
 #planet2{
     top: 40vh;
