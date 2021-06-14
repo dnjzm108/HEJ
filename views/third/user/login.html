@@ -13,7 +13,43 @@
     <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v10.0&appId=4064419383640755"
         nonce="SiOBIhLG"></script>
+    <script type="text/javascript">
 
+
+        async function  onSignIn(googleUser) {
+            let profile = googleUser.getBasicProfile();
+            console.log(profile);
+            let userid = await profile.getId()
+            let username = profile.getName()
+            console.log('image url:' + profile.getImageUrl());
+            console.log('email:' + profile.getEmail());
+        
+            google22(userid,username)  
+    
+          
+        }
+        
+        function signOut() {
+            let auth2 = gapi.auth2.getAuthInstance();
+            console.log(auth2);
+            auth2.signOut().then(function () {
+                console.log('User signed out');
+            })
+            auth2.disconnect();
+            google_out()
+        }
+        
+        async function google22(id,name){
+            let options = {method: "get"}
+            let url =`google?userid=${id}&username=${name}`
+     let result = await fetch(url, options);
+        }
+        async function google_out(){
+            let options = {method: "get"}
+            let url =`google_out`
+     let result = await fetch(url, options);
+        }
+    </script>
 </head>
 <div id="wrap">
     <div id="box">

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USER INFORMATION</title>
+</head>
+
+<body>
+    <form action="/admin/authority" method="POST">
+        <ul>
+            <select name="authority_level">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <li>{{userList.userid}}</li>
+            <li>{{userList.userpw}}</li>
+            <li>{{userList.user_name}}</li>
+            <li>{{userList.gender}}</li>
+            <li>{{userList.user_email}}</li>
+            <li>{{userList.user_address}}</li>
+            <li><img style="width: 300px; height: 150px;" src="{{userList.userimage}}"></li>
+            <li>{{userList.user_birth}}</li>
+            <li>{{userList.userdt}}</li>
+        </ul>
+        <textarea style="display: none;" name="userid">{{userList.userid}}</textarea>
+        <input type="submit">
+    </form>
+</body>
+
+</html>

@@ -37,6 +37,15 @@
                 <option value="portfolio">포트폴리오</option>
             </select>
             {% endif %}
+
+            {% if title =='community' %}
+            <select id="type" name="type">
+                <option value="notice">공지사항</option>
+                <option value="board">게시판</option>
+                <option value="qanda">Q and A</option>
+            </select>
+            {% endif %}
+
         </div>
 
         <div id="title_input" class="input">

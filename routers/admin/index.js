@@ -16,6 +16,11 @@ const upload = multer({
     }),
 });
 
+router.use('/community/:localUrl',controller.community);
+router.use('/community',controller.community);
+router.post('/authority',controller.authority);
+router.get('/user_view',controller.user_view);
+router.use('/user',controller.user_admin)
 router.get('/popup_view',controller.popup_view);
 router.post('/popup_upload_success',upload.single('image'),controller.popup_upload_success);
 router.get('/popup_upload',controller.popup_upload);
