@@ -1,7 +1,8 @@
-const { information, admin, hired: hiredTd, education, popup: popupTd, user } = require('../../models/index');
+const { information, admin, hired: hiredTd, education, popup: popupTd, user , community:communityTd } = require('../../models/index');
 const moment = require('moment');
 const ctoken = require('../../jwt');
 const search = require('../../serach');
+const pagination = require('../../pagination');
 
 /*========================ADMIN MAIN PAGE========================*/
 let admin_main = (req, res) => {
@@ -41,12 +42,11 @@ let upload = (req, res) => {
 
 let upload_success = async (req, res) => {
     let { localUrl, title, content, writer, type } = req.body;
-
     await search[localUrl].create({ title, content, writer, type });
     if (type != null) {
         res.redirect(`/admin/${localUrl}/${type}`);
     }
-    res.redirect(`/admin/${localUrl}`)
+    else{res.redirect(`/admin/${localUrl}`)}
     /* 각각의 board로 redirect 될 수 있도록 */
 };
 
@@ -60,6 +60,7 @@ let view = async (req, res) => {
     res.render('./admin/view.html', {
         infoList,
         infodate,
+        table,
     });
 };
 
@@ -70,7 +71,7 @@ let postDel = async (req, res) => {
 };
 
 let modify = async (req, res) => {
-    let { id, table } = req.query;
+    let { id, table } = req.query;  
     let modify_result = await search[table].findOne({ where: { id } });
     let moList = modify_result.dataValues;
     res.render('./admin/modify.html', {
@@ -115,15 +116,13 @@ let hired = async (req, res) => {
     let offset = (req.query.id == undefined) ? 0 : 9 * (page - 1);
     let page_hired = [];
 
-    let resultsall = await hiredTd.findAll({ where: { type: localUrl } })
+    let resultsall = await hiredTd.findAll({ where: { type: `${localUrl}` } })
     let totalrecord = resultsall.length;
-
-
     let results = await hiredTd.findAll({
+        where: { type: `${localUrl}` },
         limit: 9,
         order: [['id', 'DESC']],
-        offset: offset,
-        where: { type: localUrl }
+        offset: offset
     });
     let total_page = Math.ceil(totalrecord / 9);
     for (i = 1; i <= total_page; i++) {
@@ -193,7 +192,10 @@ let educationT = async (req, res) => {
 /*========================= 팝업 게시판 ================================= */
 
 let popup = async (req, res) => {
-    let result = await popupTd.findAll({ raw: true });
+    let {id} = req.query;
+    let page = { id:`${id}`, table:'popup' }
+    let pagin = await pagination(page);
+    let result = pagin.result;
     let popupList = result.map(v => {
         return {
             ...v,
@@ -203,6 +205,7 @@ let popup = async (req, res) => {
         }
     })
     res.render('./admin/popup.html', {
+        pagin:pagin.page_hired,
         popupList
     })
 };
@@ -214,7 +217,7 @@ let popup_upload = (req, res) => {
 let popup_upload_success = async (req, res) => {
     let { writer, visibility } = req.body;
     let image = req.file == undefined ? '' : req.file.path;
-    let result = await popupTd.create({ image, writer, visibility });
+    await popupTd.create({ image, writer, visibility });
     res.redirect('/admin/popup');
 }
 
@@ -267,12 +270,24 @@ let authority = async(req,res)=>{
 
 let community = async(req,res)=>{
     let {localUrl} = req.params;
-    let result = await search[localUrl].findAll({raw:true});
-    let commList = result.map(v=>{
-        return{...v,
-            
+    let {id} = req.query;
+    let page = { localUrl:`${localUrl}`, id:`${id}`, table:'community' }
+    let pagin = await pagination(page);
+    let result = pagin.result;
+    let commList = result.map(v => {
+        v.num = pagin.totalrecord - pagin.offset;
+        pagin.totalrecord--;
+        return {
+            ...v,
+            write_date: moment(v.write_date).format("MMM Do YY"),
+            num:v.num
         }
     })
+    res.render('./admin/community.html',{
+        pagin:pagin.page_hired,
+        commList,
+        localUrl
+    });
 }
 
 module.exports = {

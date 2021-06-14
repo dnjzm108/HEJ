@@ -52,7 +52,6 @@
 </head>
 <div id="wrap">
     <div id="box">
-        <table>
             <form action="/user/login_check" method="post">
                 <table id="login_table">
                     <tr class="">
@@ -71,6 +70,9 @@
 
                 <input id="local_in" type="submit" class="join_button" value="로그인">
                 <a id="join_in" href="/user/join">회원가입</a>
+                <a href="/user/find_info?flag=0">아이디 찾기</a>
+                <a href="/user/find_info?flag=1">비밀번호 찾기</a>
+
             </form>
 
             <!-- google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
@@ -84,24 +86,32 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
                 <div class="g-signin2" data-onsuccess="onSignIn"></div>
             </div>
             <a href="#" id="google_out" onclick="signOut()">google out</a>
-
-            <ul id="face_in">
-                <li onclick="fnFbCustomLogin()">
-                    <a href="javascript:void(0)">
-                        <span id="face">페이스북 로그인</span>
-                    </a>
-                </li>
-            </ul>
-
-            <a href="/kakao/info">내정보 보기</a>
-            <a href="/test">메인으로</a>
-
+           
     </div>
+
+    <!--
+        페이스북 로그인 버전 2
+        <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v11.0&appId=4064419383640755&autoLogAppEvents=1" nonce="TErsmy36"></script> -->
+
     <div>
         {{msg}}
     </div>
 
 </div>
+<!-- 페이스북 로그인 버전 1  
+    <ul id="face_in">
+    <li onclick="fnFbCustomLogin()">
+        <a href="javascript:void(0)">
+            <span id="face">페이스북 로그인</span>
+        </a>
+    </li>
+</ul>
+
+<a href="/kakao/info">내정보 보기</a>
+<a href="/test">메인으로</a>
+
 <script>
     function statusChangeCallback(res) {
         statusChangeCallback(response);
@@ -138,14 +148,13 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
                         인증코드 :https://localhost:3000/?code=AQDyUG6hwsEOdJpy9iPfeEmFWJXXlzi_2KvkvWjW2UeKuBOmYd2R8f-eSxdZjT1hfzolXZKABtbtwELoinlFH8asI79OINoSMgxOdJ6tMo3gEJlduwybiaiQEqN8XqfZDNxMPcJKbdWRV59a48Eblmha94xbRxuo_FOzB02e_m5wuCGPxCusEHGSpYCdU6X4V5tAeHwD7R6Eu_B2z7HkuX8I0F7LFaTNl6aAo9KTqyngww#_
                         토큰 : IGQVJVel91cjlnczFONEhFSlNZAUUd6cjNJZAUM3SndUbUNBSXEyWGF3UVczZAzlUMExHQmZASQlFpajVudjJWbG41dzRpY1dIbUZAXLS1qWE5yYmRMUUNDSy0xMUUtUWktUWE4WnBhR2RvUXEycmJFQ2FOWQZDZD
                         */
-</script>
+</script> -->
 {% if flag == '0' %}
 <script type="text/javascript">
 
 
     alert('아이디와 패스워드를 확인해주세요.')
     const id = document.querySelector('#userid');
-    const pw = document.querySelector('#userpw');
     id.focus();
 </script>
 {% endif %}

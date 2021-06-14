@@ -1,8 +1,7 @@
-const { information, admin, hired: hiredTd, education, popup: popupTd , user } = require('./models/index');
+const { information, admin, hired: hiredTd, education, popup: popupTd, community:communityTd } = require('./models/index');
 
-let table;
 
-let arr = [information, admin, hiredTd, education, popupTd];
+let arr = [information, admin, hiredTd, education, popupTd , communityTd];
 let search = {}
 arr.forEach(v => {
     let tableName = `${v.fieldRawAttributesMap.id.Model.tableName}`;
@@ -10,11 +9,6 @@ arr.forEach(v => {
         [tableName]:v,
     }
     search = {...search, ...obj}
-})
-
-// search[table].findAll({})
-// .then(data => {
-//     console.log(data);
-// });
+});
 
 module.exports = search

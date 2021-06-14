@@ -1,21 +1,20 @@
 const express = require('express');
-const { route } = require('..');
 const router = express.Router();
 const controller =  require('./main_controller');
 const multer = require('multer');
 const path = require('path');
-const login_check = require('../../middleware/login')
+const login_check = require('../../middleware/login');
 
 const upload = multer({
     storage:multer.diskStorage({
         destination:function(req,file,callback){
-            callback(null,'uploads/')
+            callback(null,'public/uploads/board/')
         },
         filename:function(req,file,callback){
-            callback(null,new Date().valueOf() + path.extname(file,originalname))
+            callback(null,new Date().valueOf()+ path.extname(file.originalname))
         }
-    }),
-})
+    })
+});
 
 
 router.get('/qanda/write',controller.qanda_aply);
@@ -28,9 +27,9 @@ router.get('/qanda/delete',controller.qanda_delete);
 
 router.get('/board/delete',controller.board_delete)
 router.get('/board/view',login_check,controller.board_view)
-router.post('/board/modify',upload.single('img'),controller.board_modify_send)
+router.post('/board/modify',upload.single('board_image'),controller.board_modify_send)
 router.get('/board/modify',controller.board_modify)
-router.post('/board/write',upload.single('img'),controller.board_write_send)
+router.post('/board/write',upload.single('board_image'),controller.board_write_send)
 router.get('/board/write',login_check,controller.board_write)
 router.get ('/board',controller.board_list)
 router.post('/board/comment',controller.comment_send)

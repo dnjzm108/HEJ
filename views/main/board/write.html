@@ -10,15 +10,15 @@
 <body>
     <div id="wrap">
         <div id="header">
-    <form action="/board/write" method="POST" >
+    <form action="/board/write" method="POST" enctype="multipart/form-data" >
     <span>제목</span></br>
     <input  class="w500" type="text" name="title" id="title"></br>
     <span>작성자</span></br>
     <input class="w500"  type="text" name="userid" id="userid"></br>
     <span>이미지</span></br>
     <input class="w500"  type="file" name="board_image" id="board_image"></br>
-    <span>타입</span></br>
-    <input type="text" name="write_type" id="write_type"></br>
+    <span>타입</span>
+    Q&A<input type="radio" name="type" value="Q&A">게시판<input type="radio" name="type" value="게시판">공지사항<input type="radio" name="type" value="공지사항"></br>
     <span>내용</span></br>
     <input id="cont" type="text" name="content" id="content"></br>
     <input type="submit" value="저장">

@@ -3,6 +3,7 @@ const moment = require('moment');
 const chash = require('../../chash');
 const token = require('../../jwt');
 const session = require('express-session');
+const { render } = require('nunjucks');
 
 let index = (req, res) => {
     let { uid1: userid } = req.session;
@@ -21,6 +22,7 @@ let login = (req, res) => {
 };
 
 let info = async (req, res) => {
+    let {checked, flag} = req.query;
     let userid = req.session.uid1;
     let userlist = await user.findOne({
         where: { userid }
@@ -33,8 +35,7 @@ let info = async (req, res) => {
     } else {
         gender = "여자"
     };
-    console.log(gender);
-    let obj = {
+    res.render('./third/user/info.html', {
         id: result.id,
         userid: result.userid,
         userpw: result.userpw,
@@ -46,9 +47,31 @@ let info = async (req, res) => {
         user_email: result.user_email,
         user_address: result.user_address,
         userdt: moment(result.userdt).format('YYYY년 MM월 DD일 hh:mm:ss a'),
-    };
-    res.render('./third/user/info.html', obj)
+        checked,
+        flag
+    })
 };
+
+let info_pwcheck = async(req,res) =>{
+    let {uid1} = req.session;
+    let { userpw } = req.body;
+    let hash = chash(userpw);
+    let result = await user.findOne(
+        {where: {userid:uid1, userpw:hash}}
+    )
+    console.log(result);
+
+    if(result != null){
+        //비밀번호 확인성공, result값이 db에 있을때
+        res.redirect("/user/info?checked=1");       
+    }else{
+        //비밀번호 확인실패, result값이 db에 없을때
+        res.redirect("/user/info?checked=0&flag=0");
+       
+        
+    }
+   
+} 
 
 let join_success = async (req, res) => {
     let { userid, userpw, user_name, user_number, gender, user_email, user_birth, user_address1, user_address2, user_address3 } = req.body;
@@ -82,13 +105,11 @@ let login_check = async (req, res) => {
     session.authData={
         ["local"]:authData
     }
-    console.log("++++++++",session.authData);
+    console.log("---------",session.authData);
     let {onSignIn} = req.body;
-    console.log("+++++++++",onSignIn);
+    console.log("-------",onSignIn);
     req.session.uid1 = userid;
-    // req.session.uid2 = userid;
     req.session.isLogin = true;
-    // req.session.userimage=result.userimage;
     req.session.userimage = '1623203467710.png';
     req.session.save(() => {
         res.redirect('/user/index');
@@ -144,10 +165,9 @@ let info_modify = async (req, res) => {
 };
 
 let info_after_modify = async (req, res) => { //DB 업데이트, findOne 해오기   
-    console.log(req.file);
     let { id, userpw, gender, user_birth, user_name, user_number, user_email, user_address, user_address1, user_address2, user_address3, userdt } = req.body;
     let userimage = req.file == undefined ? req.body.userimage1 : `/uploads/user_image/${req.file.filename}`;
-    console.log('modify : ', userimage);
+
     let user_addressnew = user_address1 + user_address2 + user_address3;
     let user_addressnew2 = user_addressnew == '' ? user_address : user_addressnew;
 
@@ -176,6 +196,49 @@ let info_after_modify = async (req, res) => { //DB 업데이트, findOne 해오�
     });
 };
 
+let find_info = async(req,res)=>{
+    let {flag} =req.query;
+    res.render('./third/user/find_info.html',{flag});
+}
+
+let find_check = async(req,res)=>{
+    let {AccessToken} = req.cookies;
+    console.log(AccessToken);
+    let [header,payload,sign] = AccessToken.split('.');
+    
+
+    let {flag} = req.query;
+    let {user_name,user_email,check}=req.body;
+    let result = await user.findOne({
+        where:{user_name, user_email}
+    })
+    let {userid} = result.dataValues;
+    let {userpw,exp} = JSON.parse(Buffer.from(payload,'base64').toString());
+    flag = false;
+
+    if (flag=="1"){
+        res.redirect(`/user/find_success?check=0&userid=${userid}&userpw=${userpw}`)
+        console.log("1111",flag);
+    }else {
+        res.redirect(`/user/find_success?check=1&userid=${userid}&userpw=${userpw}`)
+        console.log("2222",flag);
+    }
+}
+
+let find_success = async(req,res)=>{
+    let {check, userid,userpw} = req.query;
+    console.log(check,userid,userpw)
+    // let {user_name,user_email}=req.body;
+    // let result = await user.findOne({
+    //     where:{user_name, user_email}
+    // })
+    
+    // let userid = result.dataValues.userid;
+    // let userpw = result.datavalues.userpw;
+    res.render('./third/user/find_success.html', {check,userid,userpw})
+
+}
+
 let google =(req,res)=>{
     let {userid,username} = req.query;
     console.log(userid,username);
@@ -198,6 +261,10 @@ module.exports = {
     userid_check,
     info_modify,
     info_after_modify,
+    info_pwcheck,
+    find_info,
+    find_check,
+    find_success,
     google,
     google_out
 }

@@ -15,11 +15,11 @@
         <div id="header">
             제목 : {{view.title}} </br>
             작성자 : {{view.userid}}</br>
-            작성날짜 : {{view.write_date}}</br>
+            작성날짜 : {{dt}}</br>
             내용 : {{view.content}}</br>
-            이미지 : {{view.board_image}}</br>
+            이미지 : <img src="{{view.board_image}}" style="width: 100px;height: 100px;"></br>
             조회수 : {{view.hit}}</br>
-            카테고리 : {{view.write_type}}</br>
+            카테고리 : {{view.type}}</br>
         </div>
         <a class="tag" href="/board/modify?idx={{idx}}">수정하기</a>
         <a class="tag" href="/board">목록으로 가기</a>
@@ -27,8 +27,8 @@
         <div id="middle">
             <div id="comment">댓글
                 <ul>
+                    <form id="modi_form" action="/board/comment/modify" method="POST">
                     {% for item in see %}
-                    <form id="modi_form" action="/board/comment/modify" method="post">
                         <li>{{item.dataValues.userid}}님</li>
                         <li id="modi{{item.dataValues.id}}" class="lie">
                             <p>{{item.dataValues.content}}</p>
@@ -36,8 +36,8 @@
                             <input type="button" id="modify{{item.dataValues.id}}" class="modify" value="수정하기">
                             <a href="/comment/delete?id={{item.dataValues.id}}&idx={{idx}}">삭제</a>
                         </li>
-                    </form>
                     {% endfor %}
+                    </form>
                 </ul>
             </div>
 
@@ -56,7 +56,7 @@
         let modify = document.querySelectorAll('.modify');
         let modi_id = document.querySelector('#modi_id');
         let lie = document.querySelectorAll('.lie');
-        const modi_form = document.querySelector('#modi_form');
+        
 
         lie.forEach(v => {
             let text = v.children[0].innerHTML;
@@ -64,12 +64,16 @@
             v.children[2].addEventListener('click', () => {
                 if (flag == 0) {
                     let input = document.createElement('input');
+                    input.setAttribute('type','text')
                     input.setAttribute('name','content');
-                    input.value = text;
+                    input.setAttribute('value',text)
                     v.appendChild(input);
+                    
                     flag = 1;
                 } else if (flag == 1) {
+                    const modi_form = document.querySelector('#modi_form');
                     flag = 0;
+                    console.log(document.querySelector('input[name=content]').value);
                     modi_form.submit();
                 }
 

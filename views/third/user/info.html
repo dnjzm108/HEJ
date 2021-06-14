@@ -1,28 +1,56 @@
 {% include "../layout/top.html" %}
 
-    <h1>내 정보</h1>
+{% if checked=="0" %}
+
+<form id="info_pwcheck" method="POST" action="/user/info_pwcheck">
     <table>
+        <tr>
+            <td>아아디: {{userid}}</td>
+        </tr>
+        <tr>
+            <td>
+                비밀번호: <input id="pw" type="text" name="userpw">
+                <input type="submit" value="확인">
+            </td>
+        </tr>
+    </table>
+</form>
+
+{% if flag == '0' %}
+<script>
+    alert('비밀번호가 틀렸습니다')
+    let pw = document.querySelector('#pw');
+    pw.focus();
+</script>
+{% endif %}
+
+{% endif %}
+
+{% if checked=="1" %}
+
+<h1>내 정보</h1>
+<table>
     <tr>
         <td>번호</td>
-        <td >{{id}}</td>
-    </tr>
-    <tr >
-        <td>아이디:</td>
-        <td >{{userid}}</td>
+        <td>{{id}}</td>
     </tr>
     <tr>
+        <td>아이디:</td>
+        <td>{{userid}}</td>
+    </tr>
+    <!-- <tr>
         <td>비밀번호:</td>
         <td>{{userpw}}</td>
-    </tr>
-    <tr >
+    </tr> -->
+    <tr>
         <td>이름:</td>
         <td>{{user_name}}</td>
     </tr>
-    <tr >
+    <tr>
         <td>성별:</td>
         <td>{{gender}}</td>
     </tr>
-    <tr >
+    <tr>
         <td>생년월일:</td>
         <td>{{user_birth}}</td>
     </tr>
@@ -46,9 +74,11 @@
         <td>가입한 날짜: </td>
         <td>{{userdt}}</td>
     </tr>
-    </table>
+</table>
 
-    <a href="/user/info_modify?id={{id}}">수정</a>
-    <a href="/user/index">이전 페이지</a>
+<a href="/user/info_modify?id={{id}}">수정</a>
+<a href="/user/index">이전 페이지</a>
+
+{% endif %}
 
 {% include "../layout/bottom.html" %}
