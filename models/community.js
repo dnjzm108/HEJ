@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('board', {
+  return sequelize.define('community', {
     title: {
       type: DataTypes.STRING(100),
       allowNull: true
     },
-    userid: {
+    writer: {
       type: DataTypes.STRING(20),
       allowNull: true
     },
@@ -26,29 +26,13 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    idx: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      primaryKey: true
-    },
     type: {
       type: DataTypes.STRING(50),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'board',
+    tableName: 'community',
     timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "idx" },
-        ]
-      },
-    ]
   });
 };

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFORMATION</title>
+    <title>USERADMIN</title>
     <link rel="stylesheet" href="/css/info/index.css">
     <link rel="stylesheet" href="/css/info/list.css">
     <style>
@@ -23,7 +22,7 @@
 
         #infom {
             margin-top: 50px;
-            height: 150px;
+            height: 50px;
             margin-bottom: 20px;
         }
 
@@ -32,33 +31,27 @@
         }
     </style>
 </head>
-
 <body>
-
     <div id="wrap" class="w100">
         <div id="main" class="center">
             <div id="infom">
-                <h1>HIRED</h1>
-                <div id="atags">
-                    <a href="/admin/hired/interview">인터뷰</a>
-                    <a href="/admin/hired/portfolio">포트폴리오</a>
-                </div>
+                <h1>USER INFORMATION</h1>
             </div>
 
             <div id="board">
                 <table id="list">
                     <tr>
                         <td>No.</td>
-                        <td>Title</td>
-                        <td>Writer</td>
+                        <td>User</td>
+                        <td>Authority_level</td>
                         <td>Date</td>
                     </tr>
-                    {% for item in range(hiredid.length) %}
+                    {% for item in userList %}
                     <tr>
-                        <td>{{hiredid[item]}}</td>
-                        <td><a style="color: #fff;" href="/admin/view?id={{hiredRealId[item]}}&table=hired">{{hiredtitle[item]}}</a></td>
-                        <td>writer</td>
-                        <td>{{hireddate[item]}}</td>
+                        <td>{{item.id}}</td>
+                        <td><a style="color: #fff" href="/admin/user_view?id={{item.id}}&table=user">{{item.userid}}</a></td>
+                        <td>{{item.authority_level}}</td>
+                        <td>{{item.userdt}}</td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -70,9 +63,6 @@
                 <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
                 {% endfor %}
             </div>
-            <a class="write_btn btn" href="/admin/upload?title=hired">WRITE</a>
-            <a class="main_btn btn" href="/admin/main">MAIN</a>
         </div>
-    </div>
 </body>
 </html>
