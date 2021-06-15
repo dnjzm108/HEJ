@@ -13,7 +13,7 @@
     <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v10.0&appId=4064419383640755"
         nonce="SiOBIhLG"></script>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
 
 
         async function  onSignIn(googleUser) {
@@ -49,7 +49,7 @@
             let url =`google_out`
      let result = await fetch(url, options);
         }
-    </script>
+    </script> -->
 </head>
 <div id="wrap">
     <div id="box">
@@ -75,17 +75,18 @@
             <a href="/user/find_info?flag=0">아이디 찾기</a>
             <a href="/user/find_info?flag=1">비밀번호 찾기</a>
     
-       
+            <a id="kakao_in" class="kakao" href="/auth/kakao">카카오 로그인</a>
+            <div id="google_in">
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </div>
         </form>
         <!-- google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
 client id : 271562730452-rufsjg41rp8hhbno7686je73714i5dpu.apps.googleusercontent.com
 client password : wMc8se_eBobJrH2EN-r3JF6z -->
-        <a id="kakao_in" class="kakao" href="/auth/kakao">카카오 로그인</a>
-        <div id="google_in">
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        </div>
-        <!-- 지도 -->
+      
+        <!-------- 지도---- -->
         {% include "./map.html" %} 
+        <!-------- 지도---- -->
         
         {% endif %}
         {% if session != undefined %}
@@ -94,6 +95,8 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
         {% endif %}
 
         {% if session.google %}
+        
+        <input type="hidden" class="g-signin2" gapi.auth2.getauthinstance()="onSignIn">
         <button id="google_out" onclick="signOut()">google out</button>
         {% endif %}
 
@@ -132,7 +135,6 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
 
     async function onSignIn(googleUser) {
         let profile = googleUser.getBasicProfile();
-        console.log(profile);
         let userid = await profile.getId()
         let username = profile.getName()
         console.log('image url:' + profile.getImageUrl());
@@ -140,13 +142,11 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
         google22(userid, username)
     }
     function signOut() {
-        // console.log(gapi.auth2);
-        // let auth2 = gapi.auth2.getAuthInstance();
-        // console.log(auth2);
-        // auth2.signOut().then(function () {
-        //     console.log('User signed out');
-        // })
-        // auth2.disconnect();
+        let auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out');
+        })
+        auth2.disconnect();
         google_out()
     }
 
@@ -154,12 +154,13 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
         let options = { method: "get" }
         let url = `google?userid=${id}&username=${name}`
         let result = await fetch(url, options);
+        location.href= 'http://localhost:3000/user/login';
     }
     async function google_out() {
         let options = { method: "get" }
         let url = `google_out`
         let result = await fetch(url, options);
-        console.log(result);
+        location.href= 'http://localhost:3000/user/login';
     }
 </script>
 
