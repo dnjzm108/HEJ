@@ -29,31 +29,33 @@ div{
     height: 200px;
     position: absolute;
     opacity: 0.3;
-    backface-visibility: hidden;
+    /* backface-visibility: hidden; */
     opacity: 0.3;
 }
 
 div:nth-child(1){
     transform: rotateY(0deg) translate3d(0px, 0px, 100px);
-    background: red;
+    border: 1px solid black;
 }
 div:nth-child(2){
     transform: rotateY(90deg) translate3d(0px, 0px, 100px);
-    background: green;
+    border: 1px solid black;
+
 }
 div:nth-child(3){
     transform: rotateY(180deg) translate3d(0px, 0px, 100px);
-    background: blue;
+    border: 1px solid black;
 }
 div:nth-child(4){
     transform: rotateY(270deg) translate3d(0px, 0px, 100px);
-    background: yellow;
+    border: 1px solid black;
 }
 div:nth-child(5){
     transform: rotateX(90deg) translate3d(0px, 0px, 100px);
-    background: brown;
+    border: 1px solid black;
+    
 }
 div:nth-child(6){
     transform: rotateX(270deg) translate3d(0px, 0px, 100px);
-    background: pink;
+    border: 1px solid black;
 }

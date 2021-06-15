@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    board_image: {
+    community_image: {
       type: DataTypes.STRING(100),
       allowNull: true
     },
