@@ -1,6 +1,10 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('community', {
+    userid: {
+      type: DataTypes.STRING(100),
+      allowNull: true
+    },
     title: {
       type: DataTypes.STRING(100),
       allowNull: true

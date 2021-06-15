@@ -1,4 +1,4 @@
-body{
+/* body{
     width: 200px;
     margin: 200px auto;
 }
@@ -9,11 +9,11 @@ section{
     position: relative;
     animation: rint 3s linear 0s infinite;
     transform-style: preserve-3d;
-    /* animation-name: rint ;
+     animation-name: rint ;
     animation-duration:3s ;
     animation-timing-function: inherit;
     animation-delay: 0s;
-    animation-iteration-count: infinite; */
+    animation-iteration-count: infinite; 
 }
 @keyframes rint{
     from{
@@ -29,7 +29,7 @@ div{
     height: 200px;
     position: absolute;
     opacity: 0.3;
-    /* backface-visibility: hidden; */
+     backface-visibility: hidden; 
     opacity: 0.3;
 }
 
@@ -57,5 +57,72 @@ div:nth-child(5){
 }
 div:nth-child(6){
     transform: rotateX(270deg) translate3d(0px, 0px, 100px);
+    border: 1px solid black;
+} */
+
+
+
+
+body{
+    width: 400px;
+    height: 400px;
+    margin: 200px auto;
+}
+
+section{
+    width: 400px;
+    height: 400px;
+    position: relative;
+    /* animation: rint 3s linear 0s infinite; */
+    transform-style: preserve-3d;
+
+    /* animation-name: rint ;
+    animation-duration:3s ;
+    animation-timing-function: inherit;
+    animation-delay: 0s;
+    animation-iteration-count: infinite; */
+}
+@keyframes rint{
+    from{
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    to{
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+
+div{
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    /* opacity: 0.3; */
+    /* backface-visibility: hidden; */
+    /* opacity: 0.3; */
+}
+
+div:nth-child(1){
+    transform: rotateY(0deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+div:nth-child(2){
+    transform: rotateY(90deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+
+}
+div:nth-child(3){
+    transform: rotateY(180deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+div:nth-child(4){
+    transform: rotateY(270deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+div:nth-child(5){
+    transform: rotateX(90deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+    
+}
+div:nth-child(6){
+    transform: rotateX(270deg) translate3d(0px, 0px, 200px);
     border: 1px solid black;
 }
