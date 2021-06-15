@@ -10,6 +10,14 @@
 </head>
 
 <body>
+    <!-- lodding start -->
+    <div id="loding_mode">
+        <div class="loading-container">
+            <div class="loading"></div>
+            <div id="loading-text">loading</div>
+        </div>
+    </div>
+     <!-- lodding end -->
     <div id="wrap">
         <div id="menu">
             <ul>
@@ -51,13 +59,9 @@
             function moving() {
                 document.addEventListener("mousemove", (e) => {
                     const mouseX = e.clientX;
-                    // console.log('x좌표:'+mouseX);
                     const mouseY = e.clientY;
-                    // console.log('y좌표:'+mouseY);
                     const X = mouseX / 2;
                     const Y = mouseY / 2;
-                    console.log('X:' + X);
-                    console.log('Y:' + Y);
                     mouse.style.left = mouseX + 'px';
                     mouse.style.top = mouseY + 'px';
                     square.style.transform = `rotateX(${X}deg) rotateY(${X}deg)`;
