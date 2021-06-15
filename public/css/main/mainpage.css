@@ -185,10 +185,10 @@ a{
 
 @keyframes slideopen{
     from{
-        bottom: -40vh;
+        height: 0;
     }
     to{
-        bottom: 0;
+        height: 40vh;
     }
 }
 
@@ -213,10 +213,10 @@ a{
 
 @keyframes slideclose{
     from{
-        bottom: 0px;
+        height: 40vh;
     }
     to{
-        bottom: -40vh;
+        height: 0;
     }
 }
 
