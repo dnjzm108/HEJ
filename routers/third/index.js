@@ -23,7 +23,6 @@ router.get('/logout',userController.logout);
 router.get('/info',auth,userController.info);
 router.get('/find_info',userController.find_info);
 router.post('/find_check',userController.find_check);
-router.get('/find_success',userController.find_success);
 router.post('/info_pwcheck',userController.info_pwcheck);
 router.post('/join_success', upload.single('userimage'),userController.join_success);
 router.post('/login_check',userController.login_check);

@@ -1,7 +1,7 @@
 {% include "../layout/top.html" %}
 
 {% if flag == '0' %}
-<form action="/user/find_check" method="post">
+<form action="/user/find_check?check=0" method="post">
     <table>
         <tr class="">
             <td>이름을 입력해주세요:</td>
@@ -26,7 +26,7 @@
 {% endif %}
 
 {% if flag == '1' %}
-<form action="/user/find_check" method="post">
+<form action="/user/find_check?check=1" method="post">
     <table>
         <tr class="">
             <td>이름을 입력해주세요:</td>

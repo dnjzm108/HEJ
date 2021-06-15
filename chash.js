@@ -3,11 +3,10 @@ require('dotenv').config({path: path.join(__dirname, '.env')})
 const crypto = require('crypto');
 
 function createHash(userpw){
-    const signature = crypto.createHmac('sha256',Buffer.from(process.env.salt))
-    .update(userpw)
-    .digest('base64')
+    const signature = Buffer.from(JSON.stringify(userpw))
+    .toString('base64')
     .replace('==','')
-    .replace('=','')
+    .replace('=','');
     
     return signature
 }

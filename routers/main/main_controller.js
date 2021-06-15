@@ -13,7 +13,7 @@ const axios = require('axios');
 const qs = require('qs');
 const moment = require('moment');
 const session = require('express-session')
-const { board, information, user, sequelize, qanda, comment } = require('../../models');
+const { community, information, user, sequelize, qanda, comment } = require('../../models');
 
 
 const kakao = {
@@ -111,6 +111,9 @@ let kakao_logout = async (req, res) => {
 let main = (req, res) => {
     let id = req.query.id;
     let pw = req.query.pw;
+    if(session.authData != null){
+        console.log(session.authData);
+    }
     res.render('./main/test.html', {
         id, pw
     })
@@ -123,9 +126,10 @@ let login = (req, res) => {
     console.log('id:' + id, 'pw:' + pw, 'pw_check:' + pw_check);
     res.redirect(`/?id=${id}&pw=${pw}`);
 }
+// community start
 
-let board_list = async (req, res) => {
-    let result = await board.findAll({ raw: true });
+let community_list = async (req, res) => {
+    let result = await community.findAll({ raw: true });
     //    let arr = []
     //       result.forEach(v => {
     //          arr.push(v.dataValues.write_date);
@@ -140,31 +144,42 @@ let board_list = async (req, res) => {
             write_date: moment(v.write_date).format('YYYY년 MM월 DD일 hh:mm a')
         }
     })
-    res.render('./main/board/list.html', {
+    console.log("++++++++++++"+arr);
+    res.render('./main/community/list.html', {
         result: arr
     })
 }
-let board_write = (req, res) => {
-    res.render('./main/board/write.html')
+let community_write = (req, res) => {
+    let userid;
+    if (session.authData.kakao != null) {
+        userid = session.authData.kakao.properties.nickname;
+    } else if (session.authData.local != null) {
+        userid = session.authData.local.userid
+    } else if (session.authData.google != null) {
+        userid = session.authData.google.userid
+    }
+    res.render('./main/community/write.html',{
+        userid
+    })
 }
-let board_write_send = async (req, res) => {
+let community_write_send = async (req, res) => {
     let { title, userid, content, type } = req.body;
-    let board_image = req.file == undefined ? '' : `/uploads/board/${req.file.filename}`;
-    console.log(board_image);
-    let write = await board.create({
-        title, userid, content, board_image, type,
+    let community_image = req.file == undefined ? '' : `/uploads/community/${req.file.filename}`;
+    console.log(community_image);
+    let write = await community.create({
+        title, userid, content, community_image, type,
         hit: 0,
     })
-    res.redirect('/board')
+    res.redirect('/community')
 }
-let board_view = async (req, res) => {
+let community_view = async (req, res) => {
     let idx = req.query.idx;
-    let result = await board.findAll({
+    let result = await community.findAll({
         where: { idx }
     })
    
     let view = result[0].dataValues;
-    let hitNum = await board.update({
+    let hitNum = await community.update({
         hit: view.hit + 1
     }, { where: { idx } });
     let see = await comment.findAll({
@@ -182,24 +197,53 @@ let board_view = async (req, res) => {
         userid = session.authData.fecebook.userid
     }
 
-    res.render('./main/board/view.html', {
+    res.render('./main/community/view.html', {
         view, idx, userid, see,dt
     })
 }
 
+let community_modify = async (req, res) => {
+    let idx = req.query.idx;
+    let result = await community.findAll({
+        where: { idx }
+    })
+    let modify = result[0].dataValues;
+    res.render('./main/community/modify.html', {
+        modify, idx
+    })
+}
+let community_modify_send = async (req, res) => {
+    let { title, userid, content, type, idx,community_image1} = req.body;
+    let community_image = req.file == undefined ? community_image1 : `/uploads/community/${req.file.filename}`;
+    console.log('modify : '+ community_image);
+    console.log('dkdk'+community_image);
+    console.log('aaa');
+    let modify = await community.update({
+        title, userid, content, community_image, type
+    }, { where: { idx } });
+    res.redirect(`/community/view?idx=${idx}`);
+}
+let community_delete = async (req, res) => {
+    let idx = req.query.idx
+    let result = await community.destroy({ where: { idx } });
+    res.redirect('/community');
+}
+//  community end
+
+//comment start
 let comment_send = async (req, res) => {
     let { userid, content, idx } = req.body;
     let result = await comment.create({
         userid, content, idx
     })
-    res.redirect(`/board/view?idx=${idx}`);
+    res.redirect(`/community/view?idx=${idx}`);
 }
 let comment_delete = async (req, res) => {
     let { id, idx } = req.query;
     let result = await comment.destroy({
         where: { id }
     })
-    res.redirect(`/board/view?idx=${idx}`)
+    res.redirect(`/community/view?idx=${idx}`)
 }
 
 let comment_modify = async (req, res) => {
@@ -210,35 +254,9 @@ let comment_modify = async (req, res) => {
         content
     }, { where: { id } });
     console.log('result:'+result);
-    res.redirect('/board');
+    res.redirect('/community');
 }
-
-let board_modify = async (req, res) => {
-    let idx = req.query.idx;
-    let result = await board.findAll({
-        where: { idx }
-    })
-    let modify = result[0].dataValues;
-    res.render('./main/board/modify.html', {
-        modify, idx
-    })
-}
-let board_modify_send = async (req, res) => {
-    let { title, userid, content, type, idx,board_image1} = req.body;
-    let board_image = req.file == undefined ? board_image1 : `/uploads/board/${req.file.filename}`;
-    console.log('modify : '+ board_image);
-    console.log('dkdk'+board_image);
-    console.log('aaa');
-    let modify = await board.update({
-        title, userid, content, board_image, type
-    }, { where: { idx } });
-    res.redirect(`/board/view?idx=${idx}`);
-}
-let board_delete = async (req, res) => {
-    let idx = req.query.idx
-    let result = await board.destroy({ where: { idx } });
-    res.redirect('/board');
-}
+//comment end
 
 let qanda_list = async (req, res) => {
     let result = await qanda.findAll({});
@@ -299,13 +317,13 @@ module.exports = {
     login,
     kakao_login,
     kakao_check,
-    board_list,
-    board_write,
-    board_write_send,
-    board_modify,
-    board_modify_send,
-    board_view,
-    board_delete,
+    community_list,
+    community_write,
+    community_write_send,
+    community_modify,
+    community_modify_send,
+    community_view,
+    community_delete,
     qanda_aply,
     qanda_send,
     qanda_list,

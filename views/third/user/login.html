@@ -31,6 +31,7 @@
         
         function signOut() {
             let auth2 = gapi.auth2.getAuthInstance();
+            console.log(auth2);
             auth2.signOut().then(function () {
                 console.log('User signed out');
             })
@@ -52,42 +53,56 @@
 </head>
 <div id="wrap">
     <div id="box">
-            <form action="/user/login_check" method="post">
-                <table id="login_table">
-                    <tr class="">
-                        <td>아이디:</td>
-                        <td>
-                            <input type="text" id="userid" class="" name="userid" required>
-                        </td>
-                    </tr>
-                    <tr class="">
-                        <td>비밀번호:</td>
-                        <td>
-                            <input type="password" id="userpw" class="" name="userpw" required>
-                        </td>
-                    </tr>
-                </table>
+        {% if session == undefined %}
+        <form action="/user/login_check" method="post">
+            <table id="login_table">
+                <tr class="">
+                    <td>아이디:</td>
+                    <td>
+                        <input type="text" id="userid" class="" name="userid" required>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td>비밀번호:</td>
+                    <td>
+                        <input type="password" id="userpw" class="" name="userpw" required>
+                    </td>
+                </tr>
+            </table>
 
-                <input id="local_in" type="submit" class="join_button" value="로그인">
-                <a id="join_in" href="/user/join">회원가입</a>
-                <a href="/user/find_info?flag=0">아이디 찾기</a>
-                <a href="/user/find_info?flag=1">비밀번호 찾기</a>
-
-            </form>
-
-            <!-- google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
+            <input id="local_in" type="submit" class="join_button" value="로그인">
+            <a id="join_in" href="/user/join">회원가입</a>
+            <a href="/user/find_info?flag=0">아이디 찾기</a>
+            <a href="/user/find_info?flag=1">비밀번호 찾기</a>
+        </form>
+        <!-- google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
 client id : 271562730452-rufsjg41rp8hhbno7686je73714i5dpu.apps.googleusercontent.com
 client password : wMc8se_eBobJrH2EN-r3JF6z -->
+        <a id="kakao_in" class="kakao" href="/auth/kakao">카카오 로그인</a>
+        <div id="google_in">
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        </div>
+        {% endif %}
+        {% if session != undefined %}
+        {% if session.kakao %}
+        <a id="kakao out" class="kakao" href="/auth/kakao/unlink">카카오 로그아웃</a>
+        {% endif %}
 
-            <a id="kakao_in" class="kakao" href="/auth/kakao">카카오 로그인</a>
-            <a id="kakao out" class="kakao" href="/auth/kakao/unlink">카카오 로그아웃</a>
+        {% if session.google %}
+        <button id="google_out" onclick="signOut()">google out</button>
+        {% endif %}
 
-            <div id="google_in">
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
-            </div>
-            <a href="#" id="google_out" onclick="signOut()">google out</a>
-           
+        {% if session.local %}
+        {{userid}}님 환영합니다.
+        <a href="/">메인페이지</a>
+
+        <a href="/user/info?checked=0">내 정보확인하기</a>
+        <a href="/user/logout">로그아웃</a>
+
+        {% endif %}
+        {% endif %}
     </div>
+
 
     <!--
         페이스북 로그인 버전 2
@@ -100,6 +115,54 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
     </div>
 
 </div>
+
+{% if flag == '0' %}
+<script type="text/javascript">
+    alert('아이디와 패스워드를 확인해주세요.')
+    const id = document.querySelector('#userid');
+    id.focus();
+</script>
+{% endif %}
+<script type="text/javascript">
+
+    async function onSignIn(googleUser) {
+        let profile = googleUser.getBasicProfile();
+        console.log(profile);
+        let userid = await profile.getId()
+        let username = profile.getName()
+        console.log('image url:' + profile.getImageUrl());
+        console.log('email:' + profile.getEmail());
+        google22(userid, username)
+    }
+    function signOut() {
+        // console.log(gapi.auth2);
+        // let auth2 = gapi.auth2.getAuthInstance();
+        // console.log(auth2);
+        // auth2.signOut().then(function () {
+        //     console.log('User signed out');
+        // })
+        // auth2.disconnect();
+        google_out()
+    }
+
+    async function google22(id, name) {
+        let options = { method: "get" }
+        let url = `google?userid=${id}&username=${name}`
+        let result = await fetch(url, options);
+    }
+    async function google_out() {
+        let options = { method: "get" }
+        let url = `google_out`
+        let result = await fetch(url, options);
+        console.log(result);
+    }
+</script>
+
+
+{% include "../layout/bottom.html" %}
+
+
+
 <!-- 페이스북 로그인 버전 1  
     <ul id="face_in">
     <li onclick="fnFbCustomLogin()">
@@ -149,14 +212,3 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
                         토큰 : IGQVJVel91cjlnczFONEhFSlNZAUUd6cjNJZAUM3SndUbUNBSXEyWGF3UVczZAzlUMExHQmZASQlFpajVudjJWbG41dzRpY1dIbUZAXLS1qWE5yYmRMUUNDSy0xMUUtUWktUWE4WnBhR2RvUXEycmJFQ2FOWQZDZD
                         */
 </script> -->
-{% if flag == '0' %}
-<script type="text/javascript">
-
-
-    alert('아이디와 패스워드를 확인해주세요.')
-    const id = document.querySelector('#userid');
-    id.focus();
-</script>
-{% endif %}
-
-{% include "../layout/bottom.html" %}

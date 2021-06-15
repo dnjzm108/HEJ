@@ -13,7 +13,7 @@
     수정하기
     <div id="wrap">
         <div id="header">
-            <form action="/board/modify" method="POST" enctype="multipart/form-data">
+            <form action="/community/modify" method="POST" enctype="multipart/form-data">
                 <span>제목</span>
                 </br>
                 <input class="w500" type="text" name="title" id="title" value="{{modify.title}}">
@@ -24,9 +24,9 @@
                 </br>
                 <span>이미지</span>
                 </br>
-                <input type="hidden" name="board_image1" value="{{modify.board_image}}">
-                <img src="{{modify.board_image}}" style="width: 150px; height: 150px;">
-                <input type="file" name="board_image" id="board_image">
+                <input type="hidden" name="community_image1" value="{{modify.community_image}}">
+                <img src="{{modify.community_image}}" style="width: 150px; height: 150px;">
+                <input type="file" name="community_image" id="community_image">
                 </br>
                 <span>타입</span>
                 </br>
@@ -38,8 +38,8 @@
                 </br>
                 <input type="hidden" name="idx" id="idx" value={{modify.idx}}>
                 <input type="submit" value="수정하기">
-                <a href="/board">목록으로 가기</a>
-                <a href="/board/delete?idx={{idx}}">삭제하기</a>
+                <a href="/community">목록으로 가기</a>
+                <a href="/community/delete?idx={{idx}}">삭제하기</a>
             </form>
         </div>
     </div>
