@@ -236,6 +236,10 @@ let google_out = (req,res)=>{
 }
 res.redirect('/user/login');
 }
+
+let map = (req,res)=>{
+    res.render('./third/user/map.html')
+}
 module.exports = {
     index,
     join,
@@ -251,5 +255,6 @@ module.exports = {
     find_info,
     find_check,
     google,
-    google_out
+    google_out,
+    map
 }

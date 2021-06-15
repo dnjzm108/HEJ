@@ -74,6 +74,7 @@
             <a id="join_in" href="/user/join">회원가입</a>
             <a href="/user/find_info?flag=0">아이디 찾기</a>
             <a href="/user/find_info?flag=1">비밀번호 찾기</a>
+    
        
         </form>
         <!-- google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
@@ -83,6 +84,9 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
         <div id="google_in">
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
         </div>
+        <!-- 지도 -->
+        {% include "./map.html" %} 
+        
         {% endif %}
         {% if session != undefined %}
         {% if session.kakao %}

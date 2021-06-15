@@ -1,6 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>주소로 장소 표시하기</title>
+    
+</head>
+<body>
 
-  
 <div id="map" style="width:100%;height:350px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17a47a401a3bcdefe49701a43e303beb&libraries=services"></script>
 <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
@@ -15,7 +24,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var geocoder = new kakao.maps.services.Geocoder();
 
 // 주소로 좌표를 검색합니다
-geocoder.addressSearch('서울특별시 강동구 천호대로 995 금복빌딩', function(result, status) {
+geocoder.addressSearch('서울특별시 강동구 천호대로 995 금복빌딩 ', function(result, status) {
 
     // 정상적으로 검색이 완료됐으면 
      if (status === kakao.maps.services.Status.OK) {
@@ -39,3 +48,5 @@ geocoder.addressSearch('서울특별시 강동구 천호대로 995 금복빌딩'
     } 
 });    
 </script>
+</body>
+</html>
