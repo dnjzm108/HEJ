@@ -7,7 +7,6 @@ const { render } = require('nunjucks');
 
 let index = (req, res) => {
     let { uid1: userid } = req.session;
-    console.log(userid);
     res.render('./third/user/index', { userid })
 };
 
@@ -60,8 +59,6 @@ let info_pwcheck = async(req,res) =>{
     let result = await user.findOne(
         {where: {userid:uid1, userpw:hash}}
     )
-    console.log(result);
-
     if(result != null){
         //비밀번호 확인성공, result값이 db에 있을때
         res.redirect("/user/info?checked=1");       
@@ -80,11 +77,9 @@ let join_success = async (req, res) => {
     let hash = chash(userpw);
     let user_address = user_address1 + user_address2 + user_address3;
 
-    console.log('++++++++++++++++++++' + hash);
     let rst = await user.create({
         userid, userpw: hash, user_name, gender, user_number, userimage, user_email, user_address, user_birth
     });
-    console.log(user_address);
 
     res.render('./third/user/join_success', { userimage, user_name });
 };
@@ -94,7 +89,6 @@ let login_check = async (req, res) => {
 
     let hash = chash(userpw);
     let ctoken = token(userpw);
-    console.log("111111", userid, "2222222", hash)
     let result = await user.findOne({
         where: { userid, userpw: hash }
     });
@@ -106,9 +100,7 @@ let login_check = async (req, res) => {
     session.authData={
         ["local"]:authData
     }
-    console.log("---------",session.authData);
     let {onSignIn} = req.body;
-    console.log("-------",onSignIn);
     req.session.uid1 = userid;
     req.session.isLogin = true;
     req.session.userimage = '1623203467710.png';
@@ -124,7 +116,6 @@ let logout = (req, res) => {
 
 let userid_check = async (req, res) => {
     let userid = req.query.userid;
-    console.log("++++++++",userid)
     let result = await user.findOne({
         where: { userid }
     })
@@ -209,7 +200,6 @@ let find_check = async(req,res)=>{
     })
     flag = false;
     let {userid,userpw} = result.dataValues;
-    console.log("hiiiiiiiiiiiiiiii",userpw);
     const test =JSON.parse(Buffer.from(userpw,'base64').toString()); 
     if (check=="0"){
         res.render("./third/user/find_success.html",{
@@ -227,7 +217,6 @@ let google =(req,res)=>{
     let authData = {userid:userid,username:username}
     session.authData = {["google"]: authData};
     let result = JSON.stringify(session.authData)
-    console.log( '세션:'+result);
     res.redirect('/');
 }
 let google_out = (req,res)=>{

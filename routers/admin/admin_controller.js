@@ -1,4 +1,4 @@
-const { information, admin, hired: hiredTd, education, popup: popupTd, user , community:communityTd } = require('../../models/index');
+const { information, admin, hired: hiredTd, education, popup: popupTd, user, community: communityTd } = require('../../models/index');
 const moment = require('moment');
 const ctoken = require('../../jwt');
 const search = require('../../serach');
@@ -36,8 +36,8 @@ let login_success = async (req, res) => {
 
 /*========================WRITE PAGE========================*/
 let upload = (req, res) => {
-    let { title } = req.query;
-    res.render('./admin/upload.html', { title });
+    let { title,localUrl } = req.query;
+    res.render('./admin/upload.html', { title, localUrl });
 };
 
 let upload_success = async (req, res) => {
@@ -46,14 +46,14 @@ let upload_success = async (req, res) => {
     if (type != null) {
         res.redirect(`/admin/${localUrl}/${type}`);
     }
-    else{res.redirect(`/admin/${localUrl}`)}
+    else { res.redirect(`/admin/${localUrl}`) }
     /* 각각의 board로 redirect 될 수 있도록 */
 };
 
 /*========================VIEW PAGE========================*/
 
 let view = async (req, res) => {
-    let { id, table } = req.query;
+    let { id, table, localUrl } = req.query;
     let infoView = await search[table].findOne({ where: { id } })
     let infoList = infoView.dataValues;
     let infodate = moment(infoList.date).format("MMM Do YY");
@@ -61,17 +61,22 @@ let view = async (req, res) => {
         infoList,
         infodate,
         table,
+        localUrl
     });
 };
 
 let postDel = async (req, res) => {
-    let { id, table } = req.query;
-    await search[table].destroy({ where: { id } })
-    res.redirect(`/admin/${table}`);
+    let { id, table, localUrl } = req.query;
+    await search[table].destroy({ where: { id } });
+    if (localUrl == '') {
+        res.redirect(`/admin/${table}`);
+    } else {
+        res.redirect(`/admin/${table}/${localUrl}`);
+    }
 };
 
 let modify = async (req, res) => {
-    let { id, table } = req.query;  
+    let { id, table } = req.query;
     let modify_result = await search[table].findOne({ where: { id } });
     let moList = modify_result.dataValues;
     res.render('./admin/modify.html', {
@@ -99,113 +104,77 @@ let Information = async (req, res) => {
             visibility: v.visibility == 0 ? "invisible" : "visible"
         }
     });
-
     let idArr = '';
     infoList.forEach(v => {
         idArr += v.id + ','
     })
-    res.render('./admin/information.html', { infoList, idArr })
+    res.render('./admin/information.html', { infoList, idArr, localUrl })
 }
 
 /*============================== 취업정보 =============================== */
 
 let hired = async (req, res) => {
     let { localUrl } = req.params;
-
-    let page = (req.query.id == undefined) ? 1 : req.query.id;
-    let offset = (req.query.id == undefined) ? 0 : 9 * (page - 1);
-    let page_hired = [];
-
-    let resultsall = await hiredTd.findAll({ where: { type: `${localUrl}` } })
-    let totalrecord = resultsall.length;
-    let results = await hiredTd.findAll({
-        where: { type: `${localUrl}` },
-        limit: 9,
-        order: [['id', 'DESC']],
-        offset: offset
-    });
-    let total_page = Math.ceil(totalrecord / 9);
-    for (i = 1; i <= total_page; i++) {
-        page_hired.push(i);
-    };
-    let hiredid = []
-    let hiredtitle = []
-    let hireddate = []
-    let hiredcontent = []
-    let hiredRealId = []
-    results.forEach(ele => {
-        ele.num = totalrecord - offset;
-        totalrecord--;
-        hiredid.push(ele.num);
-        hiredtitle.push(ele.dataValues.title);
-        hireddate.push(moment(ele.dataValues.date).format("MMM Do YY"));
-        hiredcontent.push(ele.dataValues.content);
-        hiredRealId.push(ele.dataValues.id);
-    });
-    res.render('./admin/hired.html', {
-        pagination: page_hired,
-        hiredid,
-        hiredtitle,
-        hireddate,
-        hiredcontent,
-        hiredRealId,
-        localUrl,
-    });
-};
-
-/*======================== 교육과정 ============================*/
-let educationT = async (req, res) => {
-    let page = (req.query.id == undefined) ? 1 : req.query.id;
-    let offset = (req.query.id == undefined) ? 0 : 9 * (page - 1);
-    let page_hired = [];
-    let resultsall = await education.findAll({})
-    let totalrecord = resultsall.length;
-    let total_page = Math.ceil(totalrecord / 9);
-    for (i = 1; i <= total_page; i++) {
-        page_hired.push(i);
-    };
-    let result = await education.findAll({
-        raw: true,
-        limit: 9,
-        order: [['id', 'DESC']],
-        offset: offset,
-    });
-    let newid = [];
-    result.forEach(ele => {
-        ele.num = totalrecord - offset;
-        totalrecord--;
-        newid.push(ele.num);
-    })
-    let edList = result.map(v => {
+    let { id } = req.query;
+    let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'hired' }
+    let pagin = await pagination(page);
+    let result = pagin.result;
+    let hireList = result.map(v => {
+        v.num = pagin.totalrecord - pagin.offset;
+        pagin.totalrecord--;
         return {
             ...v,
             date: moment(v.date).format("MMM Do YY")
         }
+    })
+    res.render('./admin/hired.html', {
+        pagin: pagin.page_hired,
+        hireList,
+        localUrl
+    })
+};
+
+/*======================== 교육과정 ============================*/
+let educationT = async (req, res) => {
+    let { id } = req.query;
+    let page = { id: `${id}`, table: 'education' };
+    let pagin = await pagination(page);
+    let result = pagin.result;
+    let edList = result.map(v => {
+        v.num = pagin.totalrecord - pagin.offset;
+        pagin.totalrecord--;
+        return {
+            ...v,
+            date: moment(v.date).format("MMM Do YY"),
+            num: v.num
+        }
     });
-    res.render('./admin/education.html', {
+    res.render('./admin/education.html',{
         edList,
-        pagination: page_hired,
-        newid,
-    });
+        pagin:pagin.page_hired,
+    })
 };
 
 /*========================= 팝업 게시판 ================================= */
 
 let popup = async (req, res) => {
-    let {id} = req.query;
-    let page = { id:`${id}`, table:'popup' }
+    let { id } = req.query;
+    let page = { id: `${id}`, table: 'popup' }
     let pagin = await pagination(page);
     let result = pagin.result;
     let popupList = result.map(v => {
+        v.num = pagin.totalrecord - pagin.offset;
+        pagin.totalrecord--;
         return {
             ...v,
             image: v.image.replace('public', ''),
             date: moment(v.date).format("MMM Do YY"),
-            visibility: v.visibility == 0 ? "invisible" : "visible"
+            visibility: v.visibility == 0 ? "invisible" : "visible",
+            num: v.num
         }
     })
     res.render('./admin/popup.html', {
-        pagin:pagin.page_hired,
+        pagin: pagin.page_hired,
         popupList
     })
 };
@@ -235,32 +204,39 @@ let popup_view = async (req, res) => {
 /*========================= 회원관리 ================================= */
 
 let user_admin = async (req, res) => {
-    let result = await user.findAll({ raw: true });
+    let { id } = req.query;
+    let page = { id: `${id}`, table: 'user' }
+    let pagin = await pagination(page);
+    let result = pagin.result;
     let userList = result.map(v => {
+        v.num = pagin.totalrecord - pagin.offset;
+        pagin.totalrecord--;
         return {
             ...v,
             userdt: moment(v.userdt).format("MMM Do YY"),
+            num: v.num
         }
-    })
-    res.render('./admin/user_admin', { userList });
+    });
+    res.render('./admin/user_admin', { userList, pagin:pagin.page_hired });
 }
 
 let user_view = async (req, res) => {
     let { id } = req.query;
     let image = req.file == undefined ? '' : req.file.path;
-    let result = await user.findAll({ where: { id },raw:true });
+    let result = await user.findAll({ where: { id }, raw: true });
     /* map은 배열에만 사용가능하다 */
-    let userResult = result.map(v=>{
-        return {...v,
+    let userResult = result.map(v => {
+        return {
+            ...v,
             userdt: moment(v.userdt).format("MMM Do YY"),
-            userimage: v.userimage.replace('public','')
+            userimage: v.userimage.replace('public', '')
         }
     });
     let userList = userResult.pop();
     res.render('./admin/user_view.html', { userList })
 }
 
-let authority = async(req,res)=>{
+let authority = async (req, res) => {
     let { authority_level, userid } = req.body;
     await user.update({ authority_level }, { where: { userid } });
     res.redirect('/admin/user')
@@ -268,10 +244,10 @@ let authority = async(req,res)=>{
 
 /* ===================== 커뮤니티 게시판 ========================= */
 
-let community = async(req,res)=>{
-    let {localUrl} = req.params;
-    let {id} = req.query;
-    let page = { localUrl:`${localUrl}`, id:`${id}`, table:'community' }
+let community = async (req, res) => {
+    let { localUrl } = req.params;
+    let { id } = req.query;
+    let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'community' }
     let pagin = await pagination(page);
     let result = pagin.result;
     let commList = result.map(v => {
@@ -280,11 +256,11 @@ let community = async(req,res)=>{
         return {
             ...v,
             write_date: moment(v.write_date).format("MMM Do YY"),
-            num:v.num
+            num: v.num
         }
     })
-    res.render('./admin/community.html',{
-        pagin:pagin.page_hired,
+    res.render('./admin/community.html', {
+        pagin: pagin.page_hired,
         commList,
         localUrl
     });

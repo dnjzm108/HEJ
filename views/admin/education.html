@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDUCATION</title>
-    <link rel="stylesheet" href="/css/info/index.css">
+    <link rel="stylesheet" href="/css/info/item.css">
     <link rel="stylesheet" href="/css/info/list.css">
     <style>
         a {
@@ -45,12 +45,12 @@
                         <td>Writer</td>
                         <td>Date</td>
                     </tr>
-                    {% for index in range(newid.length) %}
+                    {% for item in edList %}
                     <tr>
-                        <td>{{newid[index]}}</td>
-                        <td><a style="color: #fff;" href="/admin/view?id={{edList[index].id}}&table=education">{{edList[index].title}}</a></td>
+                        <td>{{item.num}}</td>
+                        <td><a style="color: #fff;" href="/admin/view?id={{item.id}}&table=education">{{item.title}}</a></td>
                         <td>writer</td>
-                        <td>{{edList[index].date}}</td>
+                        <td>{{item.date}}</td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -59,7 +59,7 @@
         
         <div class="footer center">
             <div id="pagenation">
-                {% for item in pagination %}
+                {% for item in pagin %}
                 <a style="border: none;" href="/admin/education?id={{item}}">{{item}}</a>
                 {% endfor %}
             </div>

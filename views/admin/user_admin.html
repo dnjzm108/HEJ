@@ -48,7 +48,7 @@
                     </tr>
                     {% for item in userList %}
                     <tr>
-                        <td>{{item.id}}</td>
+                        <td>{{item.num}}</td>
                         <td><a style="color: #fff" href="/admin/user_view?id={{item.id}}&table=user">{{item.userid}}</a></td>
                         <td>{{item.authority_level}}</td>
                         <td>{{item.userdt}}</td>
@@ -59,7 +59,7 @@
         </div>
         <div class="footer center">
             <div id="pagenation">
-                {% for item in pagination %}
+                {% for item in pagin %}
                 <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
                 {% endfor %}
             </div>
