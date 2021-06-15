@@ -114,7 +114,7 @@ let main = (req, res) => {
     if(session.authData != null){
         console.log(session.authData);
     }
-    res.render('./main/test.html', {
+    res.render('./main/main.html', {
         id, pw
     })
 }
@@ -173,17 +173,17 @@ let community_write_send = async (req, res) => {
     res.redirect('/community')
 }
 let community_view = async (req, res) => {
-    let idx = req.query.idx;
+    let id = req.query.id;
     let result = await community.findAll({
-        where: { idx }
+        where: { id }
     })
    
     let view = result[0].dataValues;
     let hitNum = await community.update({
         hit: view.hit + 1
-    }, { where: { idx } });
+    }, { where: { id } });
     let see = await comment.findAll({
-        where: { idx }
+        where: { idx:id }
     });
     let dt = moment(view.write_date).format('YYYY년 MM월 DD일 hh:mm a')
     let userid;
@@ -198,52 +198,52 @@ let community_view = async (req, res) => {
     }
 
     res.render('./main/community/view.html', {
-        view, idx, userid, see,dt
+        view, id, userid, see,dt
     })
 }
 
 let community_modify = async (req, res) => {
-    let idx = req.query.idx;
+    let id = req.query.id;
     let result = await community.findAll({
-        where: { idx }
+        where: { id }
     })
     let modify = result[0].dataValues;
     res.render('./main/community/modify.html', {
-        modify, idx
+        modify, id
     })
 }
 let community_modify_send = async (req, res) => {
-    let { title, userid, content, type, idx,community_image1} = req.body;
+    let { title, userid, content, type, id,community_image1} = req.body;
     let community_image = req.file == undefined ? community_image1 : `/uploads/community/${req.file.filename}`;
     console.log('modify : '+ community_image);
     console.log('dkdk'+community_image);
     console.log('aaa');
     let modify = await community.update({
         title, userid, content, community_image, type
-    }, { where: { idx } });
-    res.redirect(`/community/view?idx=${idx}`);
+    }, { where: { id } });
+    res.redirect(`/community/view?id=${id}`);
 }
 let community_delete = async (req, res) => {
-    let idx = req.query.idx
-    let result = await community.destroy({ where: { idx } });
+    let id = req.query.id
+    let result = await community.destroy({ where: { id } });
     res.redirect('/community');
 }
 //  community end
 
 //comment start
 let comment_send = async (req, res) => {
-    let { userid, content, idx } = req.body;
+    let { userid, content,id} = req.body;
     let result = await comment.create({
-        userid, content, idx
+        userid, content,idx:id
     })
-    res.redirect(`/community/view?idx=${idx}`);
+    res.redirect(`/community/view?id=${id}`);
 }
 let comment_delete = async (req, res) => {
-    let { id, idx } = req.query;
+    let { id,idx } = req.query;
     let result = await comment.destroy({
         where: { id }
     })
-    res.redirect(`/community/view?idx=${idx}`)
+    res.redirect(`/community/view?id=${idx}`)
 }
 
 let comment_modify = async (req, res) => {

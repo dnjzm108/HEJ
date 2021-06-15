@@ -20,7 +20,7 @@
                 </br>
                 <span>작성자</span>
                 </br>
-                <input class="w500" type="text" name="userid" id="userid" value="{{modify.userid}}">
+                {{modify.userid}} 님
                 </br>
                 <span>이미지</span>
                 </br>
@@ -36,10 +36,10 @@
                 </br>
                 <input class="w500" type="text" name="content" id="content" value="{{modify.content}}">
                 </br>
-                <input type="hidden" name="idx" id="idx" value={{modify.idx}}>
+                <input type="hidden" name="id" id="id" value={{modify.id}}>
                 <input type="submit" value="수정하기">
                 <a href="/community">목록으로 가기</a>
-                <a href="/community/delete?idx={{idx}}">삭제하기</a>
+                <a href="/community/delete?id={{id}}">삭제하기</a>
             </form>
         </div>
     </div>
