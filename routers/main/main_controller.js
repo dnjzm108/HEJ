@@ -114,7 +114,7 @@ let main = (req, res) => {
     if(session.authData != null){
         console.log(session.authData);
     }
-    res.render('./main/test.html', {
+    res.render('./main/main.html', {
         id, pw
     })
 }

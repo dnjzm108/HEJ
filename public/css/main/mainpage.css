@@ -1,7 +1,6 @@
 *{
     margin:0;
     padding:0;
-    overflow: hidden;
 }
 
 ul,li{
@@ -13,7 +12,7 @@ a{
 }
 
 #wrap{
-    position: relative;
+ 
     width: 100vw;
     height: 100vh;
 }
@@ -47,6 +46,100 @@ a{
     font-size: 5vh;
     color: #2e2b2bd7 ;
 }
+/* square start */
+#gnb{
+    display: inline-block;
+    width: 73vw;
+    height: 100vh;
+}
+#square{
+    width: 400px;
+    height: 400px;
+    margin: 30vh auto 0;
+    position: relative; 
+    transform: rotateX(10deg) rotateY(10deg) rotateZ(10deg);
+    /* animation: rint 3s linear 0s infinite; */
+    transform-style: preserve-3d;
+
+    /* animation-name: rint ;
+    animation-duration:3s ;
+    animation-timing-function: inherit;
+    animation-delay: 0s;
+    animation-iteration-count: infinite; */
+}
+@keyframes rint{
+    from{
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    to{
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+
+#square>div{
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    /* opacity: 0.3; */
+    /* backface-visibility: hidden; */
+    /* opacity: 0.3; */
+}
+
+#square > div:nth-child(1){
+    transform: rotateY(0deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+#square > div:nth-child(2){
+    transform: rotateY(90deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+#square > div:nth-child(3){
+    transform: rotateY(180deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+#square > div:nth-child(4){
+    transform: rotateY(270deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+#square > div:nth-child(5){
+    transform: rotateX(90deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+    
+}
+#square > div:nth-child(6){
+    transform: rotateX(270deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+#square > div:nth-child(1):hover{
+   background: silver;
+   opacity: 0.3;
+}
+#square > div:nth-child(2):hover{
+  background: silver;
+  opacity: 0.3;
+}
+#square > div:nth-child(3):hover{
+   background: silver;
+   opacity: 0.3;
+}
+#square > div:nth-child(4):hover{
+    background: silver;
+    opacity: 0.3;
+}
+#square > div:nth-child(5):hover{
+      background: silver;
+      opacity: 0.3;
+}
+#square > div:nth-child(6):hover{
+    background: silver;
+    opacity: 0.3;
+}
+
+/* square end */
+
+
+
+
 
 #apply_btn{
     right: 5vh;

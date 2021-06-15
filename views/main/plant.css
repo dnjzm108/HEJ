@@ -73,6 +73,7 @@ section{
     width: 400px;
     height: 400px;
     position: relative;
+
     /* animation: rint 3s linear 0s infinite; */
     transform-style: preserve-3d;
 
