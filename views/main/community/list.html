@@ -27,12 +27,12 @@
                 </tr>
                 {% for item in result %}
                 <tr>
-                    <td><a href="/community/view?idx={{item.idx}}">{{item.title}}</a></td>
-                    <td><a href="/community/view?idx={{item.idx}}">{{item.userid}}</a></td>
-                    <td><a href="/community/view?idx={{item.idx}}">{{item.write_date}}</a></td>
-                    <td><a href="/community/view?idx={{item.idx}}">{{item.content}}</a></td>
-                    <td><a href="/community/view?idx={{item.idx}}">{{item.hit}}</a></td>
-                    <td><a href="/community/view?idx={{item.idx}}">{{item.type}}</a></td>
+                    <td><a href="/community/view?id={{item.id}}">{{item.title}}</a></td>
+                    <td><a href="/community/view?id={{item.id}}">{{item.userid}}</a></td>
+                    <td><a href="/community/view?id={{item.id}}">{{item.write_date}}</a></td>
+                    <td><a href="/community/view?id={{item.id}}">{{item.content}}</a></td>
+                    <td><a href="/community/view?id={{item.id}}">{{item.hit}}</a></td>
+                    <td><a href="/community/view?id={{item.id}}">{{item.type}}</a></td>
                 </tr>
                 {% endfor %}
             </table>

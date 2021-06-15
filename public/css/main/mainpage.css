@@ -1,0 +1,230 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+ul,li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+#wrap{
+ 
+    width: 100vw;
+    height: 100vh;
+}
+
+#menu{
+    display: inline-block;
+    width:25vw;
+    height: 100vh;
+    background-color: #ededed;
+    margin-left: 0px;
+    text-align: center;
+}
+
+#menu > ul{
+    width: 25vw;
+    position:absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    vertical-align: middle;
+}
+
+#menu > ul > li {
+    padding: 5vh;
+}
+
+#menu > ul > li:hover > a{
+    color: #000;
+}
+
+#menu > ul > li > a{
+    font-size: 5vh;
+    color: #2e2b2bd7 ;
+}
+/* square start */
+#gnb{
+    display: inline-block;
+    width: 73vw;
+    height: 100vh;
+}
+#square{
+    width: 400px;
+    height: 400px;
+    margin: 30vh auto 0;
+    position: relative; 
+    transform: rotateX(10deg) rotateY(10deg) rotateZ(10deg);
+    /* animation: rint 3s linear 0s infinite; */
+    transform-style: preserve-3d;
+
+    /* animation-name: rint ;
+    animation-duration:3s ;
+    animation-timing-function: inherit;
+    animation-delay: 0s;
+    animation-iteration-count: infinite; */
+}
+@keyframes rint{
+    from{
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    to{
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+
+#square>div{
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    /* opacity: 0.3; */
+    /* backface-visibility: hidden; */
+    /* opacity: 0.3; */
+}
+
+#square > div:nth-child(1){
+    transform: rotateY(0deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+#square > div:nth-child(2){
+    transform: rotateY(90deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+#square > div:nth-child(3){
+    transform: rotateY(180deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+#square > div:nth-child(4){
+    transform: rotateY(270deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+#square > div:nth-child(5){
+    transform: rotateX(90deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+    
+}
+#square > div:nth-child(6){
+    transform: rotateX(270deg) translate3d(0px, 0px, 200px);
+    border: 1px solid black;
+}
+#square > div:nth-child(1):hover{
+   background: silver;
+   opacity: 0.3;
+}
+#square > div:nth-child(2):hover{
+  background: silver;
+  opacity: 0.3;
+}
+#square > div:nth-child(3):hover{
+   background: silver;
+   opacity: 0.3;
+}
+#square > div:nth-child(4):hover{
+    background: silver;
+    opacity: 0.3;
+}
+#square > div:nth-child(5):hover{
+      background: silver;
+      opacity: 0.3;
+}
+#square > div:nth-child(6):hover{
+    background: silver;
+    opacity: 0.3;
+}
+
+/* square end */
+
+
+
+
+
+#apply_btn{
+    right: 5vh;
+    bottom: 0;
+    position: absolute;
+    float: right;
+    text-align: center;
+    width: 5vw;
+    height: 4vh;
+    padding: 1vh;
+    font-size: 1.5vh;
+    box-sizing: border-box;
+    background-color: #ededed;
+    color: #2e2b2bd7;
+}
+
+#apply_btn:hover{
+    transition: all 0.8s;
+    background-color: #2e2b2b5d;
+    cursor: pointer;
+}
+
+#apply_form{
+    position: absolute;
+    right: 3vh;
+    height: 40vh;
+    width: 18vw;
+    padding: 3vh;
+    box-sizing: border-box;
+    background-color: #ededed;
+    color: #2e2b2bd7;
+}
+
+.apply_open{
+    animation: slideopen 2s;
+    animation-fill-mode: forwards;
+}
+
+.btn_open{
+    animation: btnopen 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slideopen{
+    from{
+        bottom: -40vh;
+    }
+    to{
+        bottom: 0;
+    }
+}
+
+@keyframes btnopen{
+    from{
+        bottom: 0px;
+    }
+    to{
+        bottom: 40vh;
+    }
+}
+
+.apply_close{
+    animation: slideclose 2s;
+    animation-fill-mode: forwards;
+}
+
+.btn_close{
+    animation: btnclose 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slideclose{
+    from{
+        bottom: 0px;
+    }
+    to{
+        bottom: -40vh;
+    }
+}
+
+@keyframes btnclose{
+    from{
+        bottom: 40vh;
+    }
+    to{
+        bottom: 0px;
+    }
+}
