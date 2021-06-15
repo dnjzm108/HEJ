@@ -1,10 +1,10 @@
 const express =require('express');
 const router = express.Router();
-const adminRouter = require('./admin/index');
+const admin = require('./admin/index');
 const main = require('./main/main');
 const user = require('./third');
 
-router.use('/admin',adminRouter);
+router.use('/admin',admin);
 router.use('/user',user);
 router.use('/',main);
 

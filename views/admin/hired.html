@@ -53,12 +53,12 @@
                         <td>Writer</td>
                         <td>Date</td>
                     </tr>
-                    {% for item in range(hiredid.length) %}
+                    {% for item in hireList %}
                     <tr>
-                        <td>{{hiredid[item]}}</td>
-                        <td><a style="color: #fff;" href="/admin/view?id={{hiredRealId[item]}}&table=hired">{{hiredtitle[item]}}</a></td>
+                        <td>{{item.num}}</td>
+                        <td><a style="color: #fff;" href="/admin/view?id={{item.id}}&table=hired&localUrl={{localUrl}}">{{item.title}}</a></td>
                         <td>writer</td>
-                        <td>{{hireddate[item]}}</td>
+                        <td>{{item.date}}</td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -66,11 +66,11 @@
         </div>
         <div class="footer center">
             <div id="pagenation">
-                {% for item in pagination %}
+                {% for item in pagin %}
                 <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
                 {% endfor %}
             </div>
-            <a class="write_btn btn" href="/admin/upload?title=hired">WRITE</a>
+            <a class="write_btn btn" href="/admin/upload?title=hired&localUrl={{localUrl}}">WRITE</a>
             <a class="main_btn btn" href="/admin/main">MAIN</a>
         </div>
     </div>
