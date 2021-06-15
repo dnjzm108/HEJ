@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,7 +68,7 @@
                 <textarea id="content{{item.id}}" style="display: none;">{{item.content}}</textarea>
                 {% endfor %}
             </div>
-            <a href="/admin/upload?title=information">WRITE</a>
+            <a href="/admin/upload?title=information&localUrl={{localUrl}}">WRITE</a>
             <a class="main_btn btn" href="/admin/main">MAIN</a>
         </div>
     </div>

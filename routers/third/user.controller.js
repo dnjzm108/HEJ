@@ -101,7 +101,7 @@ let login_check = async (req, res) => {
     session.authData = {
         ["local"]: authData
     }
-    let { onSignIn } = req.body;
+    let {onSignIn} = req.body;
     req.session.uid1 = userid;
     req.session.isLogin = true;
     req.session.userimage = '1623203467710.png';
