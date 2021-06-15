@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../public/css/main/mainpage.css">
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="menu">
+            <ul>
+                <li><a href="#">MENU</a></li>
+                <li><a href="#">MENU</a></li>
+                <li><a href="#">MENU</a></li>
+                <li><a href="#">MENU</a></li>
+                <li><a href="#">MENU</a></li>
+            </ul>
+        </div>
+        <div id="apply_btn">상담신청</div>
+    </div>
+    
+    <div id="apply_form">
+        <label for="name">name</label>
+        <input id="name" type="text"><br/>
+        <label for="age">age</label>
+        <input id="age" type="text">
+    </div>
+    <script type="text/javascript">
+        const apply_btn = document.querySelector('#apply_btn');
+        const apply_from = document.querySelector('#apply_form');
+        let flag = 0;
+        apply_btn.addEventListener('click',()=>{
+            if(flag == 0){
+                apply_btn.setAttribute('class','btn_open');
+                apply_from.setAttribute('class','apply_open');
+                flag = 1;
+            }else if (flag == 1){
+                apply_btn.setAttribute('class','btn_close');
+                apply_from.setAttribute('class','apply_close');
+                flag = 0;
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+*{
+    margin:0;
+    padding:0;
+    overflow: hidden;
+}
+
+ul,li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+#wrap{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#menu{
+    display: inline-block;
+    width:25vw;
+    height: 100vh;
+    background-color: #ededed;
+    margin-left: 0px;
+    text-align: center;
+}
+
+#menu > ul{
+    width: 25vw;
+    position:absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    vertical-align: middle;
+}
+
+#menu > ul > li {
+    padding: 5vh;
+}
+
+#menu > ul > li:hover > a{
+    color: #000;
+}
+
+#menu > ul > li > a{
+    font-size: 5vh;
+    color: #2e2b2bd7 ;
+}
+
+#apply_btn{
+    right: 5vh;
+    bottom: 0;
+    position: absolute;
+    float: right;
+    text-align: center;
+    width: 5vw;
+    height: 4vh;
+    padding: 1vh;
+    font-size: 1.5vh;
+    box-sizing: border-box;
+    background-color: #ededed;
+    color: #2e2b2bd7;
+}
+
+#apply_btn:hover{
+    transition: all 0.8s;
+    background-color: #2e2b2b5d;
+    cursor: pointer;
+}
+
+#apply_form{
+    position: absolute;
+    right: 3vh;
+    height: 40vh;
+    width: 18vw;
+    padding: 3vh;
+    box-sizing: border-box;
+    background-color: #ededed;
+    color: #2e2b2bd7;
+}
+
+.apply_open{
+    animation: slideopen 2s;
+    animation-fill-mode: forwards;
+}
+
+.btn_open{
+    animation: btnopen 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slideopen{
+    from{
+        bottom: -40vh;
+    }
+    to{
+        bottom: 0;
+    }
+}
+
+@keyframes btnopen{
+    from{
+        bottom: 0px;
+    }
+    to{
+        bottom: 40vh;
+    }
+}
+
+.apply_close{
+    animation: slideclose 2s;
+    animation-fill-mode: forwards;
+}
+
+.btn_close{
+    animation: btnclose 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slideclose{
+    from{
+        bottom: 0px;
+    }
+    to{
+        bottom: -40vh;
+    }
+}
+
+@keyframes btnclose{
+    from{
+        bottom: 40vh;
+    }
+    to{
+        bottom: 0px;
+    }
+}
