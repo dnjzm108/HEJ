@@ -63,6 +63,14 @@ a{
     text-align: center;
 }
 
+#atags{
+    margin-top: 20px;
+    width: auto;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
 #atags > a{
     display: inline-block;
     width: auto;

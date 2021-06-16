@@ -16,7 +16,11 @@ const upload = multer({
     })
 });
 
-
+router.use('/view',controller.view);
+router.use('/education/:localUrl',controller.education);
+router.use('/education',controller.education);
+router.use('/hired/:localUrl',controller.hired);
+router.use('/hired',controller.hired);
 router.use('/information/:localUrl',controller.information);
 router.use('/information',controller.information);
 
@@ -34,7 +38,8 @@ router.post('/community/modify',upload.single('community_image'),controller.comm
 router.get('/community/modify',controller.community_modify)
 router.post('/community/write',upload.single('community_image'),controller.community_write_send)
 router.get('/community/write',login_check,controller.community_write)
-router.get ('/community',controller.community_list)
+router.use ('/community/:localUrl',controller.community_list);
+router.use ('/community',controller.community_list);
 router.post('/community/comment',controller.comment_send)
 router.get('/comment/delete',controller.comment_delete)
 router.post('/community/comment/modify',controller.comment_modify);
