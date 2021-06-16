@@ -12,7 +12,13 @@ client password : wMc8se_eBobJrH2EN-r3JF6z
 const axios = require('axios');
 const qs = require('qs');
 const moment = require('moment');
-const session = require('express-session')
+const session = require('express-session');
+const express = require('express');
+const app = express();
+const socket = require ('socket.io');
+const http = require ('http');
+const server = http.createServer(app);
+const io = socket(server);
 const { community, user, sequelize, qanda, comment } = require('../../models');
 const search = require('../../serach');
 const pagination = require('../../pagination');
@@ -272,59 +278,26 @@ let comment_modify = async (req, res) => {
 }
 //comment end
 
-let qanda_list = async (req, res) => {
-    let result = await qanda.findAll({});
-    res.render('./main/qanda/qanda_list.html', {
-        result
-    });
-}
-
-let qanda_aply = (req, res) => {
-    res.render('./main/qanda/qanda_write.html')
-}
-let qanda_send = async (req, res) => {
-    let { write_name, gender, age, email, pone_number, content } = req.body;
-    let result = await qanda.create({
-        write_name, gender, age, email, pone_number, content
-    })
-    res.redirect('/qanda/list')
-}
-let qanda_view = async (req, res) => {
-    let id = req.query.id;
-    let result = await qanda.findAll({
-        where: { id }
-    })
-    let view = result[0].dataValues;
-    res.render('./main/qanda/qanda_view', {
-        view, id
-    });
-}
-let qanda_modify = async (req, res) => {
-    let id = req.query.id;
-    let result = await qanda.findAll({
-        where: { id }
-    })
-    let modify = result[0].dataValues;
-    res.render('./main/qanda/qanda_modify.html', {
-        modify, id
-    })
-}
-let qanda_modify_send = async (req, res) => {
-    let { write_name, gender, age, email, pone_number, content, id } = req.body;
-    let modify = await qanda.update({
-        write_name, gender, age, email, pone_number, content
-    }, { where: { id } });
-    res.redirect(`/qanda/view?id=${id}`);
-}
-let qanda_delete = async (req, res) => {
-    let id = req.query.id
-    let result = await qanda.destroy({ where: { id } });
-    res.redirect('/qanda/list');
-}
 let test = (req, res) => {
     res.render('./main/test.html');
 }
 
+let chat = (req,res) =>{
+    let {kakao,local,google} = session.authData;
+    let name ;
+    if(local != undefined){
+       name = session.authData.local.userid;
+    }if(kakao != undefined){
+        name = kakao.properties.nickname;
+    }if(google != undefined){
+        name = google.username;
+    }
+    res.render('./main/chat.html',{
+        name
+    });
+   
+}
+  
 let information = async (req,res)=>{
     let { localUrl } = req.params;
 
@@ -411,19 +384,13 @@ module.exports = {
     community_modify_send,
     community_view,
     community_delete,
-    qanda_aply,
-    qanda_send,
-    qanda_list,
-    qanda_view,
-    qanda_modify,
-    qanda_modify_send,
-    qanda_delete,
     test,
     info,
     kakao_logout,
     comment_send,
     comment_delete,
     comment_modify,
+    chat,
     information,
     hired,
     education,
