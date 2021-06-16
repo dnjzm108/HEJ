@@ -1,0 +1,41 @@
+</div>
+
+<script type="text/javascript">
+    const logo = document.querySelector('#logo');
+    const contentWrap = document.querySelector('#content_wrap');
+    const content = document.querySelector('#content')
+
+    const header = document.querySelector('#header');
+    const subHeader = document.querySelector('#sub_header');
+    header.addEventListener('mouseover', () => {
+        subHeader.setAttribute('class', 'header_open');
+    })
+    subHeader.addEventListener('mouseover', () => {
+        subHeader.setAttribute('class', 'header_open');
+    })
+    subHeader.addEventListener('mouseout', () => {
+        subHeader.setAttribute('class', 'header_close');
+    })
+
+    const wrap = document.getElementById('wrap')
+    let flag2 = 0;
+    logo.addEventListener('click', () => {
+        for (i = 0; i < 10; i++) {
+            setTimeout(() => {
+                if (flag2 == 0) {
+                    wrap.setAttribute('style', 'background-color:#000; color:#fff');
+                    flag2 = 1;
+                } else {
+                    wrap.setAttribute('style', 'background-color:#fff; color:#000');
+                    flag2 = 0;
+                }
+            }, 500 * i);
+        }
+    });
+</script>
+</body>
+
+</html>
+</body>
+
+</html>

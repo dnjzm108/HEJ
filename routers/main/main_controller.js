@@ -20,6 +20,10 @@ const http = require ('http');
 const server = http.createServer(app);
 const io = socket(server);
 const { community, information, user, sequelize, comment } = require('../../models');
+const session = require('express-session')
+const { community, user, sequelize, qanda, comment } = require('../../models');
+const search = require('../../serach');
+const pagination = require('../../pagination');
 
 
 const kakao = {
@@ -128,13 +132,12 @@ let login = (req, res) => {
     let id = req.body.id;
     let pw = req.body.pw;
     let pw_check = req.body.pw_check;
-    console.log('id:' + id, 'pw:' + pw, 'pw_check:' + pw_check);
     res.redirect(`/?id=${id}&pw=${pw}`);
 }
 // community start
 
 let community_list = async (req, res) => {
-    let result = await community.findAll({ raw: true });
+    // let result = await community.findAll({ raw: true });
     //    let arr = []
     //       result.forEach(v => {
     //          arr.push(v.dataValues.write_date);
@@ -143,16 +146,36 @@ let community_list = async (req, res) => {
     //      console.log(arr);
     //      let dt = moment(arr).format('YYYY년 MM월 DD일')
     //      console.log(dt);
-    let arr = result.map(v => {
+    // let arr = result.map(v => {
+    //     return {
+    //         ...v,
+    //         write_date: moment(v.write_date).format('YYYY년 MM월 DD일 hh:mm a')
+    //     }
+    // })
+    // console.log("++++++++++++"+arr);
+    // res.render('./main/community/list.html', {
+    //     result: arr
+    // })
+    let { localUrl } = req.params;
+    let { id } = req.query;
+    let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'community' }
+    let pagin = await pagination(page);
+    let result = pagin.result;
+    let commList = result.map(v => {
+        v.num = pagin.totalrecord - pagin.offset;
+        pagin.totalrecord--;
         return {
             ...v,
-            write_date: moment(v.write_date).format('YYYY년 MM월 DD일 hh:mm a')
+            write_date: moment(v.write_date).format("MMM Do YY"),
+            num: v.num
         }
     })
-    console.log("++++++++++++"+arr);
-    res.render('./main/community/list.html', {
-        result: arr
-    })
+    res.render('./main/menu/community_list.html', {
+        pagin: pagin.page_hired,
+        commList,
+        localUrl
+    });
+
 }
 let community_write = (req, res) => {
     let userid;
@@ -170,7 +193,6 @@ let community_write = (req, res) => {
 let community_write_send = async (req, res) => {
     let { title, userid, content, type } = req.body;
     let community_image = req.file == undefined ? '' : `/uploads/community/${req.file.filename}`;
-    console.log(community_image);
     let write = await community.create({
         title, userid, content, community_image, type,
         hit: 0,
@@ -221,8 +243,6 @@ let community_modify_send = async (req, res) => {
     let { title, userid, content, type, id,community_image1} = req.body;
     let community_image = req.file == undefined ? community_image1 : `/uploads/community/${req.file.filename}`;
     console.log('modify : '+ community_image);
-    console.log('dkdk'+community_image);
-    console.log('aaa');
     let modify = await community.update({
         title, userid, content, community_image, type
     }, { where: { id } });
@@ -253,12 +273,9 @@ let comment_delete = async (req, res) => {
 
 let comment_modify = async (req, res) => {
     let { id,content } = req.body;
-    console.log(id);
-    console.log(content);
     let result = await comment.update({
         content
     }, { where: { id } });
-    console.log('result:'+result);
     res.redirect('/community');
 }
 //comment end
@@ -278,6 +295,79 @@ let chat = (req,res) =>{
    
 }
   
+let information = async (req,res)=>{
+    let { localUrl } = req.params;
+
+    let resultsall = await search['information'].findAll({ where: { type: `${localUrl}` }, raw: true });
+
+    let infoList = resultsall.map(v => {
+        return {
+            ...v,
+            date: moment(v.date).format("MMM Do YY"),
+            visibility: v.visibility == 0 ? "invisible" : "visible"
+        }
+    });
+    let idArr = '';
+    infoList.forEach(v => {
+        idArr += v.id + ','
+    })
+    res.render('./main/menu/information_list.html', { infoList, idArr, localUrl })
+}
+
+let hired = async (req,res)=>{
+    let { localUrl } = req.params;
+    let { id } = req.query;
+    let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'hired' }
+    let pagin = await pagination(page);
+    let result = pagin.result;
+    let hireList = result.map(v => {
+        v.num = pagin.totalrecord - pagin.offset;
+        pagin.totalrecord--;
+        return {
+            ...v,
+            date: moment(v.date).format("MMM Do YY")
+        }
+    })
+    res.render('./main/menu/hired_list.html', {
+        pagin: pagin.page_hired,
+        hireList,
+        localUrl
+    })
+}
+
+let education = async (req,res)=>{
+    let {id} = req.query;
+    let page = { id: `${id}`, table: 'education' };
+    let pagin = await pagination(page);
+    let result = pagin.result;
+    let edList = result.map(v => {
+        v.num = pagin.totalrecord - pagin.offset;
+        pagin.totalrecord--;
+        return {
+            ...v,
+            date: moment(v.date).format("MMM Do YY"),
+            num: v.num
+        }
+    });
+    res.render('./main/menu/education.html',{
+        edList,
+        pagin:pagin.page_hired,
+    })
+}
+
+let view = async(req,res)=>{
+    let { id, table, localUrl } = req.query;
+    let infoView = await search[table].findOne({ where: { id } })
+    let infoList = infoView.dataValues;
+    let infodate = moment(infoList.date).format("MMM Do YY");
+    res.render('./main/menu/menu_view.html', {
+        infoList,
+        infodate,
+        table,
+        localUrl
+    });
+}
+
 module.exports = {
     main,
     kakao_in,
@@ -297,5 +387,9 @@ module.exports = {
     comment_send,
     comment_delete,
     comment_modify,
-    chat
+    chat,
+    information,
+    hired,
+    education,
+    view,
 }

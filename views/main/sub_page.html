@@ -11,39 +11,120 @@
 
 <body>
     <div id="wrap">
-        <div id="menu">
+        <div id="header">
             <ul>
-                <li><a href="#">MENU</a></li>
                 <li><a href="#">MENU</a></li>
                 <li><a href="#">MENU</a></li>
                 <li><a href="#">MENU</a></li>
                 <li><a href="#">MENU</a></li>
             </ul>
         </div>
-        <div id="apply_btn">상담신청</div>
-    </div>
-    
-    <div id="apply_form">
-        <label for="name">name</label>
-        <input id="name" type="text"><br/>
-        <label for="age">age</label>
-        <input id="age" type="text">
+        <div id="sub_header">
+            <ul>
+                <li>MENU1</li>
+                <li>MENU1</li>
+                <li>MENU1</li>
+                <li>MENU1</li>
+                <li>MENU1</li>
+            </ul>
+            <ul>
+                <li>MENU2</li>
+                <li>MENU2</li>
+                <li>MENU2</li>
+            </ul>
+            <ul>
+                <li>MENU3</li>
+                <li>MENU3</li>
+                <li>MENU3</li>
+                <li>MENU3</li>
+            </ul>
+            <ul>
+                <li>MENU4</li>
+                <li>MENU4</li>
+                <li>MENU4</li>
+                <li>MENU4</li>
+            </ul>
+        </div>
+        <div id="content_wrap">
+            <div id="content" class="center">
+                <div id="logo"><img src="../../public/uploads/info_image/1623383319105.jpg"></div>
+                <h1>TITLE</h1>
+                <div id="sub_content">
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                    <p>안녕안녕</p>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+
+        </div>
     </div>
     <script type="text/javascript">
-        const apply_btn = document.querySelector('#apply_btn');
-        const apply_from = document.querySelector('#apply_form');
-        let flag = 0;
-        apply_btn.addEventListener('click',()=>{
-            if(flag == 0){
-                apply_btn.setAttribute('class','btn_open');
-                apply_from.setAttribute('class','apply_open');
-                flag = 1;
-            }else if (flag == 1){
-                apply_btn.setAttribute('class','btn_close');
-                apply_from.setAttribute('class','apply_close');
-                flag = 0;
-            }
+        const logo = document.querySelector('#logo');
+        const contentWrap = document.querySelector('#content_wrap');
+        const content = document.querySelector('#content')
+
+        const header = document.querySelector('#header');
+        const subHeader = document.querySelector('#sub_header');
+        header.addEventListener('mouseover', () => {
+            subHeader.setAttribute('class', 'header_open');
         })
+        subHeader.addEventListener('mouseover', () => {
+            subHeader.setAttribute('class', 'header_open');
+        })
+        subHeader.addEventListener('mouseout', () => {
+            subHeader.setAttribute('class', 'header_close');
+        })
+
+        const wrap = document.getElementById('wrap')
+        let flag2 = 0;
+        logo.addEventListener('click', () => {
+            for (i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    if (flag2 == 0) {
+                        wrap.setAttribute('style', 'background-color:#000');
+                        flag2 = 1;
+                    } else {
+                        wrap.setAttribute('style', 'background-color:#fff');
+                        flag2 = 0;
+                    }
+                }, 500 * i);
+            }
+        });
     </script>
 </body>
 

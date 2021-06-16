@@ -1,0 +1,56 @@
+{% include "../template/top.html" %}
+
+<div id="content_wrap">
+    <div id="content" class="center">
+        <div id="logo"><img src="/uploads/info_image/1623383319105.jpg"></div>
+        <h1>COMMUNITY</h1>
+        <div id="atags">
+            <a class="tags" href="/community/notice">공지사항</a>
+            <a class="tags" href="/community/qanda">Q and A</a>
+            <a class="tags" href="/community/board">수강후기</a>
+        </div>
+        <div id="sub_content">
+
+            <table  id="list">
+                <tr>
+                    <td>No.</td>
+                    <td>title</td>
+                    <td>writer</td>
+                    <td>Date</td>
+                </tr>
+                {% for item in commList %}
+                <tr>
+                    <td>{{item.num}}</td>
+                    <td><a style="color: #fff" href="/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a>
+                    </td>
+                    <td>{{item.writer}}</td>
+                    <td>{{item.write_date}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <textarea id="localUrl" style="display: none;">{{localUrl}}</textarea>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <div id="pagenation">
+        {% for item in pagin %}
+        <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
+        {% endfor %}
+    </div>
+    <a class="main_btn btn" href="/">MAIN</a>
+</div>
+
+<script type="text/javascript">
+    const tags = document.querySelectorAll('.tags');
+    const localUrl = document.querySelector('#localUrl').innerHTML;
+
+    tags.forEach(v=>{
+        let tagName = v.href.replace('http://localhost:3000/community/','');
+        if(tagName == localUrl){
+            v.setAttribute('style','background-color:#ededed');
+        }
+    })
+</script>
+
+{% include "../template/bottom.html" %}
