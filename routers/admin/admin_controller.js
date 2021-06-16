@@ -184,7 +184,7 @@ let popup_upload = (req, res) => {
 }
 
 let popup_upload_success = async (req, res) => {
-    let { writer, visibility } = req.body;
+    let { writer, visibility, title, term, type, scroll, size, location, hyperlink } = req.body;
     let image = req.file == undefined ? '' : req.file.path;
     await popupTd.create({ image, writer, visibility });
     res.redirect('/admin/popup');
