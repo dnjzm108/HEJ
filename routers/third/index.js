@@ -16,6 +16,7 @@ const upload = multer({
     })
 });
 
+router.get('/map',userController.map);
 router.get('/index',userController.index);
 router.get('/join',userController.join);
 router.get('/login',userController.login);

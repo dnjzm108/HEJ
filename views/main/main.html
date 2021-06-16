@@ -29,6 +29,7 @@
             </ul>
         </div>
         <div id="gnb">
+            <div class="on">
             <section id="square">
                 <div>
                 <a href="#">블록체인</a>
@@ -51,23 +52,34 @@
             </section>
             <div class="mouse"></div>
         </div>
+    </div>
 
-        <script type="text/javascript">
+            <script type="text/javascript">
+           let a = 0;
             const square = document.querySelector('#square');
-            square.addEventListener('mousedown', moving);
+            square.addEventListener('click', moving);
             const mouse = document.querySelector(".mouse");
             function moving() {
-                document.addEventListener("mousemove", (e) => {
-                    const mouseX = e.clientX;
+                if(a == 0){
+                    a=1; console.log(a);
+                    square.addEventListener("mousemove",aa);
+            }else{
+                square.removeEventListener("mousemove",aa);
+                square.style.animation = 'rint 10s linear 0s infinite'
+                a=0;
+                
+            }
+          
+            }
+            function aa(e) {
+                const mouseX = e.clientX;
                     const mouseY = e.clientY;
                     const X = mouseX / 2;
                     const Y = mouseY / 2;
-                    mouse.style.left = mouseX + 'px';
-                    mouse.style.top = mouseY + 'px';
+                    square.style.animation = 'none'
                     square.style.transform = `rotateX(${X}deg) rotateY(${X}deg)`;
-                });
-            }
-
+            }    
+    
         </script>
 
 
