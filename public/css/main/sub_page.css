@@ -1,6 +1,7 @@
 *{
     margin:0;
     padding:0;
+    overflow-x: hidden;
 }
 
 #wrap{
@@ -22,18 +23,18 @@ a{
     transform: translateX(-50%);
 }
 
-#sub_header{
+#header{
     width: 100vw;
     height: 8vh;
     background-color: #ededed;
 }
 
-#sub_header > ul > li{
+#header > ul > li{
     float: left;
     padding: 2.5vh 10vw;
 }
 
-#sub_header > ul > li > a{
+#header > ul > li > a{
     font-size: 2.3vh;
     color: #2e2b2bd7;
 }
@@ -46,6 +47,7 @@ a{
     margin-left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    cursor: pointer;
 }
 
 #logo > img{
@@ -63,10 +65,62 @@ a{
 
 #sub_content{
     width: 100%;
-    height: 50vh;
+    min-height: 50vh;
     margin-top: 3vh;
     margin-left: 50%;
+    padding: 20px;
+    box-sizing: border-box;
     transform: translateX(-50%);
     text-align: center;
     background-color: #ededed;
+}
+
+#sub_header{
+    position: absolute;
+    width:100vw;
+    height: 0vh;
+    background-color: rgb(90, 83, 83);
+    text-align: center;
+    overflow:hidden;
+    z-index: 4;
+}
+
+#sub_header > ul{
+    float: left;
+    padding: 1.5479876160990713vh 0;
+    width:23.4375vw
+}
+
+#sub_header > ul >li{
+    line-height: 25px;
+}
+
+.header_open{
+    animation: headerOpen 1s;
+    animation-fill-mode: forwards;
+}
+
+.header_close{
+    animation: headerClose 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes headerOpen{
+    from{
+        height: 0vh;
+    }to{
+        height: 17vh;
+    }
+}
+
+@keyframes headerClose{
+    from{
+        height: 17vh
+    }to{
+        height: 0vh
+    }
+}
+
+#footer{
+    height: 100px;
 }
