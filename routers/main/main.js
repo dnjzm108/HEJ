@@ -16,14 +16,8 @@ const upload = multer({
     })
 });
 
+router.get('/chat',login_check,controller.chat);
 
-router.get('/qanda/write',controller.qanda_aply);
-router.post('/qanda/write',controller.qanda_send);
-router.get('/qanda/list',controller.qanda_list);
-router.get('/qanda/view',controller.qanda_view);
-router.get('/qanda/modify',controller.qanda_modify);
-router.post('/qanda/modify',controller.qanda_modify_send);
-router.get('/qanda/delete',controller.qanda_delete);
 
 router.get('/community/delete',controller.community_delete)
 router.get('/community/view',login_check,controller.community_view)

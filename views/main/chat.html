@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/main/chat.css">
+</head>
+
+<body>
+    <div id="wrap">
+    <div id="chat">
+        <div id="first_coment">{{name}}님이 입장하셨습니다</div>
+        <div>
+            <div>관리자</div>
+            <span class="you">안녕하세요</span>
+        </div>
+        <div>
+            {% if name != undefined %}
+            <div id="username">{{name}}님</div>
+            {% endif %}
+            <span class="me">안녕하세요</span>
+        </div>
+    </div>
+    <div id="chatinputArea">
+        <input type="text" id="msg">
+        <input type="button" id="btn" value="버튼">
+    </div>
+</div>
+
+    <script type="text/javascript" src="./socket.io.js"></script>
+    <script>
+        let socket = io();
+
+        // 채팅 부분 
+        const btn = document.querySelector('#btn');
+        const content = document.querySelector('#chat')
+       socket.on('connect', () => {
+                console.log('연결됨');
+       })
+
+        btn.addEventListener('click', send)
+        function send() {
+            socket.emit('send', msg.value)
+            addCard(msg.value, 'me');
+        }
+        
+        socket.on('msg', (data) => {
+                console.log('you:'+data);
+               
+                addCard(data,'you')
+             })
+             function addCard(text, type) {
+            const div = document.createElement('div');
+            const span = document.createElement('span');
+            const chat = document.querySelector('#chat');
+
+            span.innerHTML = text;
+            span.classList.add(type);
+            div.appendChild(span);
+            chat.appendChild(div)
+        }
+
+        async function getChatRoom() {
+            let url = 'http://localhost:3000/chat'
+            let options = {
+                method: 'GET'
+            }
+            let response = await fetch(url, options);
+            let result = await response.text();
+            chatRoom.innerHTML = result;
+        }
+
+        function isJson(str) {
+            try {
+                let json = JSON.parse(str)
+                return (typeof json == 'object')
+            } catch (e) {
+                return false;
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

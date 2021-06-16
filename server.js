@@ -10,6 +10,11 @@ const mysql = require('mysql');
 const {community,information,user,sequelize} = require('./models');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const auth = require('./middleware/auth');
+const socket = require ('socket.io');
+const http = require ('http');
+const server = http.createServer(app);
+const io = socket(server);
 
 app.use(cors());
 app.use(session({
@@ -18,6 +23,7 @@ app.use(session({
     secure:false,
     saveUninitialized:false,
 }))
+app.use(express.static('node_modules/socket.io/client-dist'));
 app.use(express.static('public'));
 app.use(cookieParser());
 
@@ -38,6 +44,13 @@ nunjucks.configure('views',{
 
 app.use('/',router);
 
-app.listen(3000,()=>{
+io.sockets.on('connection',(socket)=>{
+    socket.on('send',(data)=>{
+        console.log(`client msg:${data}`);
+        socket.broadcast.emit('msg',data)
+    })
+})
+
+server.listen(3000,()=>{
     console.log('server start port:3000');
 })

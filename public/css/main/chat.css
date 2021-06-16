@@ -1,0 +1,60 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+#wrap{
+    width: 100vw;
+    height: 100vh;
+}
+#chat{
+    width: 100vw;
+    height: 94vh;
+    background: wheat;
+}
+#first_coment{
+    width: ;
+}
+#chat>div{
+
+    height: 30px;
+    padding: 5px;
+}
+#chat>div>span{
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 15px;
+}
+#username{
+    float: right;
+}
+#chat>div>span.you{
+    float: left;
+    background: yellow;
+}
+#chat>div>span.me{
+    display: block;
+    float: right;
+    background: white;
+}
+#chatinputArea{
+    width: 100vw;
+    height: 5vh;
+}
+#chatinputArea>input:nth-child(1){
+    width: 90vw;
+    height: 5vh;
+    padding: 7px 14px;
+    box-sizing: border-box;
+}
+ #chatinputArea>input:nth-child(2){
+     width: 5vw;
+     height: 5vh;
+    background: #eee;
+} 
