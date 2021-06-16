@@ -46,7 +46,6 @@ app.use('/',router);
 
 io.sockets.on('connection',(socket)=>{
     socket.on('send',(data)=>{
-        console.log(`client msg:${data}`);
         socket.broadcast.emit('msg',data)
     })
 })

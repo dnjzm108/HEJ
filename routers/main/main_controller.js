@@ -19,8 +19,6 @@ const socket = require ('socket.io');
 const http = require ('http');
 const server = http.createServer(app);
 const io = socket(server);
-const { community, information, user, sequelize, comment } = require('../../models');
-const session = require('express-session')
 const { community, user, sequelize, qanda, comment } = require('../../models');
 const search = require('../../serach');
 const pagination = require('../../pagination');
@@ -285,9 +283,14 @@ let test = (req, res) => {
 }
 
 let chat = (req,res) =>{
+    let {kakao,local,google} = session.authData;
     let name ;
-    if(session.authData != undefined){
+    if(local != undefined){
        name = session.authData.local.userid;
+    }if(kakao != undefined){
+        name = kakao.properties.nickname;
+    }if(google != undefined){
+        name = google.username;
     }
     res.render('./main/chat.html',{
         name
