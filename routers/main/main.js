@@ -17,6 +17,9 @@ const upload = multer({
 });
 
 
+router.use('/information/:localUrl',controller.information);
+router.use('/information',controller.information);
+
 router.get('/qanda/write',controller.qanda_aply);
 router.post('/qanda/write',controller.qanda_send);
 router.get('/qanda/list',controller.qanda_list);

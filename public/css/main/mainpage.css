@@ -252,8 +252,8 @@ position: absolute;
 animation: 1.5s up ;
 animation-fill-mode: forwards;
 animation-delay: 1.5s;
-
 }
+
 @keyframes dowun{
 from{top: -100vh;}
 to{top:0;}
@@ -336,6 +336,7 @@ to{top: -100vh;} */
      50% {opacity: 1}
      100%{opacity: 0}
  }
+
  .loading-container,
  .loading {
      height: 100px;
@@ -394,3 +395,43 @@ to{top: -100vh;} */
      width: 100px;
  }
  /* lodding end */
+
+
+ .menu_open{
+    animation: menuopen 3s;
+    animation-fill-mode: forwards;
+ }
+
+ @keyframes menuopen{
+    from{
+        width: 25vw;
+    }
+    to{
+        width: 100vw;
+    }
+ }
+
+ .menu_close{
+    animation: menuclose 1.5s;
+    animation-fill-mode: forwards;
+ }
+
+ @keyframes menuclose{
+    from{
+        width: 100vw;
+    }
+    to{
+        width: 25vw;
+    }
+ }
+
+ #login{
+    position: relative;
+    float: right;
+    margin-right: 50px;
+    z-index: 200;
+ }
+
+ #login > a{
+    padding: 10px;
+ }

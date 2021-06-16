@@ -13,7 +13,8 @@ const axios = require('axios');
 const qs = require('qs');
 const moment = require('moment');
 const session = require('express-session')
-const { community, information, user, sequelize, qanda, comment } = require('../../models');
+const { community, user, sequelize, qanda, comment } = require('../../models');
+const search = require('../../serach');
 
 
 const kakao = {
@@ -310,6 +311,24 @@ let test = (req, res) => {
     res.render('./main/test.html');
 }
 
+let information = async (req,res)=>{
+    let { localUrl } = req.params;
+    let resultsall = await search['information'].findAll({ where: { type: `${localUrl}` }, raw: true });
+
+    let infoList = resultsall.map(v => {
+        return {
+            ...v,
+            date: moment(v.date).format("MMM Do YY"),
+            visibility: v.visibility == 0 ? "invisible" : "visible"
+        }
+    });
+    let idArr = '';
+    infoList.forEach(v => {
+        idArr += v.id + ','
+    })
+    res.render('./main/information/information_list.html', { infoList, idArr, localUrl })
+}
+
 module.exports = {
     main,
     kakao_in,
@@ -336,4 +355,5 @@ module.exports = {
     comment_send,
     comment_delete,
     comment_modify,
+    information,
 }
