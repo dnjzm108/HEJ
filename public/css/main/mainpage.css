@@ -25,13 +25,13 @@ a{
     text-align: center;
 }
 
-#menu > ul{
+/* #menu > ul{
     width: 25vw;
     position:absolute;
     top: 50%;
     transform: translateY(-50%);
     vertical-align: middle;
-}
+} */
 
 #menu > ul > li {
     padding: 5vh;
@@ -48,6 +48,8 @@ a{
 /* square start */
 #gnb{
     display: inline-block;
+    position: relative;
+    top: 0;
     width: 73vw;
     height: 100vh;
 }
@@ -176,8 +178,7 @@ a{
 }
 
 #apply_form{
-    position: absolute;
-    right: 3vh;
+    position: relative;
     height: 40vh;
     width: 18vw;
     padding: 3vh;
@@ -245,18 +246,14 @@ a{
 
 /* lodding start */
 #loding_mode{
+    display: none;
 width: 100%;
 height: 100%;
 background: #333333;
 position: absolute;
-animation: 1.5s up ;
+animation: 0.5s up ;
 animation-fill-mode: forwards;
-animation-delay: 1.5s;
-}
-
-@keyframes dowun{
-from{top: -100vh;}
-to{top:0;}
+/* animation-delay: 1.5s; */
 }
 @keyframes up{
     from{
@@ -428,8 +425,6 @@ to{top: -100vh;} */
  #login{
     position: relative;
     float: right;
-    margin-right: 50px;
-    z-index: 200;
  }
 
  #login > a{

@@ -16,32 +16,46 @@ a{
 #chat{
     width: 100vw;
     height: 94vh;
-    background: wheat;
+    overflow-y: scroll;
 }
-#first_coment{
-    width: ;
+.Come{
+    width: 350px;
+    height: 25px;
+    margin: 0 auto;
 }
-#chat>div{
-
+.time{
+    display: inline-block;
+}
+.come{
+    display: block;
+    width: 350px;
+    height: 25px;
+    background: silver;
+    border-radius: 12.5px;
+    text-align: center;
+}
+.other{
+display: block;
+}
+/* #chat>div{
     height: 30px;
     padding: 5px;
-}
-#chat>div>span{
+} */
+#chat>div>span.you,.me{
     display: inline-block;
     padding: 7px 14px;
     border-radius: 15px;
+    border: 1px solid black;
 }
-#username{
-    float: right;
-}
-#chat>div>span.you{
-    float: left;
-    background: yellow;
+
+/* #chat>div>span.you{
+} */
+.nick{
+  position: relative;
+  top: 0;
 }
 #chat>div>span.me{
-    display: block;
     float: right;
-    background: white;
 }
 #chatinputArea{
     width: 100vw;

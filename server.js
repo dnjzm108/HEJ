@@ -45,11 +45,24 @@ nunjucks.configure('views',{
 app.use('/',router);
 
 io.sockets.on('connection',(socket)=>{
-    socket.on('send',(data)=>{
-        console.log(`client msg:${data}`);
-        socket.broadcast.emit('msg',data)
+    socket.on('newUser',(name)=>{
+        console.log(name +'님이 접속하였습니다');
+        socket.name=name;
+        socket.broadcast.emit('update',{type:'connect',name:'SERVER',message:name+'님이 접속 하였습니다.'})
     })
-})
+   socket.on('message',(data)=>{
+       data.name = socket.name;
+       console.log(data);
+       socket.broadcast.emit('update',data);
+   })
+   socket.on('disconnect',()=>{
+       console.log(socket.name+'님이 나가셨습니다');
+       socket.broadcast.emit('update',{type:'disconnect',name:'SERVER',message:socket.name+'님이 나가셨습니다.'})
+   })
+   socket.on('send',(talk)=>{
+    socket.broadcast.emit('msg',{name:socket.name,content:talk});
+   })
+    })
 
 server.listen(3000,()=>{
     console.log('server start port:3000');

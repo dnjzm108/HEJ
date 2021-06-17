@@ -11,15 +11,16 @@
 </head>
 
 <body>
-    <!-- lodding start -->
-    <div id="loding_mode">
-        <div class="loading-container">
-            <div class="loading"></div>
-            <div id="loading-text">loading</div>
-        </div>
-    </div>
-    <!-- lodding end -->
+
     <div id="wrap">
+        <!-- lodding start -->
+        <div id="loding_mode">
+            <div class="loading-container">
+                <div class="loading"></div>
+                <div id="loading-text">loading</div>
+            </div>
+        </div>
+        <!-- lodding end -->
         <div id="menu">
             <ul>
                 <li><a class="menus" href="/"><img src="/uploads/logo_bottom_2018.png"></a></li>
@@ -29,11 +30,13 @@
                 <li><a class="menus" href="/community">COMMUNITY</a></li>
             </ul>
         </div>
-        <div id="login">
-            <a href="/user/login">LOGIN</a>
-            <a href="/user/join">JOIN</a>
-        </div>
         <div id="gnb">
+            <div id="login">
+                <a href="/user/login">LOGIN</a>
+                <a href="/user/join">JOIN</a>
+            </div>
+
+
             <div class="on">
                 <section id="square">
                     <div>
@@ -57,92 +60,54 @@
                 </section>
                 <div class="mouse"></div>
             </div>
+            <button id="chatBtn" data-value="0">채팅</button>
+            <div id="apply_btn">상담신청</div>
+            <div id="apply_form">
+                <label for="name">name</label>
+                <input id="name" type="text"><br />
+                <label for="age">age</label>
+                <input id="age" type="text">
+            </div>
         </div>
 
-        <button id="chatBtn" data-value="0">채팅</button>
-        <div id="chatRoom"></div>
-        <script type="text/javascript">
-const chatBtn = document.querySelector('#chatBtn')
-            // const chatRoom = document.querySelector('#chatRoom')
-            // let flag = undefined;
-            // Btn.addEventListener('click', () => {
-            //     switch (flag) {
-            //         case true:
-            //             flag = false;
-            //             chatRoom.style.display = 'none';
-            //             break;
-            //         case false:
-            //             chatBtn.innerHTML = '채팅';
-            //             chatBtn.dataset.value = 0;
-            //             flag = true;
-            //             chatRoom.style.display = 'block';
-            //             break;
-            //         case undefined:
-            //             flag = true;
-            //             getChatRoom()
-            //             break;
-            //     }
-            // })
-            // async function getChatRoom() {
-            //     let url = 'http://localhost:3000/chat'
-            //     let options = {
-            //         method: 'GET'
-            //     }
-            //     let response = await fetch(url, options);
-            //     let result = await response.text();
-            //     chatRoom.innerHTML = result;
-            //     console.log(result);
-            // }
-           
+
+    </div>
+    <script type="text/javascript">
+        const chatBtn = document.querySelector('#chatBtn')
         function popup() {
             let url = 'http://localhost:3000/chat'
             let name = '채팅'
             let option = 'width = 500 ,height = 500 ,top = 100 , left = 200, location = no'
-    
-            window.open(url,name,option);
+
+            window.open(url, name, option);
         }
-        chatBtn.addEventListener('click',popup)
-            let a = 0;
-            const square = document.querySelector('#square');
-            square.addEventListener('click', moving);
-            const mouse = document.querySelector(".mouse");
-            function moving() {
-                if (a == 0) {
-                    a = 1; console.log(a);
-                    document.addEventListener("mousemove", aa);
-                } else {
-                    document.removeEventListener("mousemove", aa);
-                    square.style.animation = 'rint 10s linear 0s infinite'
-                    a = 0;
-
-                }
+        chatBtn.addEventListener('click', popup)
+        let a = 0;
+        const square = document.querySelector('#square');
+        square.addEventListener('click', moving);
+        const mouse = document.querySelector(".mouse");
+        function moving() {
+            if (a == 0) {
+                a = 1;
+                document.addEventListener("mousemove", controll);
+            } else {
+                document.removeEventListener("mousemove", controll);
+                square.style.animation = 'rint 10s linear 0s infinite'
+                a = 0;
 
             }
-            function aa(e) {
-                const mouseX = e.clientX;
-                const mouseY = e.clientY;
-                const X = mouseX / 2;
-                const Y = mouseY / 2;
-                square.style.animation = 'none'
-                square.style.transform = `rotateX(${X}deg) rotateY(${X}deg)`;
-            }
+
+        }
+        function controll(e) {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            const X = mouseX / 2;
+            const Y = mouseY / 2;
+            square.style.animation = 'none'
+            square.style.transform = `rotateX(${X}deg) rotateY(${X}deg)`;
+        }
             // square end
-
-            
-
-        </script>
-
-        <div id="apply_btn">상담신청</div>
-    </div>
-
-
-    <div id="apply_form">
-        <label for="name">name</label>
-        <input id="name" type="text"><br />
-        <label for="age">age</label>
-        <input id="age" type="text">
-    </div>
-
+    </script>
 
     <script type="text/javascript">
         const apply_btn = document.querySelector('#apply_btn');
@@ -190,15 +155,15 @@ const chatBtn = document.querySelector('#chatBtn')
         menus.forEach(v => {
             let menu_flag = 0
             v.addEventListener('click', () => {
-                if(menu_flag == 0){
-                    v.setAttribute('style','color: #000');
+                if (menu_flag == 0) {
+                    v.setAttribute('style', 'color: #000');
                     menu.setAttribute('class', 'menu_open');
                     menu_flag = 1;
                     console.log(menu_flag)
-                }else{
-                    v.setAttribute('style','color: #2e2b2bd7');
+                } else {
+                    v.setAttribute('style', 'color: #2e2b2bd7');
                     menu.removeAttribute('class');
-                    menu.setAttribute('class','menu_close');
+                    menu.setAttribute('class', 'menu_close');
                     menu_flag = 0;
                 }
             })
