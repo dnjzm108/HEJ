@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/main/apple.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Viaoda+Libre&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="loding_mode">
+            <div class="loading-container">
+                <div class="loading"></div>
+                <div id="loading-text">loading</div>
+            </div>
+        </div>
+        <div id="menu">
+            <ul>
+                <li> <img src="/uploads/logo_bottom_2018.png"> </li>
+                <li> <a href="/information">INFORMATION</a> </li>
+                <li> <a href="/education">EDUCATION</a> </li>
+                <li> <a href="/hired">HIRED</a> </li>
+                <li> <a href="/community">COMMUNITY</a> </li>
+            </ul>
+        </div>
+        <div id="gnb">
+            <div id="login">
+                <a href="/user/login">login</a>
+                <a href="/user/join">join</a>
+            </div>
+            <div id="tum">
+                <section id="square">
+                    <div>
+                    </div>
+                    <div>
+                    </div>
+                    <div>
+                    </div>
+                    <div>
+                    </div>
+                    <div>
+                    </div>
+                    <div>
+                    </div>
+                </section>
+                <div class="mouse"></div>
+            </div>
+            <div id="btn_box">
+                <div id="cha_btn" data-value="0">chat</div>
+                <div id="consult_btn">consult</div>
+            </div>
+            <form id="apply_form">
+                <label for="name">name</label>
+                <input id="name" type="text"><br/>
+                <label for="age">age</label>
+                <input id="age" type="text"></br>
+                <label for="number">number</label></br>
+                <input id="number" type="text"></br>
+                <label for="content">content</label>
+                <input id="content" type="text">
+                <input id="" type="submit" value="apply"> 
+            </form>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    const chatBtn = document.querySelector('#cha_btn')
+        function popup() {
+            let url = 'http://localhost:3000/chat'
+            let name = '채팅'
+            let option = 'width = 500 ,height = 500 ,top = 100 , left = 200, location = no'
+
+            window.open(url, name, option);
+        }
+        chatBtn.addEventListener('click', popup)
+</script>
+
+    <script type="text/javascript">
+
+    let a = 0;
+        const square = document.querySelector('#square');
+        square.addEventListener('click', moving);
+        const mouse = document.querySelector(".mouse");
+        function moving() {
+            if (a == 0) {
+                a = 1; console.log(a);
+                square.addEventListener("mousemove", controll);
+            } else {
+                square.removeEventListener("mousemove", controll);
+                square.style.animation = 'rint 10s linear 0s infinite'
+                a = 0;
+
+            }
+
+        }
+        function controll(e) {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            const X = mouseX / 2;
+            const Y = mouseY / 2;
+            square.style.animation = 'none'
+            square.style.transform = `rotateX(${X}deg) rotateY(${X}deg)`;
+        }
+    </script>
+    <script type="text/javascript">
+
+        let consult_btn = document.querySelector('#consult_btn');
+        let apply_form = document.querySelector('#apply_form');
+        let btn_box = document.querySelector('#btn_box');
+        let fleg = 0;
+        function apply() {
+            if (fleg == '0') {
+                apply_form.style.display = 'block';
+                btn_box.style.bottom = '30vh'
+                fleg = 1;
+            } else {
+                apply_form.style.display = 'none';
+                btn_box.style.bottom = '0vh'
+                fleg = 0;
+            }
+        }
+        consult_btn.addEventListener('click', apply)
+
+        
+    </script>
+</body>
+
+</html>

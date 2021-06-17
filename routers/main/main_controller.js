@@ -121,7 +121,7 @@ let main = (req, res) => {
     let pw = req.query.pw;
     if(session.authData != null){
     }
-    res.render('./main/main.html', {
+    res.render('./main/apple.html', {
         id, pw
     })
 }
@@ -283,18 +283,7 @@ let test = (req, res) => {
 }
 
 let chat = (req,res) =>{
-    let {kakao,local,google} = session.authData;
-    let name ;
-    if(local != undefined){
-       name = session.authData.local.userid;
-    }if(kakao != undefined){
-        name = kakao.properties.nickname;
-    }if(google != undefined){
-        name = google.username;
-    }
-    res.render('./main/chat.html',{
-        name
-    });
+    res.render('./main/chat.html');
    
 }
   
