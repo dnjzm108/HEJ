@@ -7,15 +7,22 @@
 
     const header = document.querySelector('#header');
     const subHeader = document.querySelector('#sub_header');
+    const sub_header_wrap = document.querySelector('#sub_header_wrap');
+  
     header.addEventListener('mouseover', () => {
         subHeader.setAttribute('class', 'header_open');
     })
+  
     subHeader.addEventListener('mouseover', () => {
         subHeader.setAttribute('class', 'header_open');
     })
+  
     subHeader.addEventListener('mouseout', () => {
         subHeader.setAttribute('class', 'header_close');
     })
+ 
+
+  
 
     const wrap = document.getElementById('wrap')
     let flag2 = 0;
@@ -33,9 +40,6 @@
         }
     });
 </script>
-</body>
-
-</html>
 </body>
 
 </html>
