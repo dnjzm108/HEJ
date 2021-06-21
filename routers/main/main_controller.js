@@ -115,14 +115,18 @@ let kakao_logout = async (req, res) => {
     res.redirect('/?msg=로그아웃 되었습니다.')
 }
 
-
-let main = (req, res) => {
+let main = async (req, res) => {
     let id = req.query.id;
     let pw = req.query.pw;
     if(session.authData != null){
     }
-    res.render('./main/apple.html', {
-        id, pw
+    let popup = await search['popup'].findAll({where:{visibility:1},raw:true});
+    let idArr = '';
+    popup.forEach(v => {
+        idArr += v.id + ','
+    })
+    res.render('./main/main.html', {
+        id, pw, popup, idArr
     })
 }
 
@@ -132,7 +136,7 @@ let login = (req, res) => {
     let pw_check = req.body.pw_check;
     res.redirect(`/?id=${id}&pw=${pw}`);
 }
-// community start
+/*================================= community start ==============================================*/
 
 let community_list = async (req, res) => {
     // let result = await community.findAll({ raw: true });
