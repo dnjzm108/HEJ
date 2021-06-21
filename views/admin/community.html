@@ -6,21 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COMMUNITY</title>
-    <!-- <link rel="stylesheet" href="/css/info/index.css">
+    <link rel="stylesheet" href="/css/info/index.css">
     <link rel="stylesheet" href="/css/info/list.css">
     <style>
-        a {
-            display: inline-block;
-            width: auto;
-            height: 50px;
-            padding: 15px;
-            text-align: center;
-            text-decoration: none;
-            border: 1px solid #000;
-            box-sizing: border-box;
-            color: #000;
-        }
-
         #infom {
             margin-top: 50px;
             height: 50px;
@@ -30,7 +18,7 @@
         #infom>h1{
             margin-bottom: 30px;
         }
-    </style> -->
+    </style>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -53,9 +41,9 @@
             <div id="infom" style="margin-bottom: 100px;">
                 <h1>COMMUNITY</h1>
                 <div id="atags">
-                    <a href="/admin/community/notice">공지사항</a>
-                    <a href="/admin/community/board">게시판</a>
-                    <a href="/admin/community/qanda">Q and A</a>
+                    <a class="btn" href="/admin/community/notice">공지사항</a>
+                    <a class="btn" href="/admin/community/board">게시판</a>
+                    <a class="btn" href="/admin/community/qanda">Q and A</a>
                 </div>
             </div>
             <div id="board" style="margin-bottom: 50px;">
@@ -89,7 +77,7 @@
                     <a style="border: none;" href="/admin/community/{{localUrl}}?id={{item}}">{{item}}</a>
                     {% endfor %}
                 </div>
-                <a href="/admin/upload?title=community&localUrl={{localUrl}}">WRITE</a>
+                <a class="btn" href="/admin/upload?title=community&localUrl={{localUrl}}">WRITE</a>
                 <a class="main_btn btn" href="/admin/main">MAIN</a>
             </div>
 

@@ -125,7 +125,7 @@ let main = async (req, res) => {
     popup.forEach(v => {
         idArr += v.id + ','
     })
-    res.render('./main/main.html', {
+    res.render('./main/apple.html', {
         id, pw, popup, idArr
     })
 }
