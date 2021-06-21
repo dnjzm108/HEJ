@@ -1,71 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDUCATION</title>
-    <link rel="stylesheet" href="/css/info/item.css">
-    <link rel="stylesheet" href="/css/info/list.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
     <style>
-        a {
-            display: inline-block;
-            width: auto;
-            height: 50px;
-            padding: 15px;
-            text-align: center;
-            text-decoration: none;
-            border: 1px solid #000;
-            box-sizing: border-box;
-            color: #000;
-        }
-
         #infom {
             margin-top: 50px;
             height: 50px;
             margin-bottom: 20px;
         }
 
-        #infom>h1{
+        #infom>h1 {
             margin-bottom: 30px;
         }
     </style>
 </head>
+
 <body>
     <div id="wrap" class="w100">
-        <div id="main" class="center">
+        <div id="main" class="container">
             <div id="infom">
                 <h1>EDUCATION</h1>
             </div>
             <div id="board">
-                <table id="list">   
-                    <tr>
-                        <td>No.</td>
-                        <td>Title</td>
-                        <td>Writer</td>
-                        <td>Date</td>
-                    </tr>
+                <table id="list" class="table table-boardered">
+                    <thead>
+                        <tr>
+                            <td>No.</td>
+                            <td>Title</td>
+                            <td>Writer</td>
+                            <td>Date</td>
+                        </tr>
+                    </thead>
                     {% for item in edList %}
-                    <tr>
-                        <td>{{item.num}}</td>
-                        <td><a style="color: #fff;" href="/admin/view?id={{item.id}}&table=education">{{item.title}}</a></td>
-                        <td>writer</td>
-                        <td>{{item.date}}</td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>{{item.num}}</td>
+                            <td><a style="color: #fff;"
+                                    href="/admin/view?id={{item.id}}&table=education">{{item.title}}</a></td>
+                            <td>writer</td>
+                            <td>{{item.date}}</td>
+                        </tr>
+                    </tbody>
                     {% endfor %}
                 </table>
             </div>
-        </div>
-        
-        <div class="footer center">
-            <div id="pagenation">
-                {% for item in pagin %}
-                <a style="border: none;" href="/admin/education?id={{item}}">{{item}}</a>
-                {% endfor %}
+            <div class="footer center">
+                <div id="pagenation">
+                    {% for item in pagin %}
+                    <a style="border: none;" href="/admin/education?id={{item}}">{{item}}</a>
+                    {% endfor %}
+                </div>
+                <a class="write_btn btn" href="/admin/upload?title=education">WRITE</a>
+                <a class="main_btn btn" href="/admin/main">MAIN</a>
             </div>
-            <a class="write_btn btn" href="/admin/upload?title=education">WRITE</a>
-            <a class="main_btn btn" href="/admin/main">MAIN</a>
-        </div> 
+        </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>
+
 </html>

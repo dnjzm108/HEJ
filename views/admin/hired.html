@@ -5,74 +5,71 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFORMATION</title>
-    <link rel="stylesheet" href="/css/info/index.css">
-    <link rel="stylesheet" href="/css/info/list.css">
+    <title>HIRED</title>
     <style>
-        a {
-            display: inline-block;
-            width: auto;
-            height: 50px;
-            padding: 15px;
-            text-align: center;
-            text-decoration: none;
-            border: 1px solid #000;
-            box-sizing: border-box;
-            color: #000;
-        }
-
         #infom {
             margin-top: 50px;
             height: 150px;
             margin-bottom: 20px;
         }
 
-        #infom>h1{
+        #infom>h1 {
             margin-bottom: 30px;
         }
     </style>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
 </head>
 
 <body>
 
     <div id="wrap" class="w100">
-        <div id="main" class="center">
+        <div id="main" class="container">
             <div id="infom">
                 <h1>HIRED</h1>
                 <div id="atags">
-                    <a href="/admin/hired/interview">인터뷰</a>
-                    <a href="/admin/hired/portfolio">포트폴리오</a>
+                    <a class="btn" href="/admin/hired/interview">인터뷰</a>
+                    <a class="btn" href="/admin/hired/portfolio">포트폴리오</a>
                 </div>
             </div>
 
             <div id="board">
-                <table id="list">
-                    <tr>
-                        <td>No.</td>
-                        <td>Title</td>
-                        <td>Writer</td>
-                        <td>Date</td>
-                    </tr>
+                <table id="list" class="table table-boardered">
+                    <thead>
+                        <tr>
+                            <td>No.</td>
+                            <td>Title</td>
+                            <td>Writer</td>
+                            <td>Date</td>
+                        </tr>
+                    </thead>
                     {% for item in hireList %}
-                    <tr>
-                        <td>{{item.num}}</td>
-                        <td><a style="color: #fff;" href="/admin/view?id={{item.id}}&table=hired&localUrl={{localUrl}}">{{item.title}}</a></td>
-                        <td>writer</td>
-                        <td>{{item.date}}</td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>{{item.num}}</td>
+                            <td><a style="color: #fff;"
+                                    href="/admin/view?id={{item.id}}&table=hired&localUrl={{localUrl}}">{{item.title}}</a>
+                            </td>
+                            <td>writer</td>
+                            <td>{{item.date}}</td>
+                        </tr>
+                    </tbody>
                     {% endfor %}
                 </table>
             </div>
-        </div>
-        <div class="footer center">
-            <div id="pagenation">
-                {% for item in pagin %}
-                <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
-                {% endfor %}
+            <div class="footer center">
+                <div id="pagenation">
+                    {% for item in pagin %}
+                    <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
+                    {% endfor %}
+                </div>
+                <a class="write_btn btn" href="/admin/upload?title=hired&localUrl={{localUrl}}">WRITE</a>
+                <a class="main_btn btn" href="/admin/main">MAIN</a>
             </div>
-            <a class="write_btn btn" href="/admin/upload?title=hired&localUrl={{localUrl}}">WRITE</a>
-            <a class="main_btn btn" href="/admin/main">MAIN</a>
         </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>
+
 </html>
