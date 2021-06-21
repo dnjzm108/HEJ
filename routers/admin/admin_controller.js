@@ -96,20 +96,34 @@ let modify_success = async (req, res) => {
 
 let Information = async (req, res) => {
     let { localUrl } = req.params;
-    let resultsall = await search['information'].findAll({ where: { type: `${localUrl}` }, raw: true });
-
-    let infoList = resultsall.map(v => {
-        return {
+    let {id} = req.query;
+    let page = {localUrl: `${localUrl}`, id: `${id}`, table: 'information'}
+    let pagin = await pagination(page);
+    let result = pagin.result;
+    let infoList = result.map(v=>{
+        v.num = pagin.totalrecord - pagin.offset;
+        pagin.totalrecord--;
+        return{
             ...v,
-            date: moment(v.date).format("MMM Do YY"),
+            date:moment(v.write_date).format("MMM Do YY"),
             visibility: v.visibility == 0 ? "invisible" : "visible"
         }
-    });
-    let idArr = '';
-    infoList.forEach(v => {
-        idArr += v.id + ','
     })
-    res.render('./admin/information.html', { infoList, idArr, localUrl })
+    
+    // let resultsall = await search['information'].findAll({ where: { type: `${localUrl}` }, raw: true });
+
+    // let infoList = resultsall.map(v => {
+    //     return {
+    //         ...v,
+    //         date: moment(v.date).format("MMM Do YY"),
+    //         visibility: v.visibility == 0 ? "invisible" : "visible"
+    //     }
+    // });
+    // let idArr = '';
+    // infoList.forEach(v => {
+    //     idArr += v.id + ','
+    // })
+    res.render('./admin/information.html', { infoList, pagin : pagin.page_hired , localUrl })
 }
 
 /*============================== 취업정보 =============================== */

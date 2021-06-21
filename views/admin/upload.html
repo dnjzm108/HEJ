@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Information</title>
+    <title>UPLOAD</title>
     <link rel="stylesheet" href="./css/info/index.css">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -24,7 +24,7 @@
 
                 <div id="typeof" class="input">
                     {% if title=='information' %}
-                    <select id="type" name="type">
+                    <select class="form-control" id="type" name="type">
                         <option class="option" value="intro">인사말</option>
                         <option class="option" value="history">연혁</option>
                         <option class="option" value="popup">교직원소개</option>
@@ -44,7 +44,7 @@
                     {% endif %}
 
                     {% if title =='hired' %}
-                    <select id="type" name="type">
+                    <select class="form-control" id="type" name="type">
                         <option class="option" value="interview">취업자 인터뷰</option>
                         <option class="option" value="portfolio">포트폴리오</option>
                     </select>
@@ -61,7 +61,7 @@
                     {% endif %}
 
                     {% if title =='community' %}
-                    <select id="type" name="type">
+                    <select class="form-control" id="type" name="type">
                         <option class="option" value="notice">공지사항</option>
                         <option class="option" value="board">게시판</option>
                         <option class="option" value="qanda">Q and A</option>
@@ -87,10 +87,11 @@
 
                 <div id="summernote">
                 </div>
-                <textarea name="content" id="result">
+                <textarea style="display: none;" name="content" id="result">
         </textarea>
 
-                <input type="button" id="info_submit" value="UPLOAD">
+                <input type="button" class="btn" id="info_submit" value="UPLOAD">
+                <a href="/admin/main"><input type="button" class="btn" value="MAIN"></a>
             </form>
         </div>
     </div>
@@ -99,7 +100,7 @@
             $('#summernote').summernote()
         })
         $('.summernote').summernote({
-            height: 300,
+            height: 600,
             minHeight: null,
             maxHeight: null,
             lang: 'ko-KR',
