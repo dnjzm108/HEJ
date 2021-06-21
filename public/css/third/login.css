@@ -51,20 +51,17 @@
 
 .kakao{
     display: block; 
-    width: 400px;
+    width: 50px;
     height: 35px;
-    border: 1px solid #666;
-    background: yellow;
     margin : 5px auto;
-    color: #000000;
+    color: #666;
     cursor: pointer;
-    border-radius : 15px;
     text-align: center;
-    line-height: 35px;
-    font-size:18px;
-    font-weight:bold;
+    line-height: 20px;
+    font-size:13px;
 }
 #google_in{
+    text-indent:5px;
     width: 130px;
     height: 30px;
    margin: 20px auto;
@@ -97,4 +94,37 @@
 }
 #face{ 
     color: #000000;
+}
+
+.kakao_login{
+    width:120px;
+    height:35px;
+    border: 1px solid #6666;
+    background-color: #fff;
+    margin:0 auto;
+    line-height:30px;
+    
+}
+
+.kakao_image{
+    float:left;
+}
+
+.partition{
+    width:30px;
+    margin: 50px auto;
+    color:#666;
+}
+
+.line{
+    width:100px;
+    height:10px;
+    background:yellow;
+    border: 6px solid #0000;
+}
+
+.kakao_image>img{
+    width:22px;
+    height:22px;
+    padding:6px 4px;
 }
