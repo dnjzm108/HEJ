@@ -5,32 +5,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFOVIEW</title>
+    <title>POPUP</title>
     <link rel="stylesheet" href="/css/info/index.css">
     <link rel="stylesheet" href="/css/info/view.css">
 </head>
 
 <body>
     <div id="wrap" class="w100">
+        {% for item in popupList %}
         <div id="info_header" class="center">
-            <h1>POPUP</h1>
+            <h1>{{item.title}}</h1>
         </div>
         <div id="content_header" class="center">
             <ul>
-                <li>{{popupList.writer}}</li>
-                <li>{{popupDate}}</li>
+                <li>{{item.writer}}</li>
+                <li>{{item.date}}</li>
             </ul>
         </div>
 
         <div id="content_wrap" class="center">
-            <img style="width: 400px; height: 200px;" src="{{popupImage}}">
+            <p>{{item.popup_start_date}} ~ {{item.popup_end_date}}</p>
+            <p>{{item.type}}</p>
+            <p>{{item.visibility}}</p>
+            <p>{{item.scroll}}</p>
+            <p>가로 : {{item.pop_width}} / 세로 : {{item.pop_height}}</p>
+            <p>X축 : {{item.pop_locationX}} / Y축 : {{item.pop_locationY}}</p>
+            <p>{{item.hyperlink}}</p>
         </div>
+        
 
         <div id="footer" class="center">
             <a href="/admin/popup">MENU</a>
-            <a href="/admin/delete?id={{popupList.id}}&table=popup">DELETE</a>
-            <a href="/admin/modify?id={{popupList.id}}&table=popup">MODIFY</a>
+            <a href="/admin/delete?id={{item.id}}&table=popup">DELETE</a>
+            <a href="/admin/popup_modify?id={{item.id}}&table=popup">MODIFY</a>
         </div>
+        {% endfor %}
     </div>
     </div>
 </body>

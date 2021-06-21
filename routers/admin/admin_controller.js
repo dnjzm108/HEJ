@@ -3,6 +3,7 @@ const moment = require('moment');
 const ctoken = require('../../jwt');
 const search = require('../../serach');
 const pagination = require('../../pagination');
+const router = require('.');
 
 /*========================ADMIN MAIN PAGE========================*/
 let admin_main = (req, res) => {
@@ -36,7 +37,7 @@ let login_success = async (req, res) => {
 
 /*========================WRITE PAGE========================*/
 let upload = (req, res) => {
-    let { title,localUrl } = req.query;
+    let { title, localUrl } = req.query;
     res.render('./admin/upload.html', { title, localUrl });
 };
 
@@ -149,9 +150,9 @@ let educationT = async (req, res) => {
             num: v.num
         }
     });
-    res.render('./admin/education.html',{
+    res.render('./admin/education.html', {
         edList,
-        pagin:pagin.page_hired,
+        pagin: pagin.page_hired,
     })
 };
 
@@ -167,7 +168,6 @@ let popup = async (req, res) => {
         pagin.totalrecord--;
         return {
             ...v,
-            image: v.image.replace('public', ''),
             date: moment(v.date).format("MMM Do YY"),
             visibility: v.visibility == 0 ? "invisible" : "visible",
             num: v.num
@@ -180,25 +180,47 @@ let popup = async (req, res) => {
 };
 
 let popup_upload = (req, res) => {
-    res.render('./admin/popup_upload')
+    let { title, localUrl } = req.query;
+    res.render('./admin/popup_upload', { title, localUrl })
 }
 
 let popup_upload_success = async (req, res) => {
-    let { writer, visibility, title, term, type, scroll, size, location, hyperlink } = req.body;
-    let image = req.file == undefined ? '' : req.file.path;
-    await popupTd.create({ image, writer, visibility });
+    let { writer, visibility, title, period, type, scroll, size, location, hyperlink, content } = req.body;
+    await popupTd.create({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[0], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content });
     res.redirect('/admin/popup');
 }
 
 let popup_view = async (req, res) => {
-    let { id } = req.query;
-    let popupView = await popupTd.findOne({
-        where: { id }
+    let { id, table } = req.query;
+    let result = await search['popup'].findAll({ where: { id: `${id}` }, raw: true })
+    let popupList = result.map(v => {
+        return {
+            ...v,
+            type: v.type == 1 ? '일반팝업' : '레이어팝업',
+            visibility: v.visibility == 1 ? 'visible' : 'invisible',
+            scroll: v.scroll == 1 ? '스크롤 허용' : '스크롤 비허용',
+            popup_start_date: moment(v.popup_start_date).format("yyyy-MM-DD"),
+            popup_end_date: moment(v.popup_end_date).format("yyyy-MM-DD"),
+            date: moment(v.date).format("MMM Do YY")
+        }
     })
-    let popupList = popupView.dataValues;
-    let popupDate = moment(popupList.date).format('MMM Do YY');
-    let popupImage = popupList.image.replace('public', '');
-    res.render('./admin/popup_view.html', { popupList, popupDate, popupImage })
+    res.render('./admin/popup_view.html', { popupList })
+}
+
+let popup_modify = async (req, res) => {
+    let { id, table } = req.query;
+    let popupResult = await search[table].findAll({ where: { id }, raw: true });
+    let popupList = popupResult.map(v => {
+        return {...v,
+            popup_start_date: moment(v.popup_start_date).format("yyyy-MM-DD"),
+            popup_end_date: moment(v.popup_end_date).format("yyyy-MM-DD"),
+            date: moment(v.date).format("MMM Do YY")
+        }
+    })
+    res.render('./admin/popup_modify.html', {
+        popupList,
+        table,
+    });
 }
 
 /*========================= 회원관리 ================================= */
@@ -217,7 +239,7 @@ let user_admin = async (req, res) => {
             num: v.num
         }
     });
-    res.render('./admin/user_admin', { userList, pagin:pagin.page_hired });
+    res.render('./admin/user_admin', { userList, pagin: pagin.page_hired });
 }
 
 let user_view = async (req, res) => {
@@ -283,6 +305,7 @@ module.exports = {
     popup_upload,
     popup_upload_success,
     popup_view,
+    popup_modify,
     user_admin,
     user_view,
     authority,

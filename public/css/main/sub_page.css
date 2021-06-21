@@ -108,7 +108,9 @@ a{
 #sub_header > ul{
     float: left;
     padding: 1.5479876160990713vh 0;
-    width:23.4375vw
+    width:23.4375vw;
+    height: 100%;
+    overflow: hidden;
 }
 
 #sub_header > ul >li{

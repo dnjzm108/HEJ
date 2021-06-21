@@ -8,6 +8,24 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/main/mainpage.css">
     <link rel="stylesheet" href="/js/main/main.js">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let idArr = document.querySelector('#idArr').value;
+            idArr = idArr.split(',');
+            idArr.splice(idArr.length - 1, 1);
+            idArr.forEach(v => {
+                let content = document.querySelector('#content' + v);
+                let pre = document.querySelector('#pre' + v);
+                let setting = document.querySelector('#setting' + v);
+                let popupContent = document.querySelector('#popup_content' + v)
+                console.log(setting.value)
+                popupContent.style.cssText = `${setting.value};border:1px solid #000`;
+                pre.innerHTML = `${content.value}`
+            })
+        });
+        // document.querySelector('.abc').style.cssText  = 'background-color:red; width:300px; height:300px;';
+
+    </script>
 </head>
 
 <body>
@@ -29,7 +47,7 @@
                 <li><a class="menus" href="/community">COMMUNITY</a></li>
             </ul>
         </div>
-        
+
         <div id="gnb">
             <div id="login">
                 <a href="/user/login">LOGIN</a>
@@ -63,7 +81,7 @@
         <button id="chatBtn" data-value="0">채팅</button>
         <div id="chatRoom"></div>
         <script type="text/javascript">
-const chatBtn = document.querySelector('#chatBtn')
+            const chatBtn = document.querySelector('#chatBtn')
             // const chatRoom = document.querySelector('#chatRoom')
             // let flag = undefined;
             // Btn.addEventListener('click', () => {
@@ -94,15 +112,15 @@ const chatBtn = document.querySelector('#chatBtn')
             //     chatRoom.innerHTML = result;
             //     console.log(result);
             // }
-           
-        function popup() {
-            let url = 'http://localhost:3000/chat'
-            let name = '채팅'
-            let option = 'width = 500 ,height = 500 ,top = 100 , left = 200, location = no'
-    
-            window.open(url,name,option);
-        }
-        chatBtn.addEventListener('click',popup)
+
+            function popup() {
+                let url = 'http://localhost:3000/chat'
+                let name = '채팅'
+                let option = 'width = 500 ,height = 500 ,top = 100 , left = 200, location = no'
+
+                window.open(url, name, option);
+            }
+            chatBtn.addEventListener('click', popup)
             let a = 0;
             const square = document.querySelector('#square');
             square.addEventListener('click', moving);
@@ -129,13 +147,12 @@ const chatBtn = document.querySelector('#chatBtn')
             }
             // square end
 
-            
+
 
         </script>
 
         <div id="apply_btn">상담신청</div>
     </div>
-
 
     <div id="apply_form">
         <label for="name">name</label>
@@ -143,6 +160,24 @@ const chatBtn = document.querySelector('#chatBtn')
         <label for="age">age</label>
         <input id="age" type="text">
     </div>
+
+    <!-- {% if popup != undefiend %}
+    <input type="hidden" value="{{idArr}}" id="idArr">
+    {% for item in popup %}
+    <div id="popup_content{{item.id}}">
+        <textarea style="display: none;" id="content{{item.id}}">{{item.content}}</textarea>
+        <pre id="pre{{item.id}}"></pre>
+        <textarea style="display: none;"
+            id="setting{{item.id}}">position:absolute;background-color:beige;width:{{item.pop_width}}px;height:{{item.pop_height}}px;top:{{item.pop_locationY}}px;left:{{item.pop_locationX}}px</textarea>
+        <div id="popup_check">
+            <input type="checkbox" name="visibility" id="popup_checkbox{{item.id}}">
+            <label for="popup_checkbox{{item.id}}">1일동안 이 창 보지않기</label>
+            <button style="float:right; color:#fff; background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer" id="popup_close{{item.id}}">닫기</button>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %} -->
+    <!-- {{item.pop_locationX}};{{item.pop_locationY}};{{item.hyperlink}};{{item.scroll}}; -->
 
 
     <script type="text/javascript">
@@ -191,15 +226,15 @@ const chatBtn = document.querySelector('#chatBtn')
         menus.forEach(v => {
             let menu_flag = 0
             v.addEventListener('click', () => {
-                if(menu_flag == 0){
-                    v.setAttribute('style','color: #000');
+                if (menu_flag == 0) {
+                    v.setAttribute('style', 'color: #000');
                     menu.setAttribute('class', 'menu_open');
                     menu_flag = 1;
                     console.log(menu_flag)
-                }else{
-                    v.setAttribute('style','color: #2e2b2bd7');
+                } else {
+                    v.setAttribute('style', 'color: #2e2b2bd7');
                     menu.removeAttribute('class');
-                    menu.setAttribute('class','menu_close');
+                    menu.setAttribute('class', 'menu_close');
                     menu_flag = 0;
                 }
             })
