@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,25 +8,28 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/main/write.css">
 </head>
+
 <body>
     <div id="wrap">
         <div id="header">
-    <form action="/community/write" method="POST" enctype="multipart/form-data" >
-    <span>제목</span></br>
-    <input  class="w500" type="text" name="title" id="title"></br>
-    <span>작성자</span></br>
-    <span>{{userid}} 님</span>
-    <input class="w500"  type="hidden" name="userid" id="userid" value="{{userid}}"></br>
-    <span>이미지</span></br>
-    <input class="w500"  type="file" name="community_image" id="community_image"></br>
-    <span>타입</span>
-    Q&A<input type="radio" name="type" value="Q&A">게시판<input type="radio" name="type" value="게시판">공지사항<input type="radio" name="type" value="공지사항"></br>
-    <span>내용</span></br>
-    <input id="cont" type="text" name="content" id="content"></br>
-    <input type="submit" value="저장">
-</div>
-</div>
-</form>
-    
+            <form action="/community/write" method="POST" enctype="multipart/form-data">
+                <span>제목</span></br>
+                <input class="w500" type="text" name="title" id="title"></br>
+                <span>작성자</span></br>
+                <span>{{userid}} 님</span>
+                <input class="w500" type="hidden" name="userid" id="userid" value="{{userid}}"></br>
+                <span>이미지</span></br>
+                <input class="w500" type="file" name="community_image" id="community_image"></br>
+                <span>타입</span>
+                Q&A<input type="radio" name="type" value="Q&A">게시판<input type="radio" name="type" value="게시판">공지사항<input
+                    type="radio" name="type" value="공지사항"></br>
+                <span>내용</span></br>
+                <input id="cont" type="text" name="content" id="content"></br>
+                <input type="submit" value="저장">
+        </div>
+    </div>
+    </form>
+
 </body>
+
 </html>

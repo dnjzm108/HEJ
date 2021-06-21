@@ -52,6 +52,24 @@
                 </section>
                 <div class="mouse"></div>
             </div>
+            <div id="gnb_box">
+                <div>
+                    <div class="gnb_line"></div>
+                    <h2>누적 수강생</h2>
+                    <h3>66343명</h3>
+                </div>
+                <div>
+                    <div class="gnb_line"></div>
+                    <h2>수업 만족도</h2>
+                    <h3>97.87%</h3>
+                </div>
+                <div>
+                    <div class="gnb_line"></div>
+                    <h2>온라인 완주율</h2>
+                    <h3>60.05%</h3>
+                    <p>타사평균완주율 5%</p>
+                </div>
+            </div>
             <div id="btn_box">
                 <div id="cha_btn" data-value="0">chat</div>
                 <div id="consult_btn">consult</div>
@@ -91,9 +109,9 @@
         function moving() {
             if (a == 0) {
                 a = 1; console.log(a);
-                square.addEventListener("mousemove", controll);
+                window.addEventListener("mousemove", controll);
             } else {
-                square.removeEventListener("mousemove", controll);
+                window.removeEventListener("mousemove", controll);
                 square.style.animation = 'rint 10s linear 0s infinite'
                 a = 0;
 

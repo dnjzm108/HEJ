@@ -29,7 +29,7 @@ a{
 }
 
 #menu>ul{
-    width: 22vw;
+    width: 30vw;
     height: 80vh;
     margin: 10vh auto;
     border-right: 1px solid black ;
@@ -37,14 +37,14 @@ a{
 #menu>ul>li{
     width: 20vw;
     height: 15vh;
-    padding: 2.5% 10%;
+    padding: 2.5% 23%;
     box-sizing: border-box;
 }
 #menu>ul>li>img{
-    margin: 0 30%;
+    margin: 0 20%;
 }
 #menu>ul>li>a{
-    font-size: 3em;
+    font-size: 2.5vw;
     margin: 0 auto;
     border-bottom: 3px solid black;
     text-align: center;
@@ -58,8 +58,8 @@ a{
 }
 #tum{
     position: absolute;
-    left: 50%;
-    top: 30%;
+    left: 57%;
+    top: 19%;
     transform: translate(-50%);
     animation: 10s square1;
 }
@@ -71,11 +71,11 @@ a{
     }
 }
 #square{
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     position: relative; 
     transform: rotateX(10deg) rotateY(10deg) rotateZ(10deg);
-     animation: rint 10s linear 0s infinite;
+    animation: rint 10s linear 0s infinite;
     transform-style: preserve-3d;
 
     /* animation-name: rint ;
@@ -108,8 +108,8 @@ a{
 }
 
 #square>div{
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     position: absolute;
     /* opacity: 0.3; */
     /* backface-visibility: hidden; */
@@ -117,28 +117,28 @@ a{
 }
 
 #square > div:nth-child(1){
-    transform: rotateY(0deg) translate3d(0px, 0px, 200px);
+    transform: rotateY(0deg) translate3d(0px, 0px, 175px);
     border: 1px solid black;
 }
 #square > div:nth-child(2){
-    transform: rotateY(90deg) translate3d(0px, 0px, 200px);
+    transform: rotateY(90deg) translate3d(0px, 0px, 175px);
     border: 1px solid black;
 }
 #square > div:nth-child(3){
-    transform: rotateY(180deg) translate3d(0px, 0px, 200px);
+    transform: rotateY(180deg) translate3d(0px, 0px, 175px);
     border: 1px solid black;
 }
 #square > div:nth-child(4){
-    transform: rotateY(270deg) translate3d(0px, 0px, 200px);
+    transform: rotateY(270deg) translate3d(0px, 0px, 175px);
     border: 1px solid black;
 }
 #square > div:nth-child(5){
-    transform: rotateX(90deg) translate3d(0px, 0px, 200px);
+    transform: rotateX(90deg) translate3d(0px, 0px, 175px);
     border: 1px solid black;
     
 }
 #square > div:nth-child(6){
-    transform: rotateX(270deg) translate3d(0px, 0px, 200px);
+    transform: rotateX(270deg) translate3d(0px, 0px, 175px);
     border: 1px solid black;
 }
 #square > div:nth-child(1):hover{
@@ -165,6 +165,32 @@ a{
     background: silver;
     opacity: 0.3;
 }
+/* square end */
+
+#gnb_box{
+    width: 55vw;
+    height: 20vh;
+    position: relative;
+    top: 72%;
+    left: 20%;
+}
+#gnb_box>div{
+    display: inline-block;
+    width: 16vw;
+    height: 20vh;
+    margin: 0 10px;
+    float: left;
+    text-align: center;
+    padding: 3%;
+    box-sizing: border-box;
+}
+.gnb_line{
+    width: 10vw;
+    border-top: 2px solid #16141467;
+    margin: 0 auto 20px;
+}
+
+/* login start */
 #login{
     width: 6vw;
     height: 2.5vh;
@@ -218,6 +244,7 @@ a{
     right: 0;
     bottom: 0;
     animation: 5s form;
+    background: white;
 }
 #apply_form>#name,#age,#number{
     color: white;
