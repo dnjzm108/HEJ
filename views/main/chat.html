@@ -33,52 +33,120 @@
     <script type="text/javascript" src="./socket.io.js"></script>
     <script>
         let socket = io();
-
-        // 채팅 부분 
+        const you = document.querySelector('.you')
+        const come = document.querySelector('.come')
+        const chat = document.querySelector('#chat');
         const btn = document.querySelector('#btn');
-        const content = document.querySelector('#chat')
-        socket.on('connect', () => { })
+        const msg = document.querySelector('#msg')
+      
 
-        btn.addEventListener('click', send)
-        function send() {
-            socket.emit('send', msg.value)
-            addCard(msg.value, 'me');
-        }
 
-        socket.on('msg', (data) => {
-            addCard(data, 'you')
+        socket.on('connect', () => {
+            let name = prompt('닉네임을 입력해주세요', '')
+            if (!name) {
+                name = '익명'
+            }
+            socket.emit('newUser', name)
         })
-        function addCard(text, type) {
+        socket.on('update', (data) => {
             const div = document.createElement('div');
             const span = document.createElement('span');
-            const chat = document.querySelector('#chat');
+            span.innerHTML = data.message;
+            span.classList.add('come');
+            div.appendChild(span)
+            div.classList.add('Come');
+            chat.appendChild(div)
+            chat.scrollTop = chat.scrollHeight;
+        })
 
+
+        btn.addEventListener('click',send)
+        function send() {
+            if (msg.value == '') {
+                return;
+            } else {
+                socket.emit('send',msg.value);
+                addCard(msg.value,'me',socket.name);
+                msg.value = '';
+                chat.scrollTop = chat.scrollHeight;
+                console.log(time);                                                                                                                                       
+            }
+        }
+        socket.on('msg', (data) => {
+            console.log('name' + data.name + '내용' + data.content);
+            addCard(data.content,'you',data.name)
+            chat.scrollTop = chat.scrollHeight;
+        })
+        function addCard(text,type,name) {
+            let today = new Date();
+            let time = today.getHours()+':'+today.getMinutes()
+            const div = document.createElement('div');
+            const span = document.createElement('span');
+            const span2 = document.createElement('span')
+            const p = document.createElement('p');
+            if(type == 'you'){
+            span2.innerHTML=name;
+            span2.classList.add('other');
+            div.appendChild(span2);
+          }
             span.innerHTML = text;
             span.classList.add(type);
             div.appendChild(span);
-            chat.appendChild(div)
-            msg.value=''
+            p.innerHTML = time;
+            p.classList.add('time');
+            div.appendChild(p);
+            chat.appendChild(div);
+            msg.value = '';
             
         }
 
-        // async function getChatRoom() {
-        //     let url = 'http://localhost:3000/chat'
-        //     let options = {
-        //         method: 'GET'
-        //     }
-        //     let response = await fetch(url, options);
-        //     let result = await response.text();
-        //     chatRoom.innerHTML = result;
-        // }
+        // 채팅 부분 
+    //     const btn = document.querySelector('#btn');
+    //     const content = document.querySelector('#chat')
+    //    socket.on('connect', () => {
+    //             console.log('연결됨');
+    //    })
 
-        // function isJson(str) {
-        //     try {
-        //         let json = JSON.parse(str)
-        //         return (typeof json == 'object')
-        //     } catch (e) {
-        //         return false;
-        //     }
-        // }
+    //     btn.addEventListener('click', send)
+    //     function send() {
+    //         socket.emit('send', msg.value)
+    //         addCard(msg.value, 'me');
+    //     }
+
+    //     socket.on('msg', (data) => {
+    //             console.log('you:'+data);
+
+    //             addCard(data,'you')
+    //          })
+    //          function addCard(text, type) {
+    //         const div = document.createElement('div');
+    //         const span = document.createElement('span');
+    //         const chat = document.querySelector('#chat');
+
+    //         span.innerHTML = text;
+    //         span.classList.add(type);
+    //         div.appendChild(span);
+    //         chat.appendChild(div)
+    //     }
+
+    //     async function getChatRoom() {
+    //         let url = 'http://localhost:3000/chat'
+    //         let options = {
+    //             method: 'GET'
+    //         }
+    //         let response = await fetch(url, options);
+    //         let result = await response.text();
+    //         chatRoom.innerHTML = result;
+    //     }
+
+    //     function isJson(str) {
+    //         try {
+    //             let json = JSON.parse(str)
+    //             return (typeof json == 'object')
+    //         } catch (e) {
+    //             return false;
+    //         }
+    //     }
 
 
     </script>

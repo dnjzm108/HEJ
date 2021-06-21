@@ -10,6 +10,7 @@
     <meta name="google-signin-client_id"
         content="271562730452-rufsjg41rp8hhbno7686je73714i5dpu.apps.googleusercontent.com">
     <link rel="stylesheet" href="/css/third/login.css">
+    <link rel="stylesheet" href="/css/third/index.css">
     <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v10.0&appId=4064419383640755"
         nonce="SiOBIhLG"></script>
@@ -52,42 +53,48 @@
     </script> -->
 </head>
 <div id="wrap">
+
     <div id="box">
         {% if session == undefined %}
+        <div class="login_logo">
+            <a href="/"><img src="/uploads/logo_bottom_2018.png"></a>
+        </div>
+
         <form action="/user/login_check" method="post">
             <table id="login_table">
-                <tr class="">
-                    <td>아이디:</td>
+                <tr class="input_box">
                     <td>
-                        <input type="text" id="userid" class="" name="userid" required>
+                        <input type="text" id="userid" class="" name="userid" placeholder="아이디" required>
                     </td>
                 </tr>
-                <tr class="">
-                    <td>비밀번호:</td>
+                <tr class="input_box">
                     <td>
-                        <input type="password" id="userpw" class="" name="userpw" required>
+                        <input type="password" id="userpw" class="" name="userpw" placeholder="비밀번호" required>
                     </td>
                 </tr>
             </table>
 
             <input id="local_in" type="submit" class="join_button" value="로그인">
-            <a id="join_in" href="/user/join">회원가입</a>
-            <a href="/user/find_info?flag=0">아이디 찾기</a>
-            <a href="/user/find_info?flag=1">비밀번호 찾기</a>
-    
-            <a id="kakao_in" class="kakao" href="/auth/kakao">카카오 로그인</a>
-            <div id="google_in">
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
-            </div>
+       
+                <a id="join_in" class="login_text" href="/user/join">회원가입</a>
+                <a class="login_text" href="/user/find_info?flag=0">아이디 찾기</a>
+                <a class="login_text" href="/user/find_info?flag=1">비밀번호 찾기</a>
+
+                <div class="gooka_login">
+                    <a id="kakao_in" class="kakao" href="/auth/kakao">카카오 로그인</a>
+                    <div id="google_in">
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    </div>
+                </div>
         </form>
         <!-- google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
 client id : 271562730452-rufsjg41rp8hhbno7686je73714i5dpu.apps.googleusercontent.com
 client password : wMc8se_eBobJrH2EN-r3JF6z -->
-      
+
         <!-------- 지도---- -->
-        {% include "./map.html" %} 
+        {% include "./map.html" %}
         <!-------- 지도---- -->
-        
+
         {% endif %}
         {% if session != undefined %}
         {% if session.kakao %}
@@ -95,7 +102,7 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
         {% endif %}
 
         {% if session.google %}
-        
+
         <input type="hidden" class="g-signin2" gapi.auth2.getauthinstance()="onSignIn">
         <button id="google_out" onclick="signOut()">google out</button>
         {% endif %}
@@ -154,13 +161,13 @@ client password : wMc8se_eBobJrH2EN-r3JF6z -->
         let options = { method: "get" }
         let url = `google?userid=${id}&username=${name}`
         let result = await fetch(url, options);
-        location.href= 'http://localhost:3000/user/login';
+        location.href = 'http://localhost:3000/user/login';
     }
     async function google_out() {
         let options = { method: "get" }
         let url = `google_out`
         let result = await fetch(url, options);
-        location.href= 'http://localhost:3000/user/login';
+        location.href = 'http://localhost:3000/user/login';
     }
 </script>
 

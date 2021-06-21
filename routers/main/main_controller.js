@@ -287,18 +287,7 @@ let test = (req, res) => {
 }
 
 let chat = (req,res) =>{
-    let {kakao,local,google} = session.authData;
-    let name ;
-    if(local != undefined){
-       name = session.authData.local.userid;
-    }if(kakao != undefined){
-        name = kakao.properties.nickname;
-    }if(google != undefined){
-        name = google.username;
-    }
-    res.render('./main/chat.html',{
-        name
-    });
+    res.render('./main/chat.html');
    
 }
   

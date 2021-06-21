@@ -1,53 +1,75 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-ul,li{
-    list-style: none;
-}
-a{
-    text-decoration: none;
-}
-#wrap{
-    width: 100%;
-    text-align: center;
-}
+
 #box{
-    width: 500px;
-    height: 500px;
-    margin: 200px auto;
-    padding: 50px 100px;
+    width: 600px;
+    height: 1000px;
+    margin: 0 auto;
+    padding:50px 100px;
     box-sizing: border-box;
-    border: 1px solid #000000;
+    /* border: 1px solid #000000; */
 }
 #local_in{
-    width: 50px;
-    height: 30px;
-    margin: 10px 5px;
+    width: 400px;
+    height: 35px;
+    font-size: 15px;
+    font-weight: bold;
 }
+
+#login_table{
+    margin-bottom:8px;
+}
+
+.input_box>td>input{
+    width:395px;
+    height:35px;
+    margin: 3px 0;
+    font-size: 13px;    
+}
+
+.login_text{
+    font-size:10px;
+    font-weight:bold;
+    color:#666;
+}
+
 #join_in{
     width: 50px;
     height: 30px;
     margin: 10px 5px;
+} 
+
+.login_logo>a>img{
+    width:147px;
+    height: 62px;
+    padding-bottom: 30px;
+    margin-right: 20px;
 }
+
+
+.gooka_login{
+    margin-top:50px;
+}
+
 .kakao{
     display: block; 
-    width: 180px;
-    height: 30px;
+    width: 400px;
+    height: 35px;
     border: 1px solid #666;
     background: yellow;
-    margin : 10px auto;
+    margin : 5px auto;
     color: #000000;
     cursor: pointer;
     border-radius : 15px;
     text-align: center;
-    line-height: 30px;
+    line-height: 35px;
+    font-size:18px;
+    font-weight:bold;
 }
 #google_in{
     width: 130px;
     height: 30px;
    margin: 20px auto;
 }
+
 #google_out{
     display: block; 
     width: 180px;

@@ -1,0 +1,157 @@
+#box{
+    width: 625px;
+    height: 1000px;
+    margin: 0 auto;
+    padding:50px 100px;
+    box-sizing: border-box;
+    /* border: 1px solid #000000; */
+}
+
+.join_logo>a>img{
+    width:147px;
+    height: 62px;
+    padding-bottom: 30px;
+    margin-right: 20px;
+}
+
+.input_title{
+    width:418px;
+    height:20px;
+    background-color: #ededed;
+    text-align: left;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.input_box{
+    width:418px;
+    height:20px;
+    margin: 3px 0;
+    font-size: 13px;    
+}
+
+.join_submit{
+    padding: 40px 0;
+    float:right;
+}
+
+.btn>a{
+    font-size:13px;
+    font-weight:bold;
+    color:black;
+}
+.gender_align{
+    text-align: left;
+}
+
+.join_font{
+    font-size: 15px;
+}
+
+.join_title{
+    margin:19px 0 8px;
+    font-size:14px !important;
+    font-weight:700;
+    text-align:left;
+}
+
+.int{
+    display:block;
+    position:relative;
+    width:100%;
+    height:29px;
+    padding-right:25px;
+    line-height:29px;
+    border:none;
+    font-size:15px;
+    z-index:10;
+}
+
+.int_address{
+    display:block;
+    position:relative;
+    height:29px;
+    padding-right:25px;
+    line-height:29px;
+    border:none;
+    font-size:15px;
+    z-index:10;
+
+}
+.ps_box{
+    display:block;
+    position:relative;
+    width:100%;
+    height:51px;
+    border: 1px solid #dadada;
+    padding:10px 110px 10px 14px;
+    box-sizing: border-box;
+    background:#fff;
+}
+
+
+.country_code{
+    display: block;
+    width: 100%;
+    padding-right: 7px;
+    box-sizing: border-box;
+}
+
+.country_code > .int{
+    padding-right:0px !important;
+}
+
+.step_url{
+    position: absolute;
+    top: 16px;
+    right: 13px;
+    font-size: 12px;
+    line-height: 18px;
+    color: #8e8e8e;
+}
+
+.btn_primary {
+    color: #fff;
+    border: solid 1px rgba(0,0,0,.08);
+    background-color: #03c75a;
+}
+
+.btn_defulat {
+    color: #000;
+    border: solid 1px rgba(0,0,0,0.25);
+    background-color: #FFF;
+}
+
+a{
+    color:black;
+}
+
+.mt15{
+    margin-top:15px;
+}
+
+.btn_type {
+    display: block;
+    width: 100%;
+    padding: 15px 0 15px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.sel {
+    width: 100%;
+    height: 29px;
+    padding: 7px 8px 6px 7px\9;
+    font-size: 15px;
+    line-height: 18px;
+    color: #000;
+    border: none;
+    border-radius: 0;
+    *height: auto;
+    -webkit-appearance: none;
+}
+
+input:focus { outline: none; }

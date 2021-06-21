@@ -29,15 +29,16 @@
 </head>
 
 <body>
-    <!-- lodding start -->
-    <div id="loding_mode">
-        <div class="loading-container">
-            <div class="loading"></div>
-            <div id="loading-text">loading</div>
-        </div>
-    </div>
-    <!-- lodding end -->
+
     <div id="wrap">
+        <!-- lodding start -->
+        <div id="loding_mode">
+            <div class="loading-container">
+                <div class="loading"></div>
+                <div id="loading-text">loading</div>
+            </div>
+        </div>
+        <!-- lodding end -->
         <div id="menu">
             <ul>
                 <li><a class="menus" href="/"><img src="/uploads/logo_bottom_2018.png"></a></li>
@@ -47,13 +48,18 @@
                 <li><a class="menus" href="/community">COMMUNITY</a></li>
             </ul>
         </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8f856e59691b2306f2c44b45d9d421ce73bc3716
         <div id="gnb">
             <div id="login">
                 <a href="/user/login">LOGIN</a>
                 <a href="/user/join">JOIN</a>
             </div>
-            <div class="on">
+
+
+            <div class=none">
                 <section id="square">
                     <div>
                         <a href="#">블록체인</a>
@@ -75,6 +81,14 @@
                     </div>
                 </section>
                 <div class="mouse"></div>
+            </div>
+            <button id="chatBtn" data-value="0">채팅</button>
+            <div id="apply_btn">상담신청</div>
+            <div id="apply_form">
+                <label for="name">name</label>
+                <input id="name" type="text"><br />
+                <label for="age">age</label>
+                <input id="age" type="text">
             </div>
         </div>
 
@@ -134,7 +148,21 @@
                     square.style.animation = 'rint 10s linear 0s infinite'
                     a = 0;
 
-                }
+            window.open(url, name, option);
+        }
+        chatBtn.addEventListener('click', popup)
+        let a = 0;
+        const square = document.querySelector('#square');
+        square.addEventListener('click', moving);
+        const mouse = document.querySelector(".mouse");
+        function moving() {
+            if (a == 0) {
+                a = 1;
+                document.addEventListener("mousemove", controll);
+            } else {
+                document.removeEventListener("mousemove", controll);
+                square.style.animation = 'rint 10s linear 0s infinite'
+                a = 0;
 
             }
             function aa(e) {

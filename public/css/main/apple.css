@@ -1,63 +1,78 @@
-*{
-    margin:0;
-    padding:0;
-    overflow: hidden;
+*{font-family: 'Nanum Pen Script', cursive;
+    font-family: 'Viaoda Libre', cursive;
+    margin: 0;
+    padding: 0;
 }
-
 ul,li{
     list-style: none;
 }
-
 a{
     text-decoration: none;
 }
-
 #wrap{
-    width: 100vw;
+    width: 100%;
+}
+#menu{
+    position: relative;
+    display: inline-block;
+    float: left;
+    width: 25%;
     height: 100vh;
+    animation: 3s test;
+}
+@keyframes test{
+    from{
+        top: -100vh;
+    }to{
+        top: 0;
+    }
 }
 
-#menu{
-    display: inline-block;
-    width:25vw;
-    height: 100vh;
-    background-color: #ededed;
-    margin-left: 0px;
+#menu>ul{
+    width: 22vw;
+    height: 80vh;
+    margin: 10vh auto;
+    border-right: 1px solid black ;
+}
+#menu>ul>li{
+    width: 20vw;
+    height: 15vh;
+    padding: 2.5% 10%;
+    box-sizing: border-box;
+}
+#menu>ul>li>img{
+    margin: 0 30%;
+}
+#menu>ul>li>a{
+    font-size: 3em;
+    margin: 0 auto;
+    border-bottom: 3px solid black;
     text-align: center;
 }
 
-/* #menu > ul{
-    width: 25vw;
-    position:absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    vertical-align: middle;
-} */
-
-#menu > ul > li {
-    padding: 5vh;
-}
-
-#menu > ul > li:hover > a{
-    color: #000;
-}
-
-#menu > ul > li > a{
-    font-size: 5vh;
-    color: #2e2b2bd7 ;
-}
-/* square start */
 #gnb{
     display: inline-block;
-    position: relative;
-    top: 0;
-    width: 73vw;
+    width: 75%;
     height: 100vh;
+    position: relative;;
+}
+#tum{
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%);
+    animation: 10s square1;
+}
+@keyframes square1{
+    from{
+        opacity: 0;
+    }to{
+        opacity: 1;
+    }
 }
 #square{
     width: 400px;
     height: 400px;
-    margin: 30vh auto 0;
     position: relative; 
     transform: rotateX(10deg) rotateY(10deg) rotateZ(10deg);
      animation: rint 10s linear 0s infinite;
@@ -150,111 +165,88 @@ a{
     background: silver;
     opacity: 0.3;
 }
-
-/* square end */
-
-
-
-
-
-#apply_btn{
-    right: 5vh;
-    bottom: 0;
+#login{
+    width: 6vw;
+    height: 2.5vh;
     position: absolute;
-    float: right;
+    right: 0;
+    top: 2%;
+}
+#login>a{
+    font-size: 1.3em;
+    border-bottom: 1px solid black ;
+    margin: 0 5%;
+}
+#btn_box{
+    width: 8vw;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    animation: 5s form;
+}
+#cha_btn{
+    width: 2.5vw;
+    display: inline-block;
+    font-size: 1.4em;
+    color: #000000;
+    cursor:pointer;
+    border-bottom: 1px solid black;
     text-align: center;
+}
+#cha_btn:hover{
+    background: #000000;
+    color: white;
+}
+#consult_btn{
     width: 5vw;
-    height: 4vh;
-    padding: 1vh;
-    font-size: 1.5vh;
-    box-sizing: border-box;
-    background-color: #ededed;
-    color: #2e2b2bd7;
+    display: inline-block;
+    font-size: 1.4em;
+    color: #000000;
+    cursor:pointer;
+    border-bottom: 1px solid black;
+    text-align: center;
 }
-
-#apply_btn:hover{
-    transition: all 0.8s;
-    background-color: #2e2b2b5d;
-    cursor: pointer;
+#consult_btn:hover{
+    background: #000000;
+    color: white;
 }
-
 #apply_form{
-    position: relative;
-    height: 40vh;
-    width: 18vw;
-    padding: 3vh;
-    box-sizing: border-box;
-    background-color: #ededed;
-    color: #2e2b2bd7;
+    display: none;
+    width: 20vw;
+    height: 30vh;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    animation: 5s form;
+}
+#apply_form>#name,#age,#number{
+    color: white;
+    width: 20vw;
+}
+#apply_form>#content{
+    width: 20vw;
+    height: 14vh;
+    color: white;
 }
 
-.apply_open{
-    animation: slideopen 2s;
-    animation-fill-mode: forwards;
-}
-
-.btn_open{
-    animation: btnopen 2s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes slideopen{
+/* @keyframes form{
     from{
-        bottom: -40vh;
-    }
-    to{
+        bottom: -30vh;
+    }to{
         bottom: 0;
     }
-}
-
-@keyframes btnopen{
-    from{
-        bottom: 0px;
-    }
-    to{
-        bottom: 40vh;
-    }
-}
-
-.apply_close{
-    animation: slideclose 2s;
-    animation-fill-mode: forwards;
-}
-
-.btn_close{
-    animation: btnclose 2s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes slideclose{
-    from{
-        bottom: 0px;
-    }
-    to{
-        bottom: -40vh;
-    }
-}
-
-@keyframes btnclose{
-    from{
-        bottom: 40vh;
-    }
-    to{
-        bottom: 0px;
-    }
-}
-
+} */
 
 /* lodding start */
+
 #loding_mode{
-    display: none;
 width: 100%;
 height: 100%;
 background: #333333;
 position: absolute;
-animation: 0.5s up ;
+animation: 2s up ;
 animation-fill-mode: forwards;
-/* animation-delay: 1.5s; */
+ animation-delay: 1.5s; 
 }
 @keyframes up{
     from{
@@ -393,50 +385,3 @@ to{top: -100vh;} */
      width: 100px;
  }
  /* lodding end */
-
-
- .menu_open{
-    animation: menuopen 3s;
-    animation-fill-mode: forwards;
- }
-
- @keyframes menuopen{
-    from{
-        width: 25vw;
-    }
-    to{
-        width: 100vw;
-    }
- }
-
- .menu_close{
-    animation: menuclose 1.5s;
-    animation-fill-mode: forwards;
- }
-
- @keyframes menuclose{
-    from{
-        width: 100vw;
-    }
-    to{
-        width: 25vw;
-    }
- }
-
- #login{
-    position: relative;
-    float: right;
- }
-
- #login > a{
-    padding: 10px;
- }
-
-#popup_check{
-     position: absolute;
-     bottom: 0px;
-     width: 100%;
-     height: 20px;
-     background-color: black;
-     color: #fff;
- }

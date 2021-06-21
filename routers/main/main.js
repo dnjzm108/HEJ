@@ -16,7 +16,7 @@ const upload = multer({
     })
 });
 
-router.get('/chat',login_check,controller.chat);
+router.get('/chat',controller.chat);
 router.use('/view',controller.view);
 router.use('/education/:localUrl',controller.education);
 router.use('/education',controller.education);
