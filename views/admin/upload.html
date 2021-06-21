@@ -15,82 +15,85 @@
 </head>
 
 <body>
-    <h1>UPLOAD</h1>
-    <form action="/admin/upload_success" id="info_form" method="POST">
-        <input type="text" name="localUrl" style="display:none;" value="{{title}}">
-        <input type="text" name="writer" id="writer" value="writer">
+    <div id="wrap">
+        <div class="container">
+            <h1>UPLOAD</h1>
+            <form action="/admin/upload_success" id="info_form" method="POST">
+                <input type="text" name="localUrl" style="display:none;" value="{{title}}">
+                <input type="text" name="writer" id="writer" value="writer">
 
-        <div id="typeof" class="input">
-            {% if title=='information' %}
-            <select id="type" name="type">
-                <option class="option" value="intro">인사말</option>
-                <option class="option" value="history">연혁</option>
-                <option class="option" value="popup">교직원소개</option>
-                <option class="option" value="facility">시설소개</option>
-                <option class="option" value="location">오시는 길</option>
-            </select>
-            <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
-            <script type="text/javascript">
-                const id = document.getElementById('comid').value;
-                const option = document.querySelectorAll('.option');
-                option.forEach(v=>{
-                    if(id == v.value){
-                        v.setAttribute('selected','true');
-                    }
-                })
-            </script>
-            {% endif %}
+                <div id="typeof" class="input">
+                    {% if title=='information' %}
+                    <select id="type" name="type">
+                        <option class="option" value="intro">인사말</option>
+                        <option class="option" value="history">연혁</option>
+                        <option class="option" value="popup">교직원소개</option>
+                        <option class="option" value="facility">시설소개</option>
+                        <option class="option" value="location">오시는 길</option>
+                    </select>
+                    <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
+                    <script type="text/javascript">
+                        const id = document.getElementById('comid').value;
+                        const option = document.querySelectorAll('.option');
+                        option.forEach(v => {
+                            if (id == v.value) {
+                                v.setAttribute('selected', 'true');
+                            }
+                        })
+                    </script>
+                    {% endif %}
 
-            {% if title =='hired' %}
-            <select id="type" name="type">
-                <option class="option" value="interview">취업자 인터뷰</option>
-                <option class="option" value="portfolio">포트폴리오</option>
-            </select>
-            <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
-            <script type="text/javascript">
-                const id = document.getElementById('comid').value;
-                const option = document.querySelectorAll('.option');
-                option.forEach(v=>{
-                    if(id == v.value){
-                        v.setAttribute('selected','true');
-                    }
-                })
-            </script>
-            {% endif %}
+                    {% if title =='hired' %}
+                    <select id="type" name="type">
+                        <option class="option" value="interview">취업자 인터뷰</option>
+                        <option class="option" value="portfolio">포트폴리오</option>
+                    </select>
+                    <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
+                    <script type="text/javascript">
+                        const id = document.getElementById('comid').value;
+                        const option = document.querySelectorAll('.option');
+                        option.forEach(v => {
+                            if (id == v.value) {
+                                v.setAttribute('selected', 'true');
+                            }
+                        })
+                    </script>
+                    {% endif %}
 
-            {% if title =='community' %}
-            <select id="type" name="type">
-                <option class="option" value="notice">공지사항</option>
-                <option class="option" value="board">게시판</option>
-                <option class="option" value="qanda">Q and A</option>
-            </select>
-            <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
-            <script type="text/javascript">
-                const id = document.getElementById('comid').value;
-                const option = document.querySelectorAll('.option');
-                option.forEach(v=>{
-                    if(id == v.value){
-                        v.setAttribute('selected','true');
-                    }
-                })
-            </script>
-            {% endif %}
+                    {% if title =='community' %}
+                    <select id="type" name="type">
+                        <option class="option" value="notice">공지사항</option>
+                        <option class="option" value="board">게시판</option>
+                        <option class="option" value="qanda">Q and A</option>
+                    </select>
+                    <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
+                    <script type="text/javascript">
+                        const id = document.getElementById('comid').value;
+                        const option = document.querySelectorAll('.option');
+                        option.forEach(v => {
+                            if (id == v.value) {
+                                v.setAttribute('selected', 'true');
+                            }
+                        })
+                    </script>
+                    {% endif %}
 
-        </div>
+                </div>
 
-        <div id="title_input" class="input">
-            <label for="title">TITLE</label>
-            <input type="text" name="title" id="title"><br />
-        </div>
+                <div id="title_input" class="input">
+                    <label for="title">TITLE</label>
+                    <input type="text" class="form-control" name="title" id="title"><br />
+                </div>
 
-        <div id="summernote">
-        </div>
-        <textarea name="content" id="result">
+                <div id="summernote">
+                </div>
+                <textarea name="content" id="result">
         </textarea>
 
-        <input type="button" id="info_submit" value="UPLOAD">
-    </form>
-
+                <input type="button" id="info_submit" value="UPLOAD">
+            </form>
+        </div>
+    </div>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#summernote').summernote()
@@ -107,7 +110,7 @@
 
         const button = document.querySelector('#info_submit')
         const info_form = document.querySelector('#info_form');
-        
+
         button.addEventListener('click', submitFn)
         function submitFn() {
             let markupStr = $('#summernote').summernote('code');
