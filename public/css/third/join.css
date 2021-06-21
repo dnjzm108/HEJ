@@ -70,13 +70,25 @@
 .int_address{
     display:block;
     position:relative;
+    width: 250px;
     height:29px;
     padding-right:25px;
     line-height:29px;
     border:none;
     font-size:15px;
     z-index:10;
+}
 
+.int_address2{
+    display:block;
+    position:relative;
+    width: 170px;00
+    height:29px;
+    padding-right:25px;
+    line-height:29px;
+    border:none;
+    font-size:15px;
+    z-index:10;
 }
 .ps_box{
     display:block;
@@ -113,7 +125,7 @@
 .btn_primary {
     color: #fff;
     border: solid 1px rgba(0,0,0,.08);
-    background-color: #03c75a;
+    background-color: rgba(102,186,255);
 }
 
 .btn_defulat {
@@ -155,3 +167,28 @@ a{
 }
 
 input:focus { outline: none; }
+
+#user_birth{
+    width: 380px;
+}
+
+.ps2_box{
+    display:inline-block;
+    position:relative;
+    width:50%;
+    height:51px;
+    border: 1px solid #dadada;
+    padding:10px 110px 10px 14px;
+    box-sizing: border-box;
+    background:#fff;
+}
+
+#userid_msg{
+    width:400px;
+    text-align: right;
+    margin-top:10px;
+}
+
+#userimage{
+    margin-top:10px;
+}
