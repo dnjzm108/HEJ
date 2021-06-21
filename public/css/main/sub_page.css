@@ -151,15 +151,7 @@ a{
     text-align: center;
     line-height: 28px;
 }
-/* 
-#sub_header_wrap > ul:nth-child(2)>li{
-    text-indent:-20px;
-}
 
-#sub_header_wrap > ul:nth-child(3)>li{
-    text-indent:-10px;
-}
- */
 #sub_header_wrap > ul:nth-child(4)>li{
     text-indent:10px;
 } 

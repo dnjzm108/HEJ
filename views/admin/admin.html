@@ -1,23 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADMIN MAIN PAGE</title>
-    <link rel="stylesheet" href="/css/info/index.css">
-    <link rel="stylesheet" href="/css/info/main.css">
+    <!-- <link rel="stylesheet" href="/css/info/index.css">
+    <link rel="stylesheet" href="/css/info/main.css"> -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <style>
+        ul,li{
+            list-style: none;
+        }
+    </style>
 </head>
+
 <body>
-    <div id="wrap" class="w100">
-        <div class="center">
-            <a href="/admin/information"><div class="main_btn">학원소개</div></a>
-            <a href="/admin/education"><div class="main_btn">교육과정</div></a>
-            <a href="/admin/hired/interview"><div class="main_btn">취업정도</div></a>
-            <a href="/admin/popup"><div class="main_btn">팝업관리</div></a>
-            <a href="/admin/user"><div class="main_btn">회원관리</div></a>
-            <a href="/admin/community"><div class="main_btn">커뮤티니</div></a>
+    <div id="wrap">
+        <div class="menu">
+            <a class="main_menu" href="/admin/information">학원소개</a>
+            <div class="sub_menu_wrap">
+                <ul>
+                    <li class="sub_menu"><a href="/admin/information/intro"><img src="/uploads/logo_bottom_2018.png"></a></li>
+                    <li class="sub_menu"><a href="/admin/information/intro">인사말</a></li>
+                    <li class="sub_menu"><a href="/admin/information/history">연혁</a></li>
+                    <li class="sub_menu"><a href="/admin/information/popup">교직원소개</a></li>
+                    <li class="sub_menu"><a href="/admin/information/facility">시설소개</a></li>
+                    <li class="sub_menu"><a href="/admin/information/location">오시는길</a></li>
+                </ul>
+            </div>
+            <a class="main_menu" href="/admin/education">교육과정</a>
+            <a class="main_menu" href="/admin/hired">취업정도</a>
+            <div class="sub_menu_wrap menu_open">
+                <ul>
+                    <li class="sub_menu"><a href="/admin/hired/interview">인터뷰</a></li>
+                    <li class="sub_menu"><a href="/admin/hired/portfolio">포트폴리오</a></li>
+                </ul>
+            </div>
+            <a class="main_menu" href="/admin/popup">팝업관리</a>
+            <a class="main_menu" href="/admin/user">회원관리</a>
+            <a class="main_menu" href="/admin/community">커뮤티니</a>
+            <div class="sub_menu_wrap">
+                <ul>
+                    <li class="sub_menu"><a href="/admin/community/notice">공지사항</a></li>
+                    <li class="sub_menu"><a href="/admin/community/board">게시판</a></li>
+                    <li class="sub_menu"><a href="/admin/community/notice">Q and A</a></li>
+                </ul>
+            </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>
+
 </html>
