@@ -75,17 +75,30 @@
             </table>
 
             <input id="local_in" type="submit" class="join_button" value="로그인">
-       
-                <a id="join_in" class="login_text" href="/user/join">회원가입</a>
-                <a class="login_text" href="/user/find_info?flag=0">아이디 찾기</a>
-                <a class="login_text" href="/user/find_info?flag=1">비밀번호 찾기</a>
 
-                <div class="gooka_login">
-                    <a id="kakao_in" class="kakao" href="/auth/kakao">카카오 로그인</a>
-                    <div id="google_in">
-                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <a id="join_in" class="login_text" href="/user/join">회원가입</a>
+            <a class="login_text" href="/user/find_info?flag=0">아이디 찾기</a>
+            <a class="login_text" href="/user/find_info?flag=1">비밀번호 찾기</a>
+
+
+            <div class="partition">
+                <div class="line"></div>
+                <span>또는</span>
+                <div class="line"></div>
+            </div>
+            <div class="gooka_login">
+                <div class="kakao_login">
+                    <div class="kakao_image">
+                        <img src="/uploads/kakao.png">
+                    </div>
+                    <div>
+                        <a id="kakao_in" class="kakao" href="/auth/kakao">로그인</a>
                     </div>
                 </div>
+                <div id="google_in">
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                </div>
+            </div>
         </form>
         <!-- google key : AIzaSyDQSByPF9_abC9Gb5PLJK93mNelv-XZzic
 client id : 271562730452-rufsjg41rp8hhbno7686je73714i5dpu.apps.googleusercontent.com

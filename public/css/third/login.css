@@ -12,16 +12,17 @@
     height: 35px;
     font-size: 15px;
     font-weight: bold;
+    margin-bottom: 15px;
 }
 
-#login_table{
-    margin-bottom:8px;
-}
+ #login_table{
+    margin: 20px 0 10px ;
+} 
 
 .input_box>td>input{
     width:395px;
     height:35px;
-    margin: 3px 0;
+    margin: 10px 0;
     font-size: 13px;    
 }
 
@@ -40,34 +41,36 @@
 .login_logo>a>img{
     width:147px;
     height: 62px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
     margin-right: 20px;
 }
 
 
 .gooka_login{
-    margin-top:50px;
+    width: 400px;
+    height: 70px;
 }
 
 .kakao{
     display: block; 
-    width: 400px;
+    width: 50px;
     height: 35px;
-    border: 1px solid #666;
-    background: yellow;
     margin : 5px auto;
-    color: #000000;
+    color: #666;
     cursor: pointer;
-    border-radius : 15px;
     text-align: center;
-    line-height: 35px;
-    font-size:18px;
-    font-weight:bold;
+    line-height: 20px;
+    font-size:13px;
 }
 #google_in{
+    display: inline-block;
+    text-indent:5px;
     width: 130px;
     height: 30px;
-   margin: 20px auto;
+    position: relative;
+    top: 0;
+    right: -30px;
 }
 
 #google_out{
@@ -97,4 +100,45 @@
 }
 #face{ 
     color: #000000;
+}
+
+.kakao_login{
+    position: relative;
+    top: -15px;
+    left: 0px;
+    display: inline-block;
+    width:120px;
+    height:35px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 25%);
+    background-color: #fff;
+    line-height:30px;
+    box-sizing: border-box;
+}
+.kakao_login:hover{
+    box-shadow: 0px 0px 3px 3px rgba(102, 186, 255, 0.4)
+
+}
+.kakao_image{
+    float:left;
+}
+
+.partition{
+    width:400px;
+    margin: 45px auto;
+    color:#666;
+}
+
+.line{
+    display: inline-block;
+    width:150px;
+    height:10px;
+    border-top: 1px solid #000000;
+    position: relative;
+    top: 5px;
+}
+
+.kakao_image>img{
+    width:22px;
+    height:22px;
+    padding:6px 4px;
 }
