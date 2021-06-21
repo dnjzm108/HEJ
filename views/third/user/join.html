@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/third/index.css">
 </head>
 
-<body>
+<body bgcolor="#ededed">
 
 
     <div id="wrap">
@@ -18,23 +18,25 @@
             <div class="join_logo">
                 <a href="/"><img src="/uploads/logo_bottom_2018.png"></a>
             </div>
-        
+
             <form method="POST" action="/user/join_success" id="login_form" enctype="multipart/form-data">
                 <ul>
                     <li style="display: none">번호</li>
                     <li><input type="text" name="id" class="" value="{{id}}" style="display:none"></li>
 
 
-                    <li class="input_title"><h3 class="join_title">아이디</h3></li>
+                    <li class="input_title">
+                        <h3 class="join_title">아이디</h3>
+                    </li>
                     <li>
                         <span class="ps_box">
                             <input type="text" id="userid" name="userid" class="input_box int" maxlength="20">
-                            <span class="step_url">@naver.com</span>
+                            <!-- <span class="step_url">@naver.com</span> -->
                             <p id="userid_msg"></p>
                         </span>
                     </li>
 
-                    
+
                     <li class="input_title">
                         <h3 class="join_title">비밀번호</h3>
                     </li>
@@ -45,18 +47,19 @@
                     </li>
                     <li id="pwd1_msg"> </li>
 
-                    
+
                     <li class="input_title">
                         <h3 class="join_title">비밀번호 확인</h3>
                     </li>
                     <li>
                         <span class="ps_box">
-                        <input type="password" id="userpw_check" class="input_box int" name="userpw_check" minlength="6">
+                            <input type="password" id="userpw_check" class="input_box int" name="userpw_check"
+                                minlength="6">
                         </span>
                     </li>
                     <li id="pwd2_msg"> </li>
 
-                    
+
                     <li class="input_title">
                         <h3 class="join_title">성별</h3>
                     </li>
@@ -64,11 +67,11 @@
                         여자<input type="radio" id="usergender_F" name="gender" class="user_gender" value="0"> -->
                     <li>
                         <span class="ps_box country_code">
-                        <select id="gender" name="gender" class="sel" aria-label="성별">
-                            <option value selected>성별</option>
-                            <option value select>남자</option>
-                            <option value select>여자</option>
-                        </select> 
+                            <select id="gender" name="gender" class="sel" aria-label="성별">
+                                <option value selected>성별</option>
+                                <option value="0" select>남자</option>
+                                <option value="1" select>여자</option>
+                            </select>
                         </span>
                     </li>
                     <li class="input_title">
@@ -76,11 +79,12 @@
                     </li>
                     <li>
                         <span class="ps_box country_code">
-                        <input type="text" id="user_name" name="user_name" class="input_box int" maxlength="5" required>
+                            <input type="text" id="user_name" name="user_name" class="input_box int" maxlength="5"
+                                required>
                         </span>
                     </li>
 
-                    
+
                     <li class="input_title">
                         <h3 class="join_title">생년월일</h3>
                     </li>
@@ -88,54 +92,71 @@
                         <span class="ps_box">
                             <input type="date" id="user_birth" name="user_birth" class="int" required>
                         </span>
-                        </li>                        
+                    </li>
                     <li class="input_title">
                         <h3 class="join_title">주소</h3>
                     </li>
                     <div class="join_align">
-                    <li><input type="text" id="addressInput" class="int_address" name="addressInput" placeholder="주소를 입력해주세요." required>
-                        <button class="btn" id="addressSearch">주소검색하기</button>
-                    </li>
+                        <li>
+                            <span class="ps2_box">
+                            <input type="text" id="addressInput" class="int_address2" name="addressInput"
+                                placeholder="주소를 입력해주세요." required>
+                            </span>
 
 
-                    <li>
-                        <ul id="addressList"></ul>
-                    </li>
+                                <button class="btn addressBtn" id="addressSearch">주소검색하기</button>
+
+                        </li>
 
 
-                    <li>
-                        <input type="text" name="user_address1" class="int_address" id="addressNumber" size="10" placeholder="우편번호">
-                        <input type="text" name="user_address2" class="int_address" id="address1" size="40" placeholder="주소">
-                        <input type="text" name="user_address3" class="int_address" id="address2" placeholder="상세주소">
-                    </li>
-                </div>
+                        <li>
+                            <ul id="addressList"></ul>
+                        </li>
 
-                   
+
+                        <li>
+                            <span class="ps_box">
+                                <input type="text" name="user_address1" class="int_address" id="addressNumber" size="10"
+                                    placeholder="우편번호">
+                            </span>
+                            <span class="ps_box">
+                                <input type="text" name="user_address2" class="int_address" id="address1" size="40"
+                                    placeholder="주소">
+                            </span>
+                            <span class="ps_box">
+                                <input type="text" name="user_address3" class="int_address" id="address2"
+                                    placeholder="상세주소">
+                            </span>
+                        </li>
+                    </div>
+
+
                     <li class="input_title">
                         <h3 class="join_title">이메일</h3>
                     </li>
                     <li>
                         <span class="ps_box">
-                        <input type="text" id="user_email" name="user_email" class="input_box int" minlength="6" required>
-                    </span>
+                            <input type="text" id="user_email" name="user_email" class="input_box int" minlength="6"
+                                required>
+                        </span>
                     </li>
 
-                 
+
                     <li class="input_title">
                         <h3 class="join_title">프로필 이미지</h3>
                     </li>
                     <li class="join_align">
-                        <span class="ps_box">
+                        
                             <input type="file" id="userimage" class="" name="userimage">
-                        </span>
                     </li>
-                    
+
                     <li class="input_title">
                         <h3 class="join_title">전화번호</h3>
                     </li>
                     <li>
                         <span class="ps_box">
-                        <input type="text" id="user_number" class="input_box int" name="user_number" minlength="11" required>
+                            <input type="text" id="user_number" class="input_box int" name="user_number" minlength="11"
+                                required>
                         </span>
                     </li>
                     <li id="user_number_msg"></li>
@@ -146,7 +167,7 @@
                     <button class="btn_type btn_defulat mt15"><a href="/user/login">취소</a></button>
                 </div>
             </form>
-      
+
         </div>
     </div>
 
