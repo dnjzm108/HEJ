@@ -1,15 +1,46 @@
-.main_btn{
-    float: left;
-    margin-top: 300px;
-    margin-left: 80px;
-    width: 300px;
-    height: 300px;
-    text-align: center;
-    padding: 130px 0px;
-    box-sizing: border-box;
-    border: 1px solid #000;
+*{
+    margin: 0;
+    padding: 0;
 }
 
-.center > a{
+a{
+    text-decoration: none;
+}
+
+#wrap{
+    width: 100%;
+}
+
+.menu{
+    margin-top: 20px;
+    width: 250px;
+    height: 800px;
+    padding: 50px 0;
+    text-align: center;
+    box-sizing: border-box;
+    border-right: 1px solid #000;
+}
+
+.menu > a{
+    width: 80px;
+    display: block;
+    margin: 50px auto 20px auto;
+    border-bottom: 1px solid #000;
     color: #000;
+    box-sizing: border-box;
+}
+
+.menu > a:hover{
+    text-decoration: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+.sub_menu > a{
+    text-decoration: none;
+    color: #000;
+}
+
+.sub_menu > a:hover{
+    color: #16141467;
 }

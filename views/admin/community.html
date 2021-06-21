@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COMMUNITY</title>
-    <link rel="stylesheet" href="/css/info/index.css">
+    <!-- <link rel="stylesheet" href="/css/info/index.css">
     <link rel="stylesheet" href="/css/info/list.css">
     <style>
         a {
@@ -30,7 +30,8 @@
         #infom>h1{
             margin-bottom: 30px;
         }
-    </style>
+    </style> -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let idArr = document.querySelector('#idArr').value;
@@ -48,7 +49,7 @@
 
 <body>
     <div id="wrap">
-        <div id="main" class="center">
+        <div id="main" class="container">
             <div id="infom" style="margin-bottom: 100px;">
                 <h1>COMMUNITY</h1>
                 <div id="atags">
@@ -58,22 +59,26 @@
                 </div>
             </div>
             <div id="board" style="margin-bottom: 50px;">
-               
-                <table  id="list">
-                    <tr>
-                        <td>No.</td>
-                        <td>title</td>
-                        <td>writer</td>
-                        <td>Date</td>
-                    </tr>
+
+                <table class="table table-boardered" id="list">
+                    <thead>
+                        <tr>
+                            <td>No.</td>
+                            <td>title</td>
+                            <td>writer</td>
+                            <td>Date</td>
+                        </tr>
+                    </thead>
                     {% for item in commList %}
-                    <tr>
-                        <td>{{item.num}}</td>
-                        <td><a style="color: #fff" href="/admin/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a>
-                        </td>
-                        <td>{{item.writer}}</td>
-                        <td>{{item.write_date}}</td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>{{item.num}}</td>
+                            <td><a href="/admin/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a>
+                            </td>
+                            <td>{{item.writer}}</td>
+                            <td>{{item.write_date}}</td>
+                        </tr>
+                    </tbody>
                     {% endfor %}
                 </table>
             </div>
@@ -91,6 +96,8 @@
 
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>
 
 </html>
