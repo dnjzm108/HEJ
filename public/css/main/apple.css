@@ -201,6 +201,7 @@ a{
 }
 #login>a{
     font-size: 1.3em;
+    color: black;
     border-bottom: 1px solid black ;
     margin: 0 5%;
 }
