@@ -39,19 +39,32 @@
                 <div id="loading-text">loading</div>
             </div>
         </div>
+        <!-- <div style="background: black; height: 80px; position:absolute; top:-300px; "></div> -->
         <div id="menu">
             <ul>
-                <li> <img src="/uploads/logo_bottom_2018.png"> </li>
+                <img id="logo" src="/uploads/logo_bottom_2018.png">
                 <li> <a href="/information">INFORMATION</a> </li>
                 <li> <a href="/education">EDUCATION</a> </li>
                 <li> <a href="/hired">HIRED</a> </li>
                 <li> <a href="/community">COMMUNITY</a> </li>
+                <div id="menu_box">
+                    <div> <a id="login" href="/user/login">login</a> </div>
+                    <div> <a id="join" href="/user/join">join</a> </div>
+                    <div> <a id="cha_btn" data-value="0">chat</a> </div>
+                    <div> <a id="consult_btn">consult</a></div>
+                </div>
             </ul>
+
         </div>
+        <!-- menu end -->
+        <!-- gnb 영역 -->
+
         <div id="gnb">
-            <div id="login">
-                <a href="/user/login">login</a>
-                <a href="/user/join">join</a>
+            <div id="text_event">
+                <h1>나는 <span id="question">질문</span> 하는 자다 </h1></br>
+                <h3>운명은 내가 던지는 질문이다</h3>
+                <h5>답은 그대가 찾아라</h5></br>
+                <h5> - 엄익균 </h5>
             </div>
             <div id="tum">
                 <section id="square">
@@ -70,7 +83,8 @@
                 </section>
                 <div class="mouse"></div>
             </div>
-            <div id="gnb_box">
+            <span id="copy">Copyright © 2016. Kyungil Technical College. All rights reserved.</span>
+            <!-- <div id="gnb_box">
                 <div>
                     <div class="gnb_line"></div>
                     <h2>누적 수강생</h2>
@@ -81,17 +95,8 @@
                     <h2>수업 만족도</h2>
                     <h3>97.87%</h3>
                 </div>
-                <div>
-                    <div class="gnb_line"></div>
-                    <h2>온라인 완주율</h2>
-                    <h3>60.05%</h3>
-                    <p>타사평균완주율 5%</p>
-                </div>
             </div>
-            <div id="btn_box">
-                <div id="cha_btn" data-value="0">chat</div>
-                <div id="consult_btn">consult</div>
-            </div>
+            -->
             <form id="apply_form">
                 <label for="name">name</label>
                 <input id="name" type="text"><br />

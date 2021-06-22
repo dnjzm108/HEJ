@@ -46,7 +46,7 @@ let info = async (req, res) => {
         userimage: userimage2,
         user_email: result.user_email,
         user_address: result.user_address,
-        userdt: moment(result.userdt).format('YYYY년 MM월 DD일 hh:mm:ss a'),
+        userdt: moment(result.userdt).format('YYYY년 MM월 DD일'),
         checked,
         flag
     })
@@ -66,10 +66,7 @@ let info_pwcheck = async (req, res) => {
     } else {
         //비밀번호 확인실패, result값이 db에 없을때
         res.redirect("/user/info?checked=0&flag=0");
-
-
     }
-
 }
 
 let join_success = async (req, res) => {
@@ -82,13 +79,11 @@ let join_success = async (req, res) => {
     let rst = await user.create({
         userid, userpw: hash, user_name, gender, user_number, userimage, user_email, user_address, user_birth
     });
-
     res.render('./third/user/join_success', { userimage, user_name });
 };
 
 let login_check = async (req, res) => {
     let { userid, userpw } = req.body;
-
     let hash = chash(userpw);
     let ctoken = token(userpw);
     let result = await user.findOne({
@@ -161,19 +156,25 @@ let info_modify = async (req, res) => {
     let id = req.query.id;
     let result = await user.findOne({ where: { id } })
     let short = result.dataValues;
-    let userimage = `${short.userimage}`
+    let userimage = `${short.userimage}`;
+    let gender;
+    if (result.gender) {
+        gender = "남자"
+    } else {
+        gender = "여자"
+    };
     res.render('./third/user/info_modify.html', {
         id,
         userid: short.userid,
         userpw: short.userpw,
-        gender: short.gender,
+        gender,
         user_birth: short.user_birth,
         userimage: userimage,
         user_name: short.user_name,
         user_number: short.user_number,
         user_email: short.user_email,
         user_address: short.user_address,
-        userdt: short.userdt,
+        userdt: moment(result.userdt).format('YYYY년 MM월 DD일'),
     });
 };
 
@@ -182,30 +183,34 @@ let info_after_modify = async (req, res) => { //DB 업데이트, findOne 해오�
 
     let hash = chash(userpw);
     let userimage = req.file == undefined ? req.body.userimage1 : `/uploads/user_image/${req.file.filename}`;
-
     let user_addressnew = user_address1 + user_address2 + user_address3;
     let user_addressnew2 = user_addressnew == '' ? user_address : user_addressnew;
-
     await user.update({
         userpw: hash, gender, user_birth, userimage, user_name, user_number, user_email, user_addressnew2, userdt
     }, { where: { id } });
     let result = await user.findOne({
         where: { id, }
-    })
+    });
+    let gender2;
+    if (result.gender) {
+        gender2 = "남자"
+    } else {
+        gender2 = "여자"
+    };
     req.session.userimage = userimage;
     req.session.save(() => {
         res.render('./third/user/info.html', {
             id: result.id,
             userid: result.userid,
             userpw: result.userpw,
-            gender: result.gender,
+            gender:gender2,
             user_birth: result.user_birth,
             userimage: result.userimage,
             user_name: result.user_name,
             user_number: result.user_number,
             user_email: result.user_email,
             user_address: result.user_address,
-            userdt: result.userdt,
+            userdt: moment(result.userdt).format('YYYY년 MM월 DD일'),
             checked: "1",
         });
 

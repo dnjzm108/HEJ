@@ -40,18 +40,21 @@
             <div id="infom" style="margin-bottom: 100px;">
                 <h1>COMMUNITY</h1>
                 <div id="atags">
+                    <a class="btn" href="/admin/community">전체</a>
                     <a class="btn" href="/admin/community/notice">공지사항</a>
                     <a class="btn" href="/admin/community/board">게시판</a>
                     <a class="btn" href="/admin/community/qanda">Q and A</a>
                 </div>
             </div>
             <div id="board" style="margin-bottom: 50px;">
-
                 <table class="table table-boardered" id="list">
                     <thead>
                         <tr>
                             <td>No.</td>
                             <td>title</td>
+                            {% if localUrl == undefined %}
+                            <td>Category</td>
+                            {% endif %}
                             <td>writer</td>
                             <td>Date</td>
                         </tr>
@@ -60,8 +63,10 @@
                     <tbody>
                         <tr>
                             <td>{{item.num}}</td>
-                            <td><a href="/admin/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a>
-                            </td>
+                            <td><a href="/admin/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a></td>
+                            {% if localUrl == undefined %}
+                            <td><a href="/admin/community/{{item.type}}">{{item.type}}</a></td>
+                            {% endif %}
                             <td>{{item.writer}}</td>
                             <td>{{item.write_date}}</td>
                         </tr>
