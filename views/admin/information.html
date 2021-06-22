@@ -39,6 +39,7 @@
             <div id="infom">
                 <h1>INFORMATION</h1>
                 <div id="atags">
+                    <a class="btn" href="/admin/information">전체보기</a>
                     <a class="btn" href="/admin/information/intro">인사말</a>
                     <a class="btn" href="/admin/information/history">연혁</a>
                     <a class="btn" href="/admin/information/popup">교직원소개</a>
@@ -55,6 +56,9 @@
                             <td>No.</td>
                             <td>Visibility</td>
                             <td>Title</td>
+                            {% if localUrl == undefined %}
+                            <td>Category</td>
+                            {% endif %}
                             <td>Writer</td>
                             <td>Date</td>
                         </tr>
@@ -64,8 +68,11 @@
                         <tr>
                             <td>{{item.num}}</td>
                             <td><input class="visible" type="radio" name="visibility"></td>
-                            <td><a href="/admin/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a>
+                            <td><a href="/admin/view?id={{item.id}}&table=information&localUrl={{localUrl}}">{{item.title}}</a>
                             </td>
+                            {% if localUrl == undefined %}
+                            <td><a href="/admin/information/{{item.type}}">{{item.type}}</a></td>
+                            {% endif %}
                             <td>{{item.writer}}</td>
                             <td>{{item.date}}</td>
                         </tr>
@@ -96,7 +103,7 @@
         const visible = document.querySelectorAll('.visible');
         visible.forEach(v=>{
             if(v.check){
-                
+
             }
         })
         
