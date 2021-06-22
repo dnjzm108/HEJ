@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     visibility:{
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     date:{
       type:Sequelize.DATE,

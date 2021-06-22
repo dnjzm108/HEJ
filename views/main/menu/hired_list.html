@@ -5,6 +5,7 @@
                 <div id="logo"><img src="/uploads/info_image/1623383319105.jpg"></div>
                 <h1>HIRED</h1>
                 <div id="atags">
+                    <a class="tags" href="/hired">전체</a>
                     <a class="tags" href="/hired/interview">인터뷰</a>
                     <a class="tags" href="/hired/portfolio">포트폴리오</a>
                 </div>
@@ -14,13 +15,19 @@
                             <tr>
                                 <td>No.</td>
                                 <td>Title</td>
+                                {% if localUrl == undefined %}
+                                <td>Category</td>
+                                {% endif %}
                                 <td>Writer</td>
                                 <td>Date</td>
                             </tr>
                             {% for item in hireList %}
                             <tr>
                                 <td>{{item.num}}</td>
-                                <td><a href="/admin/view?id={{item.id}}&table=hired&localUrl={{localUrl}}">{{item.title}}</a></td>
+                                <td><a href="/hired/view?id={{item.id}}&table=hired&localUrl={{localUrl}}">{{item.title}}</a></td>
+                                {% if localUrl == undefined %}
+                                <td><a href="/hired/{{item.type}}">{{item.type}}</a></td>
+                                {% endif %}
                                 <td>writer</td>
                                 <td>{{item.date}}</td>
                             </tr>
@@ -34,7 +41,7 @@
         <div id="footer">
             <div id="pagenation">
                 {% for item in pagin %}
-                <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
+                <a style="border: none;" href="/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
                 {% endfor %}
             </div>
             <a class="main_btn btn" href="/">MAIN</a>
