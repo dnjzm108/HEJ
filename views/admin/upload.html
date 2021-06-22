@@ -20,7 +20,7 @@
             <h1>UPLOAD</h1>
             <form action="/admin/upload_success" id="info_form" method="POST">
                 <input type="text" name="localUrl" style="display:none;" value="{{title}}">
-                <input type="text" name="writer" id="writer" value="writer">
+                <input style="display: none;" type="text" name="writer" id="writer" value="최고관리자">
 
                 <div id="typeof" class="input">
                     {% if title=='information' %}

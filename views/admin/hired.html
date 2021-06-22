@@ -27,17 +27,20 @@
             <div id="infom">
                 <h1>HIRED</h1>
                 <div id="atags">
+                    <a class="btn" href="/admin/hired">전체</a>
                     <a class="btn" href="/admin/hired/interview">인터뷰</a>
                     <a class="btn" href="/admin/hired/portfolio">포트폴리오</a>
                 </div>
             </div>
-
             <div id="board">
                 <table id="list" class="table table-boardered">
                     <thead>
                         <tr>
                             <td>No.</td>
                             <td>Title</td>
+                            {% if localUrl == undefined %}
+                            <td>Category</td>
+                            {% endif %}
                             <td>Writer</td>
                             <td>Date</td>
                         </tr>
@@ -46,8 +49,10 @@
                     <tbody>
                         <tr>
                             <td>{{item.num}}</td>
-                            <td><a href="/admin/view?id={{item.id}}&table=hired&localUrl={{localUrl}}">{{item.title}}</a>
-                            </td>
+                            <td><a href="/admin/view?id={{item.id}}&table=hired&localUrl={{localUrl}}">{{item.title}}</a></td>
+                            {% if localUrl == undefined %}
+                            <td><a href="/admin/hired/{{item.type}}">{{item.type}}</a></td>
+                            {% endif %}
                             <td>writer</td>
                             <td>{{item.date}}</td>
                         </tr>
