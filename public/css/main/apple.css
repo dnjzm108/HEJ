@@ -1,8 +1,9 @@
-*{font-family: 'Nanum Pen Script', cursive;
-    font-family: 'Viaoda Libre', cursive;
-    margin: 0;
-    padding: 0;
+*{
+margin: 0;
+padding: 0;
 }
+/* font-family: 'Nanum Pen Script', cursive;
+    font-family: 'Viaoda Libre', cursive; */
 ul,li{
     list-style: none;
 }
@@ -11,13 +12,17 @@ a{
 }
 #wrap{
     width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 #menu{
     position: relative;
     display: inline-block;
     float: left;
-    width: 25%;
+    width: 20vw;
     height: 100vh;
+    text-align: center;
+    box-sizing: border-box;
     animation: 3s test;
 }
 @keyframes test{
@@ -28,39 +33,147 @@ a{
     }
 }
 
+#logo{
+    margin: 25% auto 25%;
+}
+
 #menu>ul{
-    width: 30vw;
-    height: 80vh;
-    margin: 10vh auto;
-    border-right: 1px solid black ;
+    width: 20vw;
+    height: 100vh;
+    background: #efefef03;
 }
 #menu>ul>li{
     width: 20vw;
-    height: 15vh;
-    padding: 2.5% 23%;
+    height: 10vh;
     box-sizing: border-box;
+    text-align: center;
+}
+#menu>ul>li>a:hover{
+    color: green;
+    text-shadow: 10px 10px 10px 10px blue;
+}
+
+#menu_box{
+    width: 20vw;
+    height: 15vh;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: 5vh;
+}
+#menu_box>div>a{
+    display: block;
+    width: 10vw;
+    height: 4vh;
+    margin: 1vh auto 0;
+    color: #000000;
+    border: 1px solid #000000;
+    line-height: 4vh;
+}
+#menu_box>div>a:hover{
+    background: black;
+    color: white;
 }
 #menu>ul>li>img{
     margin: 0 20%;
 }
 #menu>ul>li>a{
-    font-size: 2.5vw;
-    margin: 0 auto;
-    border-bottom: 3px solid black;
+    font-size: 1.8vw;
     text-align: center;
     color: #000;
 }
-
+/* #cha_btn{
+    width: 2.5vw;
+    display: inline-block;
+    font-size: 1.4em;
+    color: #000000;
+    cursor:pointer;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+#cha_btn:hover{
+    background: #000000;
+    color: white;
+}
+#consult_btn{
+    width: 5vw;
+    display: inline-block;
+    font-size: 1.4em;
+    color: #000000;
+    cursor:pointer;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+#consult_btn:hover{
+    background: #000000;
+    color: white;
+} */
 #gnb{
     display: inline-block;
-    width: 75%;
+    width: 79vw;
     height: 100vh;
-    position: relative;;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+#text_event{
+    position: relative;
+    width: 50vw;
+    height: 30vh;
+    top: 30vh;
+    left: 2.5vw;
+    letter-spacing: -2px;
+    line-height: 300%;
+    color: #333333;
+  
+}
+
+#question{
+    color: green;
+    font-size: 3.8vw;
+    font-weight: bold;
+}
+#text_event>h1{
+    font-size: 2.4vw;
+    font-weight: normal;
+    opacity: 0;
+    animation: 5s first;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+}
+
+#text_event>h3{
+    font-size: 2vw;
+    animation: 5s first;
+    animation-fill-mode: forwards;
+    animation-delay: 4s;
+    opacity: 0;
+}
+
+#text_event>h5{
+    font-size: 1.5vw;
+    font-weight: normal;
+    animation: 5s first;
+    animation-fill-mode: forwards;
+    animation-delay: 6s;
+    opacity: 0;
+}
+@keyframes first{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+#copy{
+    position: absolute;
+    bottom: 1vh;
+    right: 0;
 }
 #tum{
     position: absolute;
-    left: 57%;
-    top: 19%;
+    left: 65%;
+    top: 25%;
     transform: translate(-50%);
     animation: 10s square1;
 }
@@ -72,8 +185,8 @@ a{
     }
 }
 #square{
-    width: 350px;
-    height: 350px;
+    width: 500px;
+    height: 500px;
     position: relative; 
     transform: rotateX(10deg) rotateY(10deg) rotateZ(10deg);
     animation: rint 10s linear 0s infinite;
@@ -109,8 +222,8 @@ a{
 }
 
 #square>div{
-    width: 350px;
-    height: 350px;
+    width: 500px;
+    height: 500px;
     position: absolute;
     /* opacity: 0.3; */
     /* backface-visibility: hidden; */
@@ -118,28 +231,28 @@ a{
 }
 
 #square > div:nth-child(1){
-    transform: rotateY(0deg) translate3d(0px, 0px, 175px);
+    transform: rotateY(0deg) translate3d(0px, 0px, 250px);
     border: 1px solid black;
 }
 #square > div:nth-child(2){
-    transform: rotateY(90deg) translate3d(0px, 0px, 175px);
+    transform: rotateY(90deg) translate3d(0px, 0px, 250px);
     border: 1px solid black;
 }
 #square > div:nth-child(3){
-    transform: rotateY(180deg) translate3d(0px, 0px, 175px);
+    transform: rotateY(180deg) translate3d(0px, 0px, 250px);
     border: 1px solid black;
 }
 #square > div:nth-child(4){
-    transform: rotateY(270deg) translate3d(0px, 0px, 175px);
+    transform: rotateY(270deg) translate3d(0px, 0px, 250px);
     border: 1px solid black;
 }
 #square > div:nth-child(5){
-    transform: rotateX(90deg) translate3d(0px, 0px, 175px);
+    transform: rotateX(90deg) translate3d(0px, 0px, 250px);
     border: 1px solid black;
     
 }
 #square > div:nth-child(6){
-    transform: rotateX(270deg) translate3d(0px, 0px, 175px);
+    transform: rotateX(270deg) translate3d(0px, 0px, 250px);
     border: 1px solid black;
 }
 #square > div:nth-child(1):hover{
@@ -192,52 +305,9 @@ a{
 }
 
 /* login start */
-#login{
-    width: 6vw;
-    height: 2.5vh;
-    position: absolute;
-    right: 0;
-    top: 2%;
-}
-#login>a{
-    font-size: 1.3em;
-    color: black;
-    border-bottom: 1px solid black ;
-    margin: 0 5%;
-}
-#btn_box{
-    width: 8vw;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    animation: 5s form;
-}
-#cha_btn{
-    width: 2.5vw;
-    display: inline-block;
-    font-size: 1.4em;
-    color: #000000;
-    cursor:pointer;
-    border-bottom: 1px solid black;
-    text-align: center;
-}
-#cha_btn:hover{
-    background: #000000;
-    color: white;
-}
-#consult_btn{
-    width: 5vw;
-    display: inline-block;
-    font-size: 1.4em;
-    color: #000000;
-    cursor:pointer;
-    border-bottom: 1px solid black;
-    text-align: center;
-}
-#consult_btn:hover{
-    background: #000000;
-    color: white;
-}
+
+
+
 #apply_form{
     display: none;
     width: 20vw;
@@ -273,7 +343,8 @@ width: 100%;
 height: 100%;
 background: #333333;
 position: absolute;
-animation: 2s up ;
+/* z-index: 5; */
+animation: 2s up ; 
 animation-fill-mode: forwards;
  animation-delay: 1.5s; 
 }
