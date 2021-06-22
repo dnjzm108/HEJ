@@ -142,7 +142,7 @@ let community_list = async (req, res) => {
     // let result = await community.findAll({ raw: true });
     //    let arr = []
     //       result.forEach(v => {
-    //          arr.push(v.dataValues.write_date);
+    //          arr.push(v.dataValues.write_date);  
     //      });
     //      console.log(result);
     //      console.log(arr);
@@ -172,6 +172,18 @@ let community_list = async (req, res) => {
             num: v.num
         }
     })
+    console.log('+++++++++++'+commList);
+    let tables = await community.findAll({ raw: true });
+    console.log(tables);
+    if(tables != undefined){
+    let arr = tables.map(v => {
+        return {
+            ...v,
+            write_date: moment(v.write_date).format('YYYY년 MM월 DD일 hh:mm a')
+        }
+    })
+    console.log('arr2++++++++++++'+arr);
+}
     res.render('./main/menu/community_list.html', {
         pagin: pagin.page_hired,
         commList,
