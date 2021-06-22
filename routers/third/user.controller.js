@@ -75,6 +75,7 @@ let info_pwcheck = async (req, res) => {
 let join_success = async (req, res) => {
     let { userid, userpw, user_name, user_number, gender, user_email, user_birth, user_address1, user_address2, user_address3 } = req.body;
     let userimage = req.file == undefined ? '' : `/uploads/user_image/${req.file.filename}`;
+    console.log(userimage);
     let hash = chash(userpw);
     let user_address = user_address1 + user_address2 + user_address3;
 
@@ -101,7 +102,7 @@ let login_check = async (req, res) => {
     session.authData = {
         ["local"]: authData
     }
-    let {onSignIn} = req.body;
+    let { onSignIn } = req.body;
     req.session.uid1 = userid;
     req.session.isLogin = true;
     req.session.userimage = '1623203467710.png';
@@ -133,7 +134,7 @@ let logout = async (req, res) => {
             delete session.authData;
         }
         res.redirect('/?msg=로그아웃 되었습니다.')
-    
+
     } else {
         return;
     }

@@ -18,7 +18,7 @@
         }
     </style>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
-    <script>
+    <!-- <script>
         document.addEventListener("DOMContentLoaded", () => {
             let idArr = document.querySelector('#idArr').value;
             idArr = idArr.split(',');
@@ -30,7 +30,7 @@
             })
         });
 
-    </script>
+    </script> -->
 </head>
 
 <body>
@@ -63,9 +63,8 @@
                     <tbody>
                         <tr>
                             <td>{{item.num}}</td>
-                            <td><input class="visible" type="radio"></td>
-                            <td><a
-                                    href="/admin/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a>
+                            <td><input class="visible" type="radio" name="visibility"></td>
+                            <td><a href="/admin/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a>
                             </td>
                             <td>{{item.writer}}</td>
                             <td>{{item.date}}</td>
@@ -93,12 +92,15 @@
             </div>
         </div>
     </div>
-    <!-- <script>
-        let content = document.querySelector('#content');
-        let pre = document.querySelector('#pre');
-        pre.innerHTML = `${content.value}`
-    </script> -->
-
+    <script type="text/javascript">
+        const visible = document.querySelectorAll('.visible');
+        visible.forEach(v=>{
+            if(v.check){
+                
+            }
+        })
+        
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>
