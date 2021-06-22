@@ -34,12 +34,13 @@ a{
 }
 
 #logo{
-    margin: 20% auto 30%;
+    margin: 25% auto 25%;
 }
 
 #menu>ul{
     width: 20vw;
     height: 100vh;
+    background: #efefef03;
 }
 #menu>ul>li{
     width: 20vw;
@@ -47,13 +48,17 @@ a{
     box-sizing: border-box;
     text-align: center;
 }
+#menu>ul>li>a:hover{
+    color: green;
+    text-shadow: 10px 10px 10px 10px blue;
+}
 
 #menu_box{
     width: 20vw;
     height: 15vh;
     box-sizing: border-box;
     text-align: center;
-    margin-top: 10vh;
+    margin-top: 5vh;
 }
 #menu_box>div>a{
     display: block;
@@ -107,7 +112,8 @@ a{
     width: 79vw;
     height: 100vh;
     box-sizing: border-box;
-    position: relative;;
+    position: relative;
+    overflow: hidden;
 }
 #text_event{
     position: relative;
@@ -122,20 +128,42 @@ a{
 }
 
 #question{
-    color: darkblue;
+    color: green;
     font-size: 3.8vw;
     font-weight: bold;
 }
 #text_event>h1{
     font-size: 2.4vw;
     font-weight: normal;
+    opacity: 0;
+    animation: 5s first;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
 }
+
 #text_event>h3{
     font-size: 2vw;
+    animation: 5s first;
+    animation-fill-mode: forwards;
+    animation-delay: 4s;
+    opacity: 0;
 }
+
 #text_event>h5{
     font-size: 1.5vw;
     font-weight: normal;
+    animation: 5s first;
+    animation-fill-mode: forwards;
+    animation-delay: 6s;
+    opacity: 0;
+}
+@keyframes first{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
 }
 #copy{
     position: absolute;
@@ -316,7 +344,7 @@ height: 100%;
 background: #333333;
 position: absolute;
 /* z-index: 5; */
-animation: 2s up ;
+animation: 2s up ; 
 animation-fill-mode: forwards;
  animation-delay: 1.5s; 
 }
