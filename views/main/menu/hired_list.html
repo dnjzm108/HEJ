@@ -24,9 +24,9 @@
                             {% for item in hireList %}
                             <tr>
                                 <td>{{item.num}}</td>
-                                <td><a href="/hired/view?id={{item.id}}&table=hired&localUrl={{localUrl}}">{{item.title}}</a></td>
+                                <td><a href="/view?id={{item.id}}&table=hired&localUrl={{localUrl}}">{{item.title}}</a></td>
                                 {% if localUrl == undefined %}
-                                <td><a href="/hired/{{item.type}}">{{item.type}}</a></td>
+                                <td><a href="/{{item.type}}">{{item.type}}</a></td>
                                 {% endif %}
                                 <td>writer</td>
                                 <td>{{item.date}}</td>
