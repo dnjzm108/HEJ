@@ -6,6 +6,7 @@ const pagination = require('../../pagination');
 const router = require('.');
 
 /*========================ADMIN MAIN PAGE========================*/
+
 let admin_main = (req, res) => {
     res.render('./admin/admin.html');
 };
@@ -36,6 +37,7 @@ let login_success = async (req, res) => {
 };
 
 /*========================WRITE PAGE========================*/
+
 let upload = (req, res) => {
     let { title, localUrl } = req.query;
     res.render('./admin/upload.html', { title, localUrl });
@@ -43,7 +45,6 @@ let upload = (req, res) => {
 
 let upload_success = async (req, res) => {
     let { localUrl, title, content, writer, type } = req.body;
-    // let visibility
     await search[localUrl].create({ title, content, writer, type });
     if (type != null) {
         res.redirect(`/admin/${localUrl}/${type}`);
@@ -109,9 +110,9 @@ let Information = async (req, res) => {
             date:moment(v.write_date).format("MMM Do YY"),
             visibility: v.visibility == 0 ? "invisible" : "visible"
         }
-    })
+    });
     res.render('./admin/information.html', { infoList, pagin : pagin.page_hired , localUrl })
-}
+};
 
 /*============================== 취업정보 =============================== */
 
@@ -133,10 +134,11 @@ let hired = async (req, res) => {
         pagin: pagin.page_hired,
         hireList,
         localUrl
-    })
+    });
 };
 
 /*======================== 교육과정 ============================*/
+
 let educationT = async (req, res) => {
     let { id } = req.query;
     let page = { id: `${id}`, table: 'education' };
@@ -154,7 +156,7 @@ let educationT = async (req, res) => {
     res.render('./admin/education.html', {
         edList,
         pagin: pagin.page_hired,
-    })
+    });
 };
 
 /*========================= 팝업 게시판 ================================= */
@@ -173,24 +175,23 @@ let popup = async (req, res) => {
             visibility: v.visibility == 0 ? "invisible" : "visible",
             num: v.num
         }
-    })
+    });
     res.render('./admin/popup.html', {
         pagin: pagin.page_hired,
         popupList
-    })
+    });
 };
 
 let popup_upload = (req, res) => {
     let { title, localUrl } = req.query;
     res.render('./admin/popup_upload', { title, localUrl })
-}
+};
 
 let popup_upload_success = async (req, res) => {
     let { writer, visibility, title, period, type, scroll, size, location, hyperlink, content } = req.body;
-    console.log(period)
-    await popupTd.create({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[0], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content });
+    await popupTd.create({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content });
     res.redirect('/admin/popup');
-}
+};
 
 let popup_view = async (req, res) => {
     let { id, table } = req.query;
@@ -205,9 +206,9 @@ let popup_view = async (req, res) => {
             popup_end_date: moment(v.popup_end_date).format("yyyy-MM-DD"),
             date: moment(v.date).format("MMM Do YY")
         }
-    })
+    });
     res.render('./admin/popup_view.html', { popupList })
-}
+};
 
 let popup_modify = async (req, res) => {
     let { id, table } = req.query;
@@ -218,18 +219,18 @@ let popup_modify = async (req, res) => {
             popup_end_date: moment(v.popup_end_date).format("yyyy-MM-DD"),
             date: moment(v.date).format("MMM Do YY")
         }
-    })
+    });
     res.render('./admin/popup_modify.html', {
         popupList,
         table,
     });
-}
+};
 
 let popup_modify_success = async(req,res)=>{
     let {writer, visibility, title, period, type, scroll, size, location, hyperlink, content, modifyId,table} = req.body;
-    await search[table].update({writer, visibility, title, period, type, scroll, size, location, hyperlink, content},{where:{id:modifyId}});
+    await search[table].update({writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content},{where:{id:modifyId}});
     res.redirect(`/admin/popup_view?id=${modifyId}&table=${table}`);
-}
+};
 
 /*========================= 회원관리 ================================= */
 
@@ -248,7 +249,7 @@ let user_admin = async (req, res) => {
         }
     });
     res.render('./admin/user_admin', { userList, pagin: pagin.page_hired });
-}
+};
 
 let user_view = async (req, res) => {
     let { id } = req.query;
@@ -264,13 +265,13 @@ let user_view = async (req, res) => {
     });
     let userList = userResult.pop();
     res.render('./admin/user_view.html', { userList })
-}
+};
 
 let authority = async (req, res) => {
     let { authority_level, userid } = req.body;
     await user.update({ authority_level }, { where: { userid } });
     res.redirect('/admin/user')
-}
+};
 
 /* ===================== 커뮤니티 게시판 ========================= */
 
@@ -288,13 +289,13 @@ let community = async (req, res) => {
             write_date: moment(v.write_date).format("MMM Do YY"),
             num: v.num
         }
-    })
+    });
     res.render('./admin/community.html', {
         pagin: pagin.page_hired,
         commList,
         localUrl
     });
-}
+};
 
 module.exports = {
     admin_main,

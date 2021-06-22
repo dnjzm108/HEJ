@@ -39,6 +39,7 @@
             <div id="infom">
                 <h1>INFORMATION</h1>
                 <div id="atags">
+                    <a class="btn" href="/admin/information">전체</a>
                     <a class="btn" href="/admin/information/intro">인사말</a>
                     <a class="btn" href="/admin/information/history">연혁</a>
                     <a class="btn" href="/admin/information/popup">교직원소개</a>
@@ -53,7 +54,6 @@
                     <thead>
                         <tr>
                             <td>No.</td>
-                            <td>Visibility</td>
                             <td>Title</td>
                             <td>Writer</td>
                             <td>Date</td>
@@ -63,9 +63,7 @@
                     <tbody>
                         <tr>
                             <td>{{item.num}}</td>
-                            <td><input class="visible" type="radio" name="visibility"></td>
-                            <td><a href="/admin/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a>
-                            </td>
+                            <td><a href="/admin/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a></td>
                             <td>{{item.writer}}</td>
                             <td>{{item.date}}</td>
                         </tr>
@@ -94,11 +92,6 @@
     </div>
     <script type="text/javascript">
         const visible = document.querySelectorAll('.visible');
-        visible.forEach(v=>{
-            if(v.check){
-                
-            }
-        })
         
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>

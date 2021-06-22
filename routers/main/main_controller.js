@@ -12,7 +12,7 @@ client password : wMc8se_eBobJrH2EN-r3JF6z
 const axios = require('axios');
 const qs = require('qs');
 const moment = require('moment');
-const session = require('express-session');
+const sessiwon = require('express-session');
 const express = require('express');
 const app = express();
 const socket = require ('socket.io');
@@ -118,8 +118,6 @@ let kakao_logout = async (req, res) => {
 let main = async (req, res) => {
     let id = req.query.id;
     let pw = req.query.pw;
-    if(session.authData != null){
-    }
     let popup = await search['popup'].findAll({where:{visibility:1},raw:true});
     let idArr = '';
     popup.forEach(v => {
