@@ -18,11 +18,12 @@ a{
 .btn{
     width:120px;
     height:40px;
-    background:#ededed;
-    border-radius: 5px;
-    color:black;
+    background:rgba(102,186,255);
+    /* border-radius: 5px; */
+    color:white;
     font-size:15px;
     font-weight:bold;
+    border: solid 1px rgba(0,0,0,.08);
 }
 
 .join_align{

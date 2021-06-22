@@ -1,4 +1,4 @@
-#box{
+ #box{
     width: 625px;
     height: 1000px;
     margin: 0 auto;
@@ -82,7 +82,7 @@
 .int_address2{
     display:block;
     position:relative;
-    width: 170px;00
+    width: 170px;
     height:29px;
     padding-right:25px;
     line-height:29px;
