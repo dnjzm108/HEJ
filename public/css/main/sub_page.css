@@ -26,15 +26,14 @@ a{
 #header{
     width: 100vw;
     height: 10vh;
-    margin: 0 auto;
+    margin: 5px auto;
     overflow: hidden;
 }
 
 #header > ul{
     width: 80%;
-    height: 10vh;
+    height: 20vh;
     padding-left:8%;
-    background-color: ededed;
     display:flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -59,7 +58,7 @@ a{
 }
 
 #headerImg{
-    margin-top: 10px;
+    margin-top: 20px;
     width: 147px;
     height:61px;
 }
@@ -120,16 +119,16 @@ a{
 }
 
 #sub_header{
-    width:80%;
+    position: absolute;
+    z-index: 3;
+    width:100%;
     height: 0;
-    padding-left:20%;
-<<<<<<< HEAD
+    /* padding-left:20%; */
     height: 17vh;
-=======
-    background-color: rgb(90, 83, 83);
->>>>>>> 1fb63e2f1744518fbb985d2332c04a4c614fcfbf
     text-align: center;
     overflow:hidden;
+    margin-left: 380px;
+    opacity: 0;
 }
 
 #sub_header_wrap{
@@ -141,50 +140,60 @@ a{
     overflow: hidden;
 }
 
-#sub_header_wrap > ul{
+#sub_header > ul{
     float: left;
     width:10%;
 }
+#sub_header > ul:nth-child(1){
+    margin-left: 112px;
+}
+#sub_header > ul:nth-child(2){
+    margin-left: 108px;
+}
+#sub_header > ul:nth-child(3){
+    margin-left: 110px;
+}
+#sub_header > ul:nth-child(4){
+    margin-left: 100px;
+}
 
-#sub_header_wrap > ul >li{
+
+#sub_header > ul >li{
     width: 130px;
-    line-height: 40px;
     font-size: 2.3vh;
-    text-align: center;
     line-height: 28px;
 }
 
-#sub_header_wrap > ul:nth-child(4)>li{
-    text-indent:10px;
-} 
-
-#sub_header_wrap > ul > li > a{
+#sub_header > ul > li > a{
     font-size:15px;
 }
 
 .header_open{
-    animation: headerOpen 1s;
+    display: block;
+    animation: headerOpen 2s;
     animation-fill-mode: forwards;
+  
 }
 
 .header_close{
-    animation: headerClose 0.36s;
+    animation: headerClose 1s;
     animation-fill-mode: forwards;
+    display: none;
 }
 
 @keyframes headerOpen{
     from{
-        height: 0vh;
+       opacity: 0;
     }to{
-        height: 17vh;
+        opacity: 1;
     }
 }
 
 @keyframes headerClose{
     from{
-        height: 17vh
+        opacity: 1;
     }to{
-        height: 0vh
+        opacity: 0;
     }
 }
 
