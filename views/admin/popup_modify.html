@@ -15,70 +15,71 @@
 </head>
 
 <body>
-    <h1>MODIFY</h1>
-    
-    <form action="/admin/popup_upload_success" id="popup_form" method="POST">
-        {% for item in popupList %}
-        <input type="text" name="writer" id="writer" value="writer">
-        <input type="text" name="localUrl" style="display:none;" value="{{title}}">
-        <input style="display: none;" id="typeid" type="text" value="{{item.type}}">
-        <input style="display: none;" id="visibilityid" type="text" value="{{item.visibility}}">
-        <input style="display: none;" id="scrollid" type="text" value="{{item.scroll}}">
+    <div id="wrap">
+        <div class="container">
 
-        <div id="">
-            <label>제목</label>
-            <input id="title" type="text" name="title">{{item.title}}<br/>
-            <label>게시기간</label>
-            <input type="date" name="period" value="{{item.popup_start_date}}"> ~
-            <input type="date" name="period" value="{{item.popup_end_date}}"><br />
-            팝업형태 :
-            <label>일반팝업</label>
-            <input type="radio" class="select" name="type" value="1">
-            <label>레이어팝업</label>
-            <input type="radio" class="select" name="type" value="0"><br />
-        </div>
-        <div id="visibility" class="input">
-            <label for="visible">VISIBLE</label>
-            <input type="radio" class="select" name="visibility" value="1">
-            <label for="invisible">INVISIBLE</label>
-            <input type="radio" class="select" name="visibility" value="0">
-        </div>
-        <div>
-            스크롤 여부 :
-            <label>허용함</label>
-            <input type="radio" class="select" name="scroll" value="1">
-            <label>허용안함</label>
-            <input type="radio" class="select" name="scroll" value="0"><br />
-            크기 :
-            <label>가로</label>
-            <input type="text" name="size">
-            <label>세로</label>
-            <input type="text" name="size"><br />
-            위치 :
-            <label>X</label>
-            <input type="text" name="location">
-            <label>Y</label>
-            <input type="text" name="location"><br />
-            <label>링크주소</label>
-            <input type="text" name="hyperlink">
-        </div>
+            <h1>MODIFY</h1>
 
-        <div id="summernote">
+            <form action="/admin/popup_modify_success" id="popup_form" method="POST">
+                {% for item in popupList %}
+                <input style="display: none;" type="text" name="writer" id="writer" value="writer">
+                <input type="text" name="localUrl" style="display:none;" value="{{title}}">
+                <input style="display: none;" id="typeid" type="text" value="{{item.type}}">
+                <input style="display: none;" id="visibilityid" type="text" value="{{item.visibility}}">
+                <input style="display: none;" id="scrollid" type="text" value="{{item.scroll}}">
+                <textarea style="display: none;" id="modifyId" name="modifyId">{{item.id}}</textarea>
+                <textarea style="display: none;" id="modifyId" name="table">{{table}}</textarea>
+
+                <div class="input" id="">
+                    게시기간
+                    <input type="date" name="period" value="{{item.popup_start_date}}"> ~
+                    <input type="date" name="period" value="{{item.popup_end_date}}"><br />
+                    팝업형태 :
+                    <label for="normalPop">일반팝업</label>
+                    <input id="normalPop" type="radio" class="select" name="type" value="1">
+                    <label for="layerPop">레이어팝업</label>
+                    <input id="layerPop" type="radio" class="select" name="type" value="0"><br />
+                    보이기 여부:
+                    <label for="visible">VISIBLE</label>
+                    <input type="radio" id="visible" class="select" name="visibility" value="1">
+                    <label for="invisible">INVISIBLE</label>
+                    <input type="radio" id="invisible" class="select" name="visibility" value="0"><br/>
+                    스크롤 여부 :
+                    <label for="scrollallow">허용함</label>
+                    <input type="radio" id="scrollallow" class="select" name="scroll" value="1">
+                    <label for="scrolldeny">허용안함</label>
+                    <input type="radio" id="scrolldeny" class="select" name="scroll" value="0"><br />
+                    크기 :
+                    <label>가로</label>
+                    <input type="text" name="size" value="{{item.pop_width}}">
+                    <label>세로</label>
+                    <input type="text" name="size" value="{{item.pop_height}}"><br />
+                    위치 :
+                    <label for="locationX">X</label>
+                    <input id="locationX" type="text" name="location" value="{{item.pop_locationX}}">
+                    <label for="locationY">Y</label>
+                    <input id="locationY" type="text" name="location" value="{{item.pop_locationY}}"><br />
+                    <label>링크주소</label>
+                    <input type="text" name="hyperlink" class="form-control" value="{{item.hyperlink}}">
+                </div>
+                <label for="title">제목</label>
+                <input id="title" class="form-control" type="text" name="title" value="{{item.title}}"><br />
+                <div id="summernote">
+                </div>
+                <textarea style="display: none;" name="content" id="result">{{item.content}}</textarea>
+                <input type="button" class="btn" id="popup_submit" value="UPLOAD">
+                <a href="/admin/view?id={{item.id}}&table=popup&localUrl={{localUrl}}" id="return"><input type="button" class="btn" value="LIST"></a>
+                {% endfor %}
+            </form>
         </div>
-        <textarea name="content" id="result">
-        </textarea>
-
-
-        <input type="button" id="popup_submit" value="UPLOAD">
-        {% endfor %}
-    </form>
+    </div>
     <script type="text/javascript">
 
         $(document).ready(function () {
             $('#summernote').summernote()
         })
-        $('.summernote').summernote({
-            height: 300,
+        $('#summernote').summernote({
+            height: 500,
             minHeight: null,
             maxHeight: null,
             lang: 'ko-KR',
@@ -86,6 +87,8 @@
                 sendFile(files[0], editor, welEditable);
             }
         });
+        const content = document.querySelector('#result').value;
+        $('#summernote').summernote('code',content)
 
         const button = document.querySelector('#popup_submit');
         const popupForm = document.querySelector('#popup_form');
@@ -102,22 +105,35 @@
         const scrollId = document.querySelector('#scrollid').value;
         const select = document.querySelectorAll('.select');
 
-        select.forEach(v=>{
-            if(v.name == 'type'){
-                if (v.value == typeId ){
-                    v.setAttribute('checked','true')
+        select.forEach(v => {
+            console.log(v.name)
+            if (v.name == 'type') {
+                if (v.value == typeId) {
+                    v.checked = true;
+                } else {
+                    v.checked = false;
                 }
+                return;
             }
-            else if(v.name = 'visibility'){
-                if(v.value == visibilityId){
-                    v.setAttribute('checked','true')
+            if (v.name == 'visibility') {
+                if (v.value == visibilityId) {
+                    v.checked = true;
+                } else {
+                    v.checked = false;
                 }
+                return;
             }
-            else if(v.name == 'scroll'){
-                if(v.value == scrollId){ v.setAttribute('checked','true') }
+            if (v.name == 'scroll') {
+                if (v.value == scrollId) {
+                    v.checked = true
+                } else {
+                    v.checked = false;
+                }
+                return;
             }
         })
     </script>
+
 </body>
 
 </html>
