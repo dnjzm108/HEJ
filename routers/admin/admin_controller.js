@@ -43,6 +43,7 @@ let upload = (req, res) => {
 
 let upload_success = async (req, res) => {
     let { localUrl, title, content, writer, type } = req.body;
+    // let visibility
     await search[localUrl].create({ title, content, writer, type });
     if (type != null) {
         res.redirect(`/admin/${localUrl}/${type}`);
@@ -109,20 +110,6 @@ let Information = async (req, res) => {
             visibility: v.visibility == 0 ? "invisible" : "visible"
         }
     })
-    
-    // let resultsall = await search['information'].findAll({ where: { type: `${localUrl}` }, raw: true });
-
-    // let infoList = resultsall.map(v => {
-    //     return {
-    //         ...v,
-    //         date: moment(v.date).format("MMM Do YY"),
-    //         visibility: v.visibility == 0 ? "invisible" : "visible"
-    //     }
-    // });
-    // let idArr = '';
-    // infoList.forEach(v => {
-    //     idArr += v.id + ','
-    // })
     res.render('./admin/information.html', { infoList, pagin : pagin.page_hired , localUrl })
 }
 
@@ -200,6 +187,7 @@ let popup_upload = (req, res) => {
 
 let popup_upload_success = async (req, res) => {
     let { writer, visibility, title, period, type, scroll, size, location, hyperlink, content } = req.body;
+    console.log(period)
     await popupTd.create({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[0], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content });
     res.redirect('/admin/popup');
 }
@@ -235,6 +223,12 @@ let popup_modify = async (req, res) => {
         popupList,
         table,
     });
+}
+
+let popup_modify_success = async(req,res)=>{
+    let {writer, visibility, title, period, type, scroll, size, location, hyperlink, content, modifyId,table} = req.body;
+    await search[table].update({writer, visibility, title, period, type, scroll, size, location, hyperlink, content},{where:{id:modifyId}});
+    res.redirect(`/admin/popup_view?id=${modifyId}&table=${table}`);
 }
 
 /*========================= 회원관리 ================================= */
@@ -324,4 +318,5 @@ module.exports = {
     user_view,
     authority,
     community,
+    popup_modify_success,
 }

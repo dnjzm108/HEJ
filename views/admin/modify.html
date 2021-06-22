@@ -1,27 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modify</title>
-    <link rel="stylesheet" href="./css/info/index.css">
+    <link rel="stylesheet" src="./css/info/index.css">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
 </head>
+
 <body>
-    <h1>MODIFY</h1>
-    <form action="/admin/modify_success" id="modify_form" method="POST">
-        <input type="text" name="writer" id="writer" value="{{moList.writer}}">
-        <div id="title_input" class="input">
-            <label for="title">TITLE</label>
-            <input type="text" name="title" id="title" value="{{moList.title}}"><br />
+    <div id="wrap">
+        <div class="container">
+            <h1>MODIFY</h1>
+            <form action="/admin/modify_success" id="modify_form" method="POST">
+                <input type="text" style="display: none;" name="writer" id="writer" value="{{moList.writer}}">
+                <div id="title_input" class="input">
+                    <label for="title">TITLE</label>
+                    <input type="text" class="form-control" name="title" id="title" value="{{moList.title}}"><br />
+                </div>
+                <div id="content_input" class="input">
+                    <label for="content">CONTENT</label>
+                    <input type="hidden" id='content' value="{{moList.content}}">
+                </div>
+                <textarea style="display: none;" id="modifyId" name="modifyId">{{moList.id}}</textarea>
+                <textarea style="display: none;" id="modifyId" name="table">{{table}}</textarea>
+
+                <div id="summernote">
+                </div>
+                <input type="submit" class="btn" id="modify_submit" value="MODIFY">
+                <textarea style="display: none;" name="content" id="result"></textarea>
+            </form>
         </div>
-        <div id="content_input" class="input">
-            <label for="content">CONTENT</label>
-            <textarea name="content" id="content">{{moList.content}}</textarea>
-        </div>
-        <textarea style="display: none;" id="modifyId" name="modifyId">{{moList.id}}</textarea>
-        <textarea style="display: none;" id="modifyId" name="table">{{table}}</textarea>
-        <input type="submit" id="modify_submit" value="MODIFY">
-    </form>
+    </div>
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+            $('#summernote').summernote()
+        })
+        
+        $('#summernote').summernote({
+            height: 500,
+            minHeight: null,
+            maxHeight: null,
+            lang: 'ko-KR',
+            onImageUpload: function (files, editor, welEditable) {
+                sendFile(files[0], editor, welEditable);
+            }
+        });
+        const content = document.querySelector('#content').value;
+        $('#summernote').summernote('code',content);
+        
+        const button = document.querySelector('#modify_submit')
+        const modify_form = document.querySelector('#modify_form');
+
+        button.addEventListener('click', submitFn)
+        function submitFn() {
+            let markupStr = $('#summernote').summernote('code');
+            let texttitle = document.querySelector('#title').value;
+
+            if (texttitle == '') {
+                alert('Enter the subject.');
+                return
+            }
+            result.innerHTML = markupStr;
+            modify_form.submit();
+        }
+    </script>
 </body>
+
 </html>

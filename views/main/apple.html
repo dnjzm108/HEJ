@@ -11,6 +11,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Viaoda+Libre&display=swap"
         rel="stylesheet">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let idArr = document.querySelector('#idArr').value;
+            idArr = idArr.split(',');
+            idArr.splice(idArr.length - 1, 1);
+            idArr.forEach(v => {
+                let content = document.querySelector('#content' + v);
+                let pre = document.querySelector('#pre' + v);
+                let setting = document.querySelector('#setting' + v);
+                let popupContent = document.querySelector('#popup_content' + v)
+                console.log(setting.value)
+                popupContent.style.cssText = `${setting.value};border:1px solid #000`;
+                pre.innerHTML = `${content.value}`
+            })
+        });
+            // document.querySelector('.abc').style.cssText  = 'background-color:red; width:300px; height:300px;';
+
+    </script>
 </head>
 
 <body>
@@ -76,20 +94,41 @@
             </div>
             <form id="apply_form">
                 <label for="name">name</label>
-                <input id="name" type="text"><br/>
+                <input id="name" type="text"><br />
                 <label for="age">age</label>
                 <input id="age" type="text"></br>
                 <label for="number">number</label></br>
                 <input id="number" type="text"></br>
                 <label for="content">content</label>
                 <input id="content" type="text">
-                <input id="" type="submit" value="apply"> 
+                <input id="" type="submit" value="apply">
             </form>
         </div>
     </div>
 
-<script type="text/javascript">
-    const chatBtn = document.querySelector('#cha_btn')
+    {% if popup != undefiend %}
+    <input type="hidden" value="{{idArr}}" id="idArr">
+    {% for item in popup %}
+    <div id="popup_content{{item.id}}">
+        <textarea style="display: none;" id="content{{item.id}}">{{item.content}}</textarea>
+        <pre id="pre{{item.id}}"></pre>
+        <textarea style="display: none;"
+            id="setting{{item.id}}">position:absolute;background-color:beige;width:{{item.pop_width}}px;height:{{item.pop_height}}px;top:{{item.pop_locationY}}px;left:{{item.pop_locationX}}px</textarea>
+        <div id="popup_check">
+            <input type="checkbox" name="visibility" id="popup_checkbox{{item.id}}">
+            <label for="popup_checkbox{{item.id}}">1일동안 이 창 보지않기</label>
+            <button
+                style="float:right; color:#fff; background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer"
+                id="popup_close{{item.id}}">닫기</button>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <!-- {{item.pop_locationX}};{{item.pop_locationY}};{{item.hyperlink}};{{item.scroll}}; -->
+
+
+    <script type="text/javascript">
+        const chatBtn = document.querySelector('#cha_btn')
         function popup() {
             let url = 'http://localhost:3000/chat'
             let name = '채팅'
@@ -98,11 +137,11 @@
             window.open(url, name, option);
         }
         chatBtn.addEventListener('click', popup)
-</script>
+    </script>
 
     <script type="text/javascript">
 
-    let a = 0;
+        let a = 0;
         const square = document.querySelector('#square');
         square.addEventListener('click', moving);
         const mouse = document.querySelector(".mouse");
@@ -146,7 +185,7 @@
         }
         consult_btn.addEventListener('click', apply)
 
-        
+
     </script>
 </body>
 
