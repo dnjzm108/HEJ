@@ -57,6 +57,8 @@ a{
 #sub_header{
     width: 1200px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 #sub_header > ul{
@@ -175,15 +177,15 @@ a{
     padding : 20px;
 }
 #list{
-    width: 100%;
+    width: 1200px;
+    margin: 0 auto;
 }
 
-/* tr{
+tr{
     color: #000;
     text-align: center;
     height: 20px;
-    line
-} */
+} 
 
 
 tr:nth-child(1)> td{color:#000000}
@@ -197,10 +199,11 @@ tr:nth-child(10) > td{border-bottom: none;}
 td{
     color:#000;
     padding: 10px;
+    height: 50px;
     box-sizing: border-box;
     border-bottom: 1px solid #000000;
     border-right: 1px solid #666;
-    line-height: 60px;
+    box-shadow: 3px 3px 3px 3px #2222;
 }
 .line{
     width: 100px;
@@ -208,4 +211,16 @@ td{
     position: relative;
     top: -15px;
     border-bottom: 1px solid black;
+}
+#fixed{
+    position: fixed;
+    right: 0;
+    bottom: 10%;
+    border: 1px solid black;
+    box-shadow: 3px 3px 3px 3px #2222;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#fixed>a{
+    display: block;
 }

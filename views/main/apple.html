@@ -48,8 +48,24 @@
                 <li> <a href="/hired">HIRED</a> </li>
                 <li> <a href="/community">COMMUNITY</a> </li>
                 <div id="menu_box">
+                    {% if session == undefiend %}
                     <div> <a id="login" href="/user/login">login</a> </div>
                     <div> <a id="join" href="/user/join">join</a> </div>
+                    {% endif %}
+
+                    {% if session != undefiend %}
+                    {% if session.kakao %}
+                    <div> <a id="kakao out" class="kakao" href="/auth/kakao/unlink">카카오 로그아웃</a> </div>
+                    {% endif %}
+                    {% if session.google %}
+                    <input type="hidden" class="g-signin2" gapi.auth2.getauthinstance()="onSignIn">
+                    <div><a id="google_out" onclick="signOut()">google out</a></div>
+                    {% endif %}
+                    {% if session.local %}
+                    <div> <a href="/user/logout">logout</a> </div>
+                    <div> <a href="user/info?checked=0">mypage</a> </div>
+                    {% endif %}
+                    {% endif %}
                     <div> <a id="cha_btn" data-value="0">chat</a> </div>
                     <div> <a id="consult_btn">consult</a></div>
                 </div>
@@ -60,6 +76,9 @@
         <!-- gnb 영역 -->
 
         <div id="gnb">
+            {% if userid != undefiend %}
+            <a href="/user/info?checked=0" id="user">{{userid}} 님</a>
+            {% endif %}
             <div id="text_event">
                 <h1>나는 그저 <span id="question">질문</span> 하는 자다... </h1></br>
                 <h3>운명은 내가 던지는 질문이다</h3>
