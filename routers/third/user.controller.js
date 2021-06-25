@@ -18,7 +18,8 @@ let join = (req, res) => {
 let login = (req, res) => {
     let { flag } = req.query;
     let { uid1: userid } = req.session;
-    res.render('./third/user/login.html', { flag, session: session.authData, userid });
+    let {msg} = req.query;
+    res.render('./third/user/login.html', { flag, session: session.authData, userid,msg});
 };
 
 let info = async (req, res) => {
@@ -93,7 +94,11 @@ let login_check = async (req, res) => {
         res.redirect("/user/login?flag=0");
     }
     res.cookie('AccessToken', ctoken, { httpOnly: true, secure: true, })
-    let authData = { userid: result.user_name }
+    let authData = { 
+        userid: result.user_name,
+        level: result.authority_level
+     }
+     console.log(result.authority_level);
     session.authData = {
         ["local"]: authData
     }
@@ -102,7 +107,7 @@ let login_check = async (req, res) => {
     req.session.isLogin = true;
     req.session.userimage = '1623203467710.png';
     req.session.save(() => {
-        res.redirect('/user/login');
+        res.redirect('/');
     });
 };
 

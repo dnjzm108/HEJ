@@ -2,7 +2,20 @@
 
 <div id="content_wrap">
     <div id="content" class="center">
-        <div id="logo"><img src="/uploads/info_image/1623383319105.jpg"></div>
+        <section id="square">
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+        </section>
         <h1>COMMUNITY</h1>
         <div id="atags">
             <a class="tags" href="/community">전체</a>
@@ -25,7 +38,7 @@
                 {% for item in commList %}
                 <tr>
                     <td>{{item.num}}</td>
-                    <td><a href="/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a></td>
+                    <td><a href="/view?id={{item.id}}&table=community&localUrl={{item.type}}">{{item.title}}</a></td>
                     {% if localUrl == undefined %}
                     <td><a href="/community/{{item.type}}">{{item.type}}</a></td>
                     {% endif %}
@@ -43,7 +56,9 @@
                 {% endfor %}
             </div>
             <a class="main_btn btn" href="/">MAIN</a>
-            <a href="/community/write">write</a>
+            {% if (localUrl == "qanda") or (localUrl == "board") %}
+            <a href="/community/write?type={{localUrl}}">write</a>
+            {% endif %}
         </div>
     </div>
     {% include "../template/fixed.html" %}
@@ -61,5 +76,10 @@
         }
     })
 </script>
+{% if msg != undefiend %}
+<script type="text/javascript">
+alert('{{msg}}')
+</script>
+{% endif %}
 
 {% include "../template/bottom.html" %}

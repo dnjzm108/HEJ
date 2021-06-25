@@ -1,35 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+{% include "../template/top.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/main/write.css">
-</head>
+{% if modify == undefiend %}
+<div id="write_box">
+    <form id="form" action="/community/write" method="POST" enctype="multipart/form-data">
+        <p>제목</p>
+        <input class="w500" type="text" name="title" id="title">
+        <p>작성자 : {{userid}} 님</p>
+        <input class="w500" type="hidden" name="userid" id="userid" value="{{userid}}">
+        <p>이미지</p>
+        <input class="w500" type="file" name="community_image" id="community_image">
+        <p>쓰는곳 : {{type}}</p>
+        <input type="hidden" name="type" value="{{type}}">
+        <p>내용</p>
+        <input id="cont" type="textarea" name="content" id="content">
+        <input type="submit" value="저장">
+</div>
+</form>
+{% endif%}
+{% if modify != undefiend %}
+<div id="write_box">
+    <form id="form" action="/community/write" method="POST" enctype="multipart/form-data">
+        <p>제목</p>
+        <input class="w500" type="text" name="title" id="title" value="{{modify.title}}">
+        <p>작성자 : {{modify.userid}} 님</p>
+        <input class="w500" type="hidden" name="userid" id="userid" value="{{modify.userid}}">
+        <p>이미지</p>
+        <input class="w500" type="file" name="community_image" id="community_image" value="{{modify.community_image}}">
+        <p>쓰는곳 : {{modify.type}}</p>
+        <input type="hidden" name="type" value="{{modify.type}}">
+        <p>내용</p>
+        <input id="cont" type="textarea" name="content" id="content" value="{{modify.content}}">
+        <input type="submit" value="저장">
+</div>
+</form>
+{% endif %}
 
-<body>
-    <div id="wrap">
-        <div id="header">
-            <form action="/community/write" method="POST" enctype="multipart/form-data">
-                <span>제목</span></br>
-                <input class="w500" type="text" name="title" id="title"></br>
-                <span>작성자</span></br>
-                <span>{{userid}} 님</span>
-                <input class="w500" type="hidden" name="userid" id="userid" value="{{userid}}"></br>
-                <span>이미지</span></br>
-                <input class="w500" type="file" name="community_image" id="community_image"></br>
-                <span>타입</span>
-                Q&A<input type="radio" name="type" value="Q&A">게시판<input type="radio" name="type" value="게시판">공지사항<input
-                    type="radio" name="type" value="공지사항"></br>
-                <span>내용</span></br>
-                <input id="cont" type="text" name="content" id="content"></br>
-                <input type="submit" value="저장">
-        </div>
-    </div>
-    </form>
-
-</body>
-
-</html>
+{% include "../template/bottom.html" %}
