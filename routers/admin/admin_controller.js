@@ -4,6 +4,9 @@ const ctoken = require('../../jwt');
 const search = require('../../serach');
 const pagination = require('../../pagination');
 const router = require('.');
+const { Op } = require("sequelize");
+// const {Sequelize} = require('../../models/index.js');
+// const Op = Sequelize.Op
 
 /*========================ADMIN MAIN PAGE========================*/
 
@@ -45,12 +48,17 @@ let upload = (req, res) => {
 
 let upload_success = async (req, res) => {
     let { localUrl, title, content, writer, type } = req.body;
-    await search[localUrl].create({ title, content, writer, type });
+    let result = await search[localUrl].create({ title, content, writer, type });
+    console.log(type)
+    if(localUrl == 'information'){
+        await search[localUrl].update({visibility:1},{where:{type,id:result.id}});
+        await search[localUrl].update({visibility:0},{where:{type,id:{[Op.ne]:result.id}}});
+    }
+    /* 각각의 board로 redirect 될 수 있도록 */
     if (type != null) {
         res.redirect(`/admin/${localUrl}/${type}`);
     }
     else { res.redirect(`/admin/${localUrl}`) }
-    /* 각각의 board로 redirect 될 수 있도록 */
 };
 
 /*========================VIEW PAGE========================*/
@@ -98,21 +106,27 @@ let modify_success = async (req, res) => {
 
 let Information = async (req, res) => {
     let { localUrl } = req.params;
-    let {id} = req.query;
-    let page = {localUrl: `${localUrl}`, id: `${id}`, table: 'information'}
+    let { id } = req.query;
+    let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'information' }
     let pagin = await pagination(page);
     let result = pagin.result;
-    let infoList = result.map(v=>{
+    let infoList = result.map(v => {
         v.num = pagin.totalrecord - pagin.offset;
         pagin.totalrecord--;
-        return{
+        return {
             ...v,
-            date:moment(v.write_date).format("MMM Do YY"),
-            visibility: v.visibility == 0 ? "invisible" : "visible"
+            date: moment(v.write_date).format("MMM Do YY"),
         }
     });
-    res.render('./admin/information.html', { infoList, pagin : pagin.page_hired , localUrl })
+    res.render('./admin/information.html', { infoList, pagin: pagin.page_hired, localUrl })
 };
+
+let information_update = async (req, res) => {
+    let { visibility, local } = req.body;
+    await information.update({ visibility:1 }, { where: {id:visibility} });
+    await information.update({visibility:0},{where:{id :{[Op.ne]: visibility},type:local}});
+    res.redirect(`/admin/information/${local}`);
+}
 
 /*============================== 취업정보 =============================== */
 
@@ -214,7 +228,8 @@ let popup_modify = async (req, res) => {
     let { id, table } = req.query;
     let popupResult = await search[table].findAll({ where: { id }, raw: true });
     let popupList = popupResult.map(v => {
-        return {...v,
+        return {
+            ...v,
             popup_start_date: moment(v.popup_start_date).format("yyyy-MM-DD"),
             popup_end_date: moment(v.popup_end_date).format("yyyy-MM-DD"),
             date: moment(v.date).format("MMM Do YY")
@@ -226,9 +241,9 @@ let popup_modify = async (req, res) => {
     });
 };
 
-let popup_modify_success = async(req,res)=>{
-    let {writer, visibility, title, period, type, scroll, size, location, hyperlink, content, modifyId,table} = req.body;
-    await search[table].update({writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content},{where:{id:modifyId}});
+let popup_modify_success = async (req, res) => {
+    let { writer, visibility, title, period, type, scroll, size, location, hyperlink, content, modifyId, table } = req.body;
+    await search[table].update({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content }, { where: { id: modifyId } });
     res.redirect(`/admin/popup_view?id=${modifyId}&table=${table}`);
 };
 
@@ -308,6 +323,7 @@ module.exports = {
     admin_login,
     login_success,
     Information,
+    information_update,
     hired,
     educationT,
     popup,

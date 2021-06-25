@@ -30,6 +30,7 @@ router.use('/popup',controller.popup);
 router.use('/education',controller.educationT);
 router.use('/hired/:localUrl',controller.hired);
 router.use('/hired',controller.hired);
+router.post('/information_update',controller.information_update);
 router.use('/information/:localUrl',controller.Information);
 router.use('/information/',controller.Information);
 

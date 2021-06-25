@@ -19,6 +19,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
+    visibility:{
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue:1,
+    },
     date:{
       type:Sequelize.DATE,
       allowfull:true,
