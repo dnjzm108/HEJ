@@ -55,9 +55,12 @@ a{
     height:61px;
 }
 #sub_header{
+    display: none;
     width: 1200px;
+    height: 100px;
     margin: 0 auto;
-    position: relative;
+    position: absolute;
+    left: 200px;
     z-index: 1;
 }
 
@@ -80,7 +83,6 @@ a{
 }
 
 .header_open{
-    display: block;
     animation: headerOpen 2s;
     animation-fill-mode: forwards;
   
@@ -89,7 +91,6 @@ a{
 .header_close{
     animation: headerClose 1s;
     animation-fill-mode: forwards;
-    display: none;
 }
 
 @keyframes headerOpen{
