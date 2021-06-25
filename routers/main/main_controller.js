@@ -116,15 +116,25 @@ let kakao_logout = async (req, res) => {
 }
 
 let main = async (req, res) => {
+    let userid ;
     let id = req.query.id;
     let pw = req.query.pw;
+    if(session.authData != null){
+     if (session.authData.kakao != null) {
+        userid = session.authData.kakao.properties.nickname;
+    } else if (session.authData.local != null) {
+        userid = session.authData.local.userid
+    } else if (session.authData.google != null) {
+        userid = session.authData.google.username
+    }
+}
     let popup = await search['popup'].findAll({where:{visibility:1},raw:true});
     let idArr = '';
     popup.forEach(v => {
         idArr += v.id + ','
     })
     res.render('./main/apple.html', {
-        id, pw, popup, idArr
+        id, pw, popup, idArr , userid , session:session.authData
     })
 }
 
@@ -171,6 +181,17 @@ let community_list = async (req, res) => {
             num: v.num
         }
     })
+    console.log('+++++++++++'+commList);
+    let userid;
+    if(session.authData != null){
+        if (session.authData.kakao != null) {
+           userid = session.authData.kakao.properties.nickname;
+       } else if (session.authData.local != null) {
+           userid = session.authData.local.userid
+       } else if (session.authData.google != null) {
+           userid = session.authData.google.username
+       }
+   }
     let tables = await community.findAll({ raw: true });
     if(tables != undefined){
     let arr = tables.map(v => {
@@ -182,8 +203,7 @@ let community_list = async (req, res) => {
 }
     res.render('./main/menu/community_list.html', {
         pagin: pagin.page_hired,
-        commList,
-        localUrl
+        commList,userid,localUrl,session:session.authData
     });
 
 }
@@ -194,7 +214,7 @@ let community_write = (req, res) => {
     } else if (session.authData.local != null) {
         userid = session.authData.local.userid
     } else if (session.authData.google != null) {
-        userid = session.authData.google.userid
+        userid = session.authData.google.username
     }
     res.render('./main/community/write.html',{
         userid
@@ -229,9 +249,7 @@ let community_view = async (req, res) => {
     } else if (session.authData.local != null) {
         userid = session.authData.local.userid
     } else if (session.authData.google != null) {
-        userid = session.authData.google.userid
-    } else if (session.authData.fecebook != null) {
-        userid = session.authData.fecebook.userid
+        userid = session.authData.google.username
     }
 
     res.render('./main/community/view.html', {

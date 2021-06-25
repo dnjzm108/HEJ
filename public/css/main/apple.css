@@ -109,11 +109,16 @@ a{
 } */
 #gnb{
     display: inline-block;
-    width: 79vw;
+    width: 78vw;
     height: 100vh;
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
+}
+#user{
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 #text_event{
     position: relative;
