@@ -9,23 +9,28 @@
     <link rel="stylesheet" href="/css/third/info.css">
 </head>
 
-<body >
+<body>
 
 
     {% if checked=="0" %}
     <div class="box2">
         <div class="info_image">
-            <a href="/"><img src="/uploads/logo_bottom_2018.png"></a>
+            <a href="/"><img src="/uploads/logo_new_2018.png"></a>
         </div>
         <form id="info_pwcheck" method="POST" action="/user/info_pwcheck">
-            
-                <ul class="pwcheck">
-                    <li>아이디:       <span> {{userid}}</span></li>
-                    <li>비밀번호:   <input id="pw" type="text" name="userpw">
+
+            <ul class="pwcheck">
+                <span class="ps_box">
+                    <li class="int">아이디 <span> {{userid}}</span></li>
+                </span>
+                <span class="ps_box">
+
+                    <li>비밀번호 <input id="pw" type="text" name="userpw"></li>
+                    <li class="">
+                        <input type="submit" class="btn int" value="확인">
                     </li>
-                    <li>
-                        <input type="submit" value="확인">
-                    </li>
+                </span>
+
             </ul>
         </form>
     </div>
