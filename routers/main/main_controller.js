@@ -151,10 +151,11 @@ let login = (req, res) => {
 let community_list = async (req, res) => {
     let { localUrl } = req.params;
     let { id } = req.query;
-    console.log(localUrl)
+    console.log(localUrl,"=============")
     let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'community' }
     let pagin = await pagination(page);
     let result = pagin.result;
+    let {msg} = req.query;
     let commList = result.map(v => {
         v.num = pagin.totalrecord - pagin.offset;
         pagin.totalrecord--;
@@ -185,11 +186,12 @@ let community_list = async (req, res) => {
     }
     res.render('./main/menu/community_list.html', {
         pagin: pagin.page_hired,
-        commList, userid, localUrl, session: session.authData
+        commList,userid,localUrl,session:session.authData,msg
     });
 
 }
 let community_write = (req, res) => {
+    let {type} = req.query;
     let userid;
     if (session.authData.kakao != null) {
         userid = session.authData.kakao.properties.nickname;
@@ -198,15 +200,15 @@ let community_write = (req, res) => {
     } else if (session.authData.google != null) {
         userid = session.authData.google.username
     }
-    res.render('./main/community/write.html', {
-        userid
+    res.render('./main/community/write.html',{
+        userid,type
     })
 }
 let community_write_send = async (req, res) => {
     let { title, userid, content, type } = req.body;
     let community_image = req.file == undefined ? '' : `/uploads/community/${req.file.filename}`;
     let write = await community.create({
-        title, userid, content, community_image, type,
+        title, userid, content, community_image, type,writer:userid,
         hit: 0,
     })
     res.redirect('/community')
@@ -241,12 +243,12 @@ let community_view = async (req, res) => {
 
 let community_modify = async (req, res) => {
     let id = req.query.id;
-    let result = await community.findAll({
+    let modi = await community.findAll({
         where: { id }
     })
-    let modify = result[0].dataValues;
-    res.render('./main/community/modify.html', {
-        modify, id
+    let modify = modi[0].dataValues;
+    res.render('./main/community/write.html', {
+        modify
     })
 }
 let community_modify_send = async (req, res) => {
@@ -258,9 +260,9 @@ let community_modify_send = async (req, res) => {
     res.redirect(`/community/view?id=${id}`);
 }
 let community_delete = async (req, res) => {
-    let id = req.query.id
+    let {id,localUrl} = req.query
     let result = await community.destroy({ where: { id } });
-    res.redirect('/community');
+    res.redirect(`/community/${localUrl}`);
 }
 //  community end
 

@@ -1,34 +1,16 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-ul,li{
-    list-style: none;
-}
-a{
-    text-decoration: none;
-}
-#wrap{
-    width: 100%;
+#write_box{
+    width: 1200px;
+    height: 50px;
+    margin: 100px auto 0;
     text-align: center;
 }
-
-#header{
+#title{
     width: 800px;
-    height: 800px;
-    margin: 100px auto 30px;
-    border: 1px solid #000000;
-    padding: 50px;
-    box-sizing: border-box;
-}
-.w500{
-    width: 500px;
 }
 #cont{
-    width: 500px;
+    width: 800px;
     height: 400px;
 }
-#content{
-    width: 500px;
-    height: 400px;
+.mar20{
+    margin-top: 20px;
 }

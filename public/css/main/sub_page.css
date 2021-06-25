@@ -55,9 +55,12 @@ a{
     height:61px;
 }
 #sub_header{
+    display: none;
     width: 1200px;
+    height: 100px;
     margin: 0 auto;
-    position: relative;
+    position: absolute;
+    left: 200px;
     z-index: 1;
 }
 
@@ -67,7 +70,7 @@ a{
     margin-right: 40px;
 }
 #sub_header > ul:nth-child(1){
-    margin-left: 240px;
+    margin-left: 160px;
 }
 
 #sub_header > ul >li{
@@ -80,7 +83,6 @@ a{
 }
 
 .header_open{
-    display: block;
     animation: headerOpen 2s;
     animation-fill-mode: forwards;
   
@@ -89,7 +91,6 @@ a{
 .header_close{
     animation: headerClose 1s;
     animation-fill-mode: forwards;
-    display: none;
 }
 
 @keyframes headerOpen{
@@ -223,4 +224,48 @@ td{
 }
 #fixed>a{
     display: block;
+}
+#square{
+    width: 40px;
+    height: 40px;
+    position: relative; 
+    left: 50%;
+    transform: translate(-50%);
+    transform: rotateX(-20deg) rotateY(-20deg) rotateZ(-20deg);
+    transform-style: preserve-3d;
+    margin: 20px 0;
+}
+#square>div{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    /* opacity: 0.3; */
+    /* backface-visibility: hidden; */
+    /* opacity: 0.3; */
+}
+
+#square > div:nth-child(1){
+    transform: rotateY(0deg) translate3d(0px, 0px, 20px);
+    border: 1px solid black;
+}
+#square > div:nth-child(2){
+    transform: rotateY(90deg) translate3d(0px, 0px, 20px);
+    border: 1px solid black;
+}
+#square > div:nth-child(3){
+    transform: rotateY(180deg) translate3d(0px, 0px, 20px);
+    border: 1px solid black;
+}
+#square > div:nth-child(4){
+    transform: rotateY(270deg) translate3d(0px, 0px, 20px);
+    border: 1px solid black;
+}
+#square > div:nth-child(5){
+    transform: rotateX(90deg) translate3d(0px, 0px, 20px);
+    border: 1px solid black;
+    
+}
+#square > div:nth-child(6){
+    transform: rotateX(270deg) translate3d(0px, 0px, 20px);
+    border: 1px solid black;
 }

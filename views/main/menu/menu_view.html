@@ -22,27 +22,19 @@
 <body> -->
 {% include "../template/top.html" %}
 
-    <div id="wrap" class="w100">
-        <div id="info_header" class="center">
-            <div id="logo"><img src="/uploads/info_image/1623383319105.jpg"></div>
-            <h1>{{infoList.title}}</h1>
-        </div>
-        <div id="content_header" class="center">
-            <ul>
-                <li>{{infoList.writer}}</li>
-                <li>{{infodate}}</li>
-            </ul>
-        </div>
-        <div id="content_wrap" class="center">
-            <pre id="pre"></pre>
-        </div>
-        <textarea style="display: none;" id="content">{{infoList.content}}</textarea>
-
-        <div id="footer" class="center">
-            <a href="/admin/education">MENU</a>
-            <a href="/admin/delete?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">DELETE</a>
-            <a href="/admin/modify?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">MODIFY</a>
-        </div>
+<div id="logo">
+    <img src="/uploads/info_image/1623383319105.jpg">
+</div>
+<div id="view_box">
+    <p class="w800">제목 : <span>{{infoList.title}}</span></p>
+    <p class="w800">작성자 : {{infoList.writer}}</p>
+    <p class="w800">작성일 : {{infodate}}</p>
+    <p class="con">내용 : {{infoList.content}}</p>
+    <div id="footer" class="center">
+        <a href="/community">MENU</a>
+        <a href="/community/delete?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">DELETE</a>
+        <a href="/community/modify?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">MODIFY</a>
     </div>
+</div>
 
-    {% include "../template/bottom.html" %}
+{% include "../template/bottom.html" %}
