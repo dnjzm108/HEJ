@@ -12,7 +12,7 @@ client password : wMc8se_eBobJrH2EN-r3JF6z
 const axios = require('axios');
 const qs = require('qs');
 const moment = require('moment');
-const session = require('express-session');
+const sessiwon = require('express-session');
 const express = require('express');
 const app = express();
 const socket = require ('socket.io');
@@ -168,6 +168,7 @@ let community_list = async (req, res) => {
     // })
     let { localUrl } = req.params;
     let { id } = req.query;
+    console.log(localUrl)
     let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'community' }
     let pagin = await pagination(page);
     let result = pagin.result;
@@ -192,7 +193,6 @@ let community_list = async (req, res) => {
        }
    }
     let tables = await community.findAll({ raw: true });
-    console.log(tables);
     if(tables != undefined){
     let arr = tables.map(v => {
         return {
@@ -200,7 +200,6 @@ let community_list = async (req, res) => {
             write_date: moment(v.write_date).format('YYYY년 MM월 DD일 hh:mm a')
         }
     })
-    console.log('arr2++++++++++++'+arr);
 }
     res.render('./main/menu/community_list.html', {
         pagin: pagin.page_hired,
@@ -271,7 +270,6 @@ let community_modify = async (req, res) => {
 let community_modify_send = async (req, res) => {
     let { title, userid, content, type, id,community_image1} = req.body;
     let community_image = req.file == undefined ? community_image1 : `/uploads/community/${req.file.filename}`;
-    console.log('modify : '+ community_image);
     let modify = await community.update({
         title, userid, content, community_image, type
     }, { where: { id } });
