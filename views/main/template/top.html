@@ -74,9 +74,11 @@
                 </li>
             </ul>
             <ul>
+                {% for item in edList %}
                 <li>
-                    <a href="/information/intro">인사말</a>
+                    <a href="/information/education/{{item.title}}">{{item.title}}</a>
                 </li>
+                {% endfor %}
             </ul>
             <ul>
                 <li>

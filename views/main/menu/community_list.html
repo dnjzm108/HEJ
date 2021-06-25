@@ -25,7 +25,7 @@
                 {% for item in commList %}
                 <tr>
                     <td>{{item.num}}</td>
-                    <td><a href="/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a></td>
+                    <td><a href="/view?id={{item.id}}&table=community&localUrl={{item.type}}">{{item.title}}</a></td>
                     {% if localUrl == undefined %}
                     <td><a href="/community/{{item.type}}">{{item.type}}</a></td>
                     {% endif %}
@@ -39,7 +39,7 @@
         <div id="footer">
             <div id="pagenation">
                 {% for item in pagin %}
-                <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
+                <a style="border: none;" href="/community/{{localUrl}}/?id={{item}}">{{item}}</a>
                 {% endfor %}
             </div>
             <a class="main_btn btn" href="/">MAIN</a>

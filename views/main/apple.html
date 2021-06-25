@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Viaoda+Libre&display=swap"
         rel="stylesheet">
+        
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let idArr = document.querySelector('#idArr').value;
@@ -21,14 +22,22 @@
                 let pre = document.querySelector('#pre' + v);
                 let setting = document.querySelector('#setting' + v);
                 let popupContent = document.querySelector('#popup_content' + v)
-                console.log(setting.value)
                 popupContent.style.cssText = `${setting.value};border:1px solid #000`;
                 pre.innerHTML = `${content.value}`
             })
         });
             // document.querySelector('.abc').style.cssText  = 'background-color:red; width:300px; height:300px;';
-
     </script>
+    {% if popup != "" %}
+    <script type="text/javascript">
+        setTimeout(function () {
+            var url = "https://chlolisher.tistory.com/101";
+            var name = "popup test";
+            var option = "width = 500, height = 500, top = 100, left = 200, location = no";
+            window.open(url, name, option)
+        }, 2000)
+    </script>
+    {% endif %}
 </head>
 
 <body>
@@ -152,6 +161,7 @@
 
 
     <script type="text/javascript">
+
         const chatBtn = document.querySelector('#cha_btn')
         function popup() {
             let url = 'http://localhost:3000/chat'

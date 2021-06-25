@@ -12,11 +12,11 @@ client password : wMc8se_eBobJrH2EN-r3JF6z
 const axios = require('axios');
 const qs = require('qs');
 const moment = require('moment');
-const sessiwon = require('express-session');
+const session = require('express-session');
 const express = require('express');
 const app = express();
-const socket = require ('socket.io');
-const http = require ('http');
+const socket = require('socket.io');
+const http = require('http');
 const server = http.createServer(app);
 const io = socket(server);
 const { community, user, sequelize, qanda, comment } = require('../../models');
@@ -74,7 +74,7 @@ let kakao_check = async (req, res) => {
     }
     session.authData = { ["kakao"]: authData };
     res.redirect('/');
-}
+};
 
 let info = (req, res) => {
     const { authData } = session;
@@ -111,61 +111,44 @@ let kakao_logout = async (req, res) => {
     if (session.authData["kakao"].id == id) {
         delete session.authData;
     }
-
     res.redirect('/?msg=로그아웃 되었습니다.')
-}
+};
 
 let main = async (req, res) => {
-    let userid ;
+    let userid;
     let id = req.query.id;
     let pw = req.query.pw;
-    if(session.authData != null){
-     if (session.authData.kakao != null) {
-        userid = session.authData.kakao.properties.nickname;
-    } else if (session.authData.local != null) {
-        userid = session.authData.local.userid
-    } else if (session.authData.google != null) {
-        userid = session.authData.google.username
+    if (session.authData != null) {
+        if (session.authData.kakao != null) {
+            userid = session.authData.kakao.properties.nickname;
+        } else if (session.authData.local != null) {
+            userid = session.authData.local.userid
+        } else if (session.authData.google != null) {
+            userid = session.authData.google.username
+        }
     }
-}
-    let popup = await search['popup'].findAll({where:{visibility:1},raw:true});
+    let popup = await search['popup'].findAll({ where: { visibility: 1 }, raw: true });
     let idArr = '';
+    let type = [];
     popup.forEach(v => {
         idArr += v.id + ','
-    })
+        type.push(v.type);
+    });
     res.render('./main/apple.html', {
-        id, pw, popup, idArr , userid , session:session.authData
-    })
-}
+        id, pw, popup, idArr, userid, session: session.authData
+    });
+};
 
 let login = (req, res) => {
     let id = req.body.id;
     let pw = req.body.pw;
     let pw_check = req.body.pw_check;
     res.redirect(`/?id=${id}&pw=${pw}`);
-}
+};
+
 /*================================= community start ==============================================*/
 
 let community_list = async (req, res) => {
-    // let result = await community.findAll({ raw: true });
-    //    let arr = []
-    //       result.forEach(v => {
-    //          arr.push(v.dataValues.write_date);  
-    //      });
-    //      console.log(result);
-    //      console.log(arr);
-    //      let dt = moment(arr).format('YYYY년 MM월 DD일')
-    //      console.log(dt);
-    // let arr = result.map(v => {
-    //     return {
-    //         ...v,
-    //         write_date: moment(v.write_date).format('YYYY년 MM월 DD일 hh:mm a')
-    //     }
-    // })
-    // console.log("++++++++++++"+arr);
-    // res.render('./main/community/list.html', {
-    //     result: arr
-    // })
     let { localUrl } = req.params;
     let { id } = req.query;
     console.log(localUrl)
@@ -180,30 +163,29 @@ let community_list = async (req, res) => {
             write_date: moment(v.write_date).format("MMM Do YY"),
             num: v.num
         }
-    })
-    console.log('+++++++++++'+commList);
+    });
     let userid;
-    if(session.authData != null){
+    if (session.authData != null) {
         if (session.authData.kakao != null) {
-           userid = session.authData.kakao.properties.nickname;
-       } else if (session.authData.local != null) {
-           userid = session.authData.local.userid
-       } else if (session.authData.google != null) {
-           userid = session.authData.google.username
-       }
-   }
-    let tables = await community.findAll({ raw: true });
-    if(tables != undefined){
-    let arr = tables.map(v => {
-        return {
-            ...v,
-            write_date: moment(v.write_date).format('YYYY년 MM월 DD일 hh:mm a')
+            userid = session.authData.kakao.properties.nickname;
+        } else if (session.authData.local != null) {
+            userid = session.authData.local.userid
+        } else if (session.authData.google != null) {
+            userid = session.authData.google.username
         }
-    })
-}
+    }
+    let tables = await community.findAll({ raw: true });
+    if (tables != undefined) {
+        let arr = tables.map(v => {
+            return {
+                ...v,
+                write_date: moment(v.write_date).format('YYYY년 MM월 DD일 hh:mm a')
+            }
+        })
+    }
     res.render('./main/menu/community_list.html', {
         pagin: pagin.page_hired,
-        commList,userid,localUrl,session:session.authData
+        commList, userid, localUrl, session: session.authData
     });
 
 }
@@ -216,7 +198,7 @@ let community_write = (req, res) => {
     } else if (session.authData.google != null) {
         userid = session.authData.google.username
     }
-    res.render('./main/community/write.html',{
+    res.render('./main/community/write.html', {
         userid
     })
 }
@@ -234,13 +216,13 @@ let community_view = async (req, res) => {
     let result = await community.findAll({
         where: { id }
     })
-   
+
     let view = result[0].dataValues;
     let hitNum = await community.update({
         hit: view.hit + 1
     }, { where: { id } });
     let see = await comment.findAll({
-        where: { idx:id }
+        where: { idx: id }
     });
     let dt = moment(view.write_date).format('YYYY년 MM월 DD일 hh:mm a')
     let userid;
@@ -253,7 +235,7 @@ let community_view = async (req, res) => {
     }
 
     res.render('./main/community/view.html', {
-        view, id, userid, see,dt
+        view, id, userid, see, dt
     })
 }
 
@@ -268,7 +250,7 @@ let community_modify = async (req, res) => {
     })
 }
 let community_modify_send = async (req, res) => {
-    let { title, userid, content, type, id,community_image1} = req.body;
+    let { title, userid, content, type, id, community_image1 } = req.body;
     let community_image = req.file == undefined ? community_image1 : `/uploads/community/${req.file.filename}`;
     let modify = await community.update({
         title, userid, content, community_image, type
@@ -284,14 +266,14 @@ let community_delete = async (req, res) => {
 
 //comment start
 let comment_send = async (req, res) => {
-    let { userid, content,id} = req.body;
+    let { userid, content, id } = req.body;
     let result = await comment.create({
-        userid, content,idx:id
+        userid, content, idx: id
     })
     res.redirect(`/community/view?id=${id}`);
 }
 let comment_delete = async (req, res) => {
-    let { id,idx } = req.query;
+    let { id, idx } = req.query;
     let result = await comment.destroy({
         where: { id }
     })
@@ -299,7 +281,7 @@ let comment_delete = async (req, res) => {
 }
 
 let comment_modify = async (req, res) => {
-    let { id,content } = req.body;
+    let { id, content } = req.body;
     let result = await comment.update({
         content
     }, { where: { id } });
@@ -311,15 +293,15 @@ let test = (req, res) => {
     res.render('./main/test.html');
 }
 
-let chat = (req,res) =>{
+let chat = (req, res) => {
     res.render('./main/chat.html');
-   
+
 }
-  
-let information = async (req,res)=>{
+
+let information = async (req, res) => {
     let { localUrl } = req.params;
 
-    let resultsall = await search['information'].findAll({ where: { type: `${localUrl}` }, raw: true });
+    let resultsall = await search['information'].findAll({ where: { type: `${localUrl}`, visibility: 1 }, raw: true });
 
     let infoList = resultsall.map(v => {
         return {
@@ -332,10 +314,11 @@ let information = async (req,res)=>{
     infoList.forEach(v => {
         idArr += v.id + ','
     })
-    res.render('./main/menu/information_list.html', { infoList, idArr, localUrl })
+    let edList = await search['education'].findAll({ where: { visibility: 1 } });
+    res.render('./main/menu/information_list.html', { infoList, idArr, localUrl, edList })
 }
 
-let hired = async (req,res)=>{
+let hired = async (req, res) => {
     let { localUrl } = req.params;
     let { id } = req.query;
     let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'hired' }
@@ -356,8 +339,8 @@ let hired = async (req,res)=>{
     })
 }
 
-let education = async (req,res)=>{
-    let {id} = req.query;
+let education = async (req, res) => {
+    let { id } = req.query;
     let page = { id: `${id}`, table: 'education' };
     let pagin = await pagination(page);
     let result = pagin.result;
@@ -370,13 +353,13 @@ let education = async (req,res)=>{
             num: v.num
         }
     });
-    res.render('./main/menu/education.html',{
+    res.render('./main/menu/education.html', {
         edList,
-        pagin:pagin.page_hired,
+        pagin: pagin.page_hired,
     })
 }
 
-let view = async(req,res)=>{
+let view = async (req, res) => {
     let { id, table, localUrl } = req.query;
     let infoView = await search[table].findOne({ where: { id } })
     let infoList = infoView.dataValues;

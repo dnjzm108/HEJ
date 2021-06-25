@@ -27,7 +27,7 @@ let login_success = async (req, res) => {
         where: {
             adminid: adminid,
             adminpw: adminpw,
-            authority_level: '1'
+            authority_level: '3'
         }
     })
     if (loginSuccess == null) {
@@ -48,8 +48,16 @@ let upload = (req, res) => {
 
 let upload_success = async (req, res) => {
     let { localUrl, title, content, writer, type } = req.body;
+    if(localUrl == 'education'){
+        let { edName, edPeriod, time, fee , hashtag, localUrl, title, content, writer } = req.body;
+        let edResult = await search[localUrl].create({edName,ed_start_period:edPeriod[0],ed_end_period:edPeriod[1],time,fee,hashtag,title,content,writer,type});
+        await search[localUrl].update({visibility:1},{where:{id:edResult.id}});
+        await search[localUrl].update({visibility:0},{where:{id:{[Op.ne]:edResult.id}}});
+        res.redirect('/admin/education');
+        return;
+    }
+
     let result = await search[localUrl].create({ title, content, writer, type });
-    console.log(type)
     if(localUrl == 'information'){
         await search[localUrl].update({visibility:1},{where:{type,id:result.id}});
         await search[localUrl].update({visibility:0},{where:{type,id:{[Op.ne]:result.id}}});
@@ -173,6 +181,12 @@ let educationT = async (req, res) => {
     });
 };
 
+let education_update = async (req,res)=>{
+    let {visibility} = req.body;
+    await education.update({visibility:0},{where:{id:{[Op.ne]:null}}});
+    await education.update({visibility:1},{where:{id:visibility}});
+    res.redirect('/admin/education');
+}
 /*========================= 팝업 게시판 ================================= */
 
 let popup = async (req, res) => {
@@ -326,6 +340,7 @@ module.exports = {
     information_update,
     hired,
     educationT,
+    education_update,
     popup,
     popup_upload,
     popup_upload_success,
