@@ -1,0 +1,36 @@
+{% if userid != undefiend %}
+<div id="fixed">
+    
+    <a href="/user/info?checked=0">{{userid}} 님</a>
+    <a href="/user/info?checked=0">my page</a>
+    {% if session.kakao %}
+    <a id="kakao out" class="kakao" href="/auth/kakao/unlink">카카오 로그아웃</a>
+    {% endif %}
+
+    {% if session.google %}
+
+    <input type="hidden" class="g-signin2" gapi.auth2.getauthinstance()="onSignIn">
+    <button id="google_out" onclick="signOut()">google out</button>
+    <script type="text/javascript">
+    function signOut() {
+        let auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out');
+        })
+        auth2.disconnect();
+        google_out()
+    }
+    async function google_out() {
+        let options = { method: "get" }
+        let url = `google_out`
+        let result = await fetch(url, options);
+        location.href = 'http://localhost:3000/user/login';
+    }
+    </script>
+    {% endif %}
+
+    {% if session.local %}
+    <a href="/user/logut">logout</a>
+    {% endif %}
+</div>
+{% endif %}

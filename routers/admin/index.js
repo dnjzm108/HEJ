@@ -18,18 +18,25 @@ const upload = multer({
 
 router.use('/community/:localUrl',controller.community);
 router.use('/community',controller.community);
+
 router.post('/authority',controller.authority);
 router.get('/user_view',controller.user_view);
 router.use('/user',controller.user_admin)
+
 router.post('/popup_modify_success',controller.popup_modify_success);
 router.get('/popup_modify',controller.popup_modify);
 router.get('/popup_view',controller.popup_view);
 router.post('/popup_upload_success',controller.popup_upload_success);
 router.get('/popup_upload',controller.popup_upload);
 router.use('/popup',controller.popup);
+
+router.post('/education_update',controller.education_update);
 router.use('/education',controller.educationT);
+
 router.use('/hired/:localUrl',controller.hired);
 router.use('/hired',controller.hired);
+
+router.post('/information_update',controller.information_update);
 router.use('/information/:localUrl',controller.Information);
 router.use('/information/',controller.Information);
 

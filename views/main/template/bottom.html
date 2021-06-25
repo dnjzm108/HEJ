@@ -11,18 +11,19 @@
   
     header.addEventListener('mouseover', () => {
         subHeader.setAttribute('class', 'header_open');
+        subHeader.style.display='block'
     })
   
      subHeader.addEventListener('mouseover', () => {
          subHeader.setAttribute('class', 'header_open');
+         subHeader.style.display='block'
      })
   
     subHeader.addEventListener('mouseout', () => {
         subHeader.setAttribute('class', 'header_close');
+        subHeader.style.display='none'
     })
- 
 
-  
 
     const wrap = document.getElementById('wrap')
     let flag2 = 0;

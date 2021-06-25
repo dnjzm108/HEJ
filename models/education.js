@@ -19,6 +19,35 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
+    visibility:{
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue:0,
+    },
+    edName:{
+      type:DataTypes.STRING(100),
+      allowNull: true,
+    },
+    ed_start_period:{
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    ed_end_period:{
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    time:{
+      type: DataTypes.STRING(100),
+      allowNull:true,
+    },
+    fee:{
+      type:DataTypes.STRING(100),
+      allowNull: true,
+    },
+    hashtag:{
+      type: DataTypes.STRING(100),
+      allowNull: true,
+    },
     date:{
       type:Sequelize.DATE,
       allowfull:true,

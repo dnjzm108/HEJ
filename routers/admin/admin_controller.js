@@ -4,8 +4,12 @@ const ctoken = require('../../jwt');
 const search = require('../../serach');
 const pagination = require('../../pagination');
 const router = require('.');
+const { Op } = require("sequelize");
+// const {Sequelize} = require('../../models/index.js');
+// const Op = Sequelize.Op
 
 /*========================ADMIN MAIN PAGE========================*/
+
 let admin_main = (req, res) => {
     res.render('./admin/admin.html');
 };
@@ -23,7 +27,7 @@ let login_success = async (req, res) => {
         where: {
             adminid: adminid,
             adminpw: adminpw,
-            authority_level: '1'
+            authority_level: '3'
         }
     })
     if (loginSuccess == null) {
@@ -36,6 +40,7 @@ let login_success = async (req, res) => {
 };
 
 /*========================WRITE PAGE========================*/
+
 let upload = (req, res) => {
     let { title, localUrl } = req.query;
     res.render('./admin/upload.html', { title, localUrl });
@@ -43,13 +48,25 @@ let upload = (req, res) => {
 
 let upload_success = async (req, res) => {
     let { localUrl, title, content, writer, type } = req.body;
-    // let visibility
-    await search[localUrl].create({ title, content, writer, type });
+    if(localUrl == 'education'){
+        let { edName, edPeriod, time, fee , hashtag, localUrl, title, content, writer } = req.body;
+        let edResult = await search[localUrl].create({edName,ed_start_period:edPeriod[0],ed_end_period:edPeriod[1],time,fee,hashtag,title,content,writer,type});
+        await search[localUrl].update({visibility:1},{where:{id:edResult.id}});
+        await search[localUrl].update({visibility:0},{where:{id:{[Op.ne]:edResult.id}}});
+        res.redirect('/admin/education');
+        return;
+    }
+
+    let result = await search[localUrl].create({ title, content, writer, type });
+    if(localUrl == 'information'){
+        await search[localUrl].update({visibility:1},{where:{type,id:result.id}});
+        await search[localUrl].update({visibility:0},{where:{type,id:{[Op.ne]:result.id}}});
+    }
+    /* 각각의 board로 redirect 될 수 있도록 */
     if (type != null) {
         res.redirect(`/admin/${localUrl}/${type}`);
     }
     else { res.redirect(`/admin/${localUrl}`) }
-    /* 각각의 board로 redirect 될 수 있도록 */
 };
 
 /*========================VIEW PAGE========================*/
@@ -97,20 +114,26 @@ let modify_success = async (req, res) => {
 
 let Information = async (req, res) => {
     let { localUrl } = req.params;
-    let {id} = req.query;
-    let page = {localUrl: `${localUrl}`, id: `${id}`, table: 'information'}
+    let { id } = req.query;
+    let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'information' }
     let pagin = await pagination(page);
     let result = pagin.result;
-    let infoList = result.map(v=>{
+    let infoList = result.map(v => {
         v.num = pagin.totalrecord - pagin.offset;
         pagin.totalrecord--;
-        return{
+        return {
             ...v,
-            date:moment(v.write_date).format("MMM Do YY"),
-            visibility: v.visibility == 0 ? "invisible" : "visible"
+            date: moment(v.write_date).format("MMM Do YY"),
         }
-    })
-    res.render('./admin/information.html', { infoList, pagin : pagin.page_hired , localUrl })
+    });
+    res.render('./admin/information.html', { infoList, pagin: pagin.page_hired, localUrl })
+};
+
+let information_update = async (req, res) => {
+    let { visibility, local } = req.body;
+    await information.update({ visibility:1 }, { where: {id:visibility} });
+    await information.update({visibility:0},{where:{id :{[Op.ne]: visibility},type:local}});
+    res.redirect(`/admin/information/${local}`);
 }
 
 /*============================== 취업정보 =============================== */
@@ -133,10 +156,11 @@ let hired = async (req, res) => {
         pagin: pagin.page_hired,
         hireList,
         localUrl
-    })
+    });
 };
 
 /*======================== 교육과정 ============================*/
+
 let educationT = async (req, res) => {
     let { id } = req.query;
     let page = { id: `${id}`, table: 'education' };
@@ -154,9 +178,15 @@ let educationT = async (req, res) => {
     res.render('./admin/education.html', {
         edList,
         pagin: pagin.page_hired,
-    })
+    });
 };
 
+let education_update = async (req,res)=>{
+    let {visibility} = req.body;
+    await education.update({visibility:0},{where:{id:{[Op.ne]:null}}});
+    await education.update({visibility:1},{where:{id:visibility}});
+    res.redirect('/admin/education');
+}
 /*========================= 팝업 게시판 ================================= */
 
 let popup = async (req, res) => {
@@ -173,24 +203,23 @@ let popup = async (req, res) => {
             visibility: v.visibility == 0 ? "invisible" : "visible",
             num: v.num
         }
-    })
+    });
     res.render('./admin/popup.html', {
         pagin: pagin.page_hired,
         popupList
-    })
+    });
 };
 
 let popup_upload = (req, res) => {
     let { title, localUrl } = req.query;
     res.render('./admin/popup_upload', { title, localUrl })
-}
+};
 
 let popup_upload_success = async (req, res) => {
     let { writer, visibility, title, period, type, scroll, size, location, hyperlink, content } = req.body;
-    console.log(period)
-    await popupTd.create({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[0], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content });
+    await popupTd.create({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content });
     res.redirect('/admin/popup');
-}
+};
 
 let popup_view = async (req, res) => {
     let { id, table } = req.query;
@@ -205,31 +234,32 @@ let popup_view = async (req, res) => {
             popup_end_date: moment(v.popup_end_date).format("yyyy-MM-DD"),
             date: moment(v.date).format("MMM Do YY")
         }
-    })
+    });
     res.render('./admin/popup_view.html', { popupList })
-}
+};
 
 let popup_modify = async (req, res) => {
     let { id, table } = req.query;
     let popupResult = await search[table].findAll({ where: { id }, raw: true });
     let popupList = popupResult.map(v => {
-        return {...v,
+        return {
+            ...v,
             popup_start_date: moment(v.popup_start_date).format("yyyy-MM-DD"),
             popup_end_date: moment(v.popup_end_date).format("yyyy-MM-DD"),
             date: moment(v.date).format("MMM Do YY")
         }
-    })
+    });
     res.render('./admin/popup_modify.html', {
         popupList,
         table,
     });
-}
+};
 
-let popup_modify_success = async(req,res)=>{
-    let {writer, visibility, title, period, type, scroll, size, location, hyperlink, content, modifyId,table} = req.body;
-    await search[table].update({writer, visibility, title, period, type, scroll, size, location, hyperlink, content},{where:{id:modifyId}});
+let popup_modify_success = async (req, res) => {
+    let { writer, visibility, title, period, type, scroll, size, location, hyperlink, content, modifyId, table } = req.body;
+    await search[table].update({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content }, { where: { id: modifyId } });
     res.redirect(`/admin/popup_view?id=${modifyId}&table=${table}`);
-}
+};
 
 /*========================= 회원관리 ================================= */
 
@@ -248,7 +278,7 @@ let user_admin = async (req, res) => {
         }
     });
     res.render('./admin/user_admin', { userList, pagin: pagin.page_hired });
-}
+};
 
 let user_view = async (req, res) => {
     let { id } = req.query;
@@ -264,13 +294,13 @@ let user_view = async (req, res) => {
     });
     let userList = userResult.pop();
     res.render('./admin/user_view.html', { userList })
-}
+};
 
 let authority = async (req, res) => {
     let { authority_level, userid } = req.body;
     await user.update({ authority_level }, { where: { userid } });
     res.redirect('/admin/user')
-}
+};
 
 /* ===================== 커뮤니티 게시판 ========================= */
 
@@ -288,13 +318,13 @@ let community = async (req, res) => {
             write_date: moment(v.write_date).format("MMM Do YY"),
             num: v.num
         }
-    })
+    });
     res.render('./admin/community.html', {
         pagin: pagin.page_hired,
         commList,
         localUrl
     });
-}
+};
 
 module.exports = {
     admin_main,
@@ -307,8 +337,10 @@ module.exports = {
     admin_login,
     login_success,
     Information,
+    information_update,
     hired,
     educationT,
+    education_update,
     popup,
     popup_upload,
     popup_upload_success,

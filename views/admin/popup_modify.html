@@ -51,14 +51,14 @@
                     <input type="radio" id="scrolldeny" class="select" name="scroll" value="0"><br />
                     크기 :
                     <label>가로</label>
-                    <input type="text" name="size" value="{{item.pop_width}}">
+                    <input type="text" name="size" value="{{item.pop_width}}">px
                     <label>세로</label>
-                    <input type="text" name="size" value="{{item.pop_height}}"><br />
+                    <input type="text" name="size" value="{{item.pop_height}}">px<br />
                     위치 :
                     <label for="locationX">X</label>
-                    <input id="locationX" type="text" name="location" value="{{item.pop_locationX}}">
+                    <input id="locationX" type="text" name="location" value="{{item.pop_locationX}}">px
                     <label for="locationY">Y</label>
-                    <input id="locationY" type="text" name="location" value="{{item.pop_locationY}}"><br />
+                    <input id="locationY" type="text" name="location" value="{{item.pop_locationY}}">px<br />
                     <label>링크주소</label>
                     <input type="text" name="hyperlink" class="form-control" value="{{item.hyperlink}}">
                 </div>
@@ -67,7 +67,7 @@
                 <div id="summernote">
                 </div>
                 <textarea style="display: none;" name="content" id="result">{{item.content}}</textarea>
-                <input type="button" class="btn" id="popup_submit" value="UPLOAD">
+                <input type="button" class="btn" id="popup_submit" value="MODIFY">
                 <a href="/admin/view?id={{item.id}}&table=popup&localUrl={{localUrl}}" id="return"><input type="button" class="btn" value="LIST"></a>
                 {% endfor %}
             </form>
@@ -106,7 +106,6 @@
         const select = document.querySelectorAll('.select');
 
         select.forEach(v => {
-            console.log(v.name)
             if (v.name == 'type') {
                 if (v.value == typeId) {
                     v.checked = true;

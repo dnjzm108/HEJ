@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Viaoda+Libre&display=swap"
         rel="stylesheet">
+        
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let idArr = document.querySelector('#idArr').value;
@@ -21,14 +22,22 @@
                 let pre = document.querySelector('#pre' + v);
                 let setting = document.querySelector('#setting' + v);
                 let popupContent = document.querySelector('#popup_content' + v)
-                console.log(setting.value)
                 popupContent.style.cssText = `${setting.value};border:1px solid #000`;
                 pre.innerHTML = `${content.value}`
             })
         });
             // document.querySelector('.abc').style.cssText  = 'background-color:red; width:300px; height:300px;';
-
     </script>
+    {% if popup != "" %}
+    <script type="text/javascript">
+        setTimeout(function () {
+            var url = "https://chlolisher.tistory.com/101";
+            var name = "popup test";
+            var option = "width = 500, height = 500, top = 100, left = 200, location = no";
+            window.open(url, name, option)
+        }, 2000)
+    </script>
+    {% endif %}
 </head>
 
 <body>
@@ -48,8 +57,24 @@
                 <li> <a href="/hired">HIRED</a> </li>
                 <li> <a href="/community">COMMUNITY</a> </li>
                 <div id="menu_box">
+                    {% if session == undefiend %}
                     <div> <a id="login" href="/user/login">login</a> </div>
                     <div> <a id="join" href="/user/join">join</a> </div>
+                    {% endif %}
+
+                    {% if session != undefiend %}
+                    {% if session.kakao %}
+                    <div> <a id="kakao out" class="kakao" href="/auth/kakao/unlink">카카오 로그아웃</a> </div>
+                    {% endif %}
+                    {% if session.google %}
+                    <input type="hidden" class="g-signin2" gapi.auth2.getauthinstance()="onSignIn">
+                    <div><a id="google_out" onclick="signOut()">google out</a></div>
+                    {% endif %}
+                    {% if session.local %}
+                    <div> <a href="/user/logout">logout</a> </div>
+                    <div> <a href="user/info?checked=0">mypage</a> </div>
+                    {% endif %}
+                    {% endif %}
                     <div> <a id="cha_btn" data-value="0">chat</a> </div>
                     <div> <a id="consult_btn">consult</a></div>
                 </div>
@@ -60,9 +85,12 @@
         <!-- gnb 영역 -->
 
         <div id="gnb">
+            {% if userid != undefiend %}
+            <a href="/user/info?checked=0" id="user">{{userid}} 님</a>
+            {% endif %}
             <div id="text_event">
-                <h1>나는 <span id="question">질문</span> 하는 자다 </h1></br>
-                <h3>운명은 내가 던지는 질문이다</h3>
+                <h1>나는 그저 <span id="question">질문</span> 하는 자다... </h1></br>
+                <h3>알고리즘은 내가 던지는 질문이다</h3>
                 <h5>답은 그대가 찾아라</h5></br>
                 <h5> - 엄익균 </h5>
             </div>
@@ -132,6 +160,7 @@
 
 
     <script type="text/javascript">
+
         const chatBtn = document.querySelector('#cha_btn')
         function popup() {
             let url = 'http://localhost:3000/chat'

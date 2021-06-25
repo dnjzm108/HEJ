@@ -27,7 +27,7 @@
                     <select class="form-control" id="type" name="type">
                         <option class="option" value="intro">인사말</option>
                         <option class="option" value="history">연혁</option>
-                        <option class="option" value="popup">교직원소개</option>
+                        <option class="option" value="staff">교직원소개</option>
                         <option class="option" value="facility">시설소개</option>
                         <option class="option" value="location">오시는 길</option>
                     </select>
@@ -78,6 +78,28 @@
                     </script>
                     {% endif %}
 
+                    {% if title == "education" %}
+                    <label for="edName">교육과정명</label>
+                    <input type="text" name="edName" id="edName" class="form-control">
+                    <label>교육기간</label>
+                    <div id="date_wrap" class="input">
+                        <input type="date" class="form-control" style="width: 50%; float: left;" name="edPeriod"
+                            id="period">
+                        <input type="date" class="form-control" style="width: 50%" name="edPeriod" id="period">
+                    </div>
+                    <label for="time">교육시간</label>
+                    <input type="text" class="form-control" name="time" id="time">
+                    <div id="feeSelect">
+                        <label>교육수당</label>
+                        <select class="selectpicker" name="fee">
+                            <option class="fee" value="훈련비 전액지원, 교통비 지급">훈련비 전액지원, 교통비 지급</option>
+                            <option class="fee" value="전액국비지원">전액국비지원</option>
+                            <option class="fee" value="별도문의">별도문의</option>
+                        </select>
+                    </div>
+                    <!-- <input type="text" class="form-control" name="fee" id="fee"> -->
+                    {% endif %}
+
                 </div>
 
                 <div id="title_input" class="input">
@@ -87,9 +109,11 @@
 
                 <div id="summernote">
                 </div>
-                <textarea style="display: none;" name="content" id="result">
-        </textarea>
-
+                <textarea style="display: none;" name="content" id="result"></textarea>
+                {% if title == "education" %}
+                <label for="hashtag">해시태그</label>
+                <input type="text" name="hashtag" id="hashtag" class="form-control" placeholder="#">
+                {% endif %}
                 <input type="button" class="btn" id="info_submit" value="UPLOAD">
                 <a href="/admin/main"><input type="button" class="btn" value="MAIN"></a>
             </form>
@@ -122,10 +146,10 @@
                 alert('Enter the subject.');
                 return
             }
-            if (result.value == '') {
-                alert('Enter the content');
-                return
-            }
+            // if (result.value == '') {
+            //     alert('Enter the content');
+            //     return
+            // }
             result.innerHTML = markupStr;
             info_form.submit();
         }

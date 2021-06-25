@@ -2,12 +2,25 @@
 
 <div id="content_wrap">
     <div id="content" class="center">
-        <div id="logo"><img src="/uploads/info_image/1623383319105.jpg"></div>
+        <section id="square">
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+        </section>
         <h1>COMMUNITY</h1>
         <div id="atags">
             <a class="tags" href="/community">전체</a>
             <a class="tags" href="/community/notice">공지사항</a>
-            <a class="tags" href="/community/qanda">Q and A</a>
+            <a class="tags" href="/community/qanda">Q & A</a>
             <a class="tags" href="/community/board">수강후기</a>
         </div>
         <div id="sub_content">
@@ -25,7 +38,7 @@
                 {% for item in commList %}
                 <tr>
                     <td>{{item.num}}</td>
-                    <td><a href="/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a></td>
+                    <td><a href="/view?id={{item.id}}&table=community&localUrl={{item.type}}">{{item.title}}</a></td>
                     {% if localUrl == undefined %}
                     <td><a href="/community/{{item.type}}">{{item.type}}</a></td>
                     {% endif %}
@@ -39,12 +52,16 @@
         <div id="footer">
             <div id="pagenation">
                 {% for item in pagin %}
-                <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
+                <a style="border: none;" href="/community/{{localUrl}}/?id={{item}}">{{item}}</a>
                 {% endfor %}
             </div>
             <a class="main_btn btn" href="/">MAIN</a>
+            {% if (localUrl == "qanda") or (localUrl == "board") %}
+            <a href="/community/write?type={{localUrl}}">write</a>
+            {% endif %}
         </div>
     </div>
+    {% include "../template/fixed.html" %}
 </div>
 
 
@@ -59,5 +76,10 @@
         }
     })
 </script>
+{% if msg != undefiend %}
+<script type="text/javascript">
+alert('{{msg}}')
+</script>
+{% endif %}
 
 {% include "../template/bottom.html" %}

@@ -4,6 +4,7 @@ const controller =  require('./main_controller');
 const multer = require('multer');
 const path = require('path');
 const login_check = require('../../middleware/login');
+const level_check = require('../../middleware/level')
 
 const upload = multer({
     storage:multer.diskStorage({
@@ -31,8 +32,8 @@ router.get('/community/view',login_check,controller.community_view)
 router.post('/community/modify',upload.single('community_image'),controller.community_modify_send)
 router.get('/community/modify',controller.community_modify)
 router.post('/community/write',upload.single('community_image'),controller.community_write_send)
-router.get('/community/write',login_check,controller.community_write)
-router.use ('/community/:localUrl',controller.community_list);
+router.get('/community/write',login_check,controller.community_write); 
+router.use ('/community/:localUrl',controller.community_list);  //level_check  (middleware add)!!
 router.use ('/community',controller.community_list);
 router.post('/community/comment',controller.comment_send)
 router.get('/comment/delete',controller.comment_delete)

@@ -39,47 +39,56 @@
             <div id="infom">
                 <h1>INFORMATION</h1>
                 <div id="atags">
-                    <a class="btn" href="/admin/information">전체보기</a>
+                    <a class="btn" href="/admin/information">전체</a>
                     <a class="btn" href="/admin/information/intro">인사말</a>
                     <a class="btn" href="/admin/information/history">연혁</a>
-                    <a class="btn" href="/admin/information/popup">교직원소개</a>
+                    <a class="btn" href="/admin/information/staff">교직원소개</a>
                     <a class="btn" href="/admin/information/facility">시설소개</a>
                     <a class="btn" href="/admin/information/location">오시는 길</a>
                 </div>
             </div>
             <div id="board" style="margin-bottom: 50px;">
                 <!-- <input type="hidden" value="{{idArr}}" id="idArr"> -->
-
-                <table class="table table-borderede" id="list">
-                    <thead>
-                        <tr>
-                            <td>No.</td>
-                            <td>Visibility</td>
-                            <td>Title</td>
-                            {% if localUrl == undefined %}
-                            <td>Category</td>
-                            {% endif %}
-                            <td>Writer</td>
-                            <td>Date</td>
-                        </tr>
-                    </thead>
-                    {% for item in infoList %}
-                    <tbody>
-                        <tr>
-                            <td>{{item.num}}</td>
-                            <td><input class="visible" type="radio" name="visibility"></td>
-                            <td><a href="/admin/view?id={{item.id}}&table=information&localUrl={{localUrl}}">{{item.title}}</a>
-                            </td>
-                            {% if localUrl == undefined %}
-                            <td><a href="/admin/information/{{item.type}}">{{item.type}}</a></td>
-                            {% endif %}
-                            <td>{{item.writer}}</td>
-                            <td>{{item.date}}</td>
-                        </tr>
-                    </tbody>
-                    {% endfor %}
-                </table>
-
+                <form id="visibility" action="/admin/information_update" method="POST">
+                    {% if localUrl != undefined %}
+                    <input type="submit" class="btn" value="저장">
+                    {% endif %}
+                    <table class="table table-borderede" id="list">
+                        <thead>
+                            <tr>
+                                <td>No.</td>
+                                {% if localUrl != undefined %}
+                                <td>Visibility</td>
+                                {% endif %}
+                                <td>Title</td>
+                                {% if localUrl == undefined %}
+                                <td>Category</td>
+                                {% endif %}
+                                <td>Writer</td>
+                                <td>Date</td>
+                            </tr>
+                        </thead>
+                        {% for item in infoList %}
+                        <textarea class="itemInfo" style="display: none;">{{item.id}},{{item.visibility}}</textarea>
+                        <tbody>
+                            <tr>
+                                <td>{{item.num}}</td>
+                                <input type="hidden" name="num" value="{{item.num}}">
+                                {% if localUrl != undefined %}
+                                <td><input class="visible" type="radio" name="visibility" value="{{item.id}}"></td>
+                                {% endif %}
+                                <td><a href="/admin/view?id={{item.id}}&table=information&localUrl={{localUrl}}">{{item.title}}</a></td>
+                                {% if localUrl == undefined %}
+                                <td><a href="/admin/information/{{item.type}}">{{item.type}}</a></td>
+                                {% endif %}
+                                <td>{{item.writer}}</td>
+                                <td>{{item.date}}</td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                    <textarea style="display:none" name="local">{{localUrl}}</textarea>
+                </form>
                 <!-- <div id="content_wrap">
                     {% for item in infoList %}
                     <h2>{{item.title}}</h2>
@@ -94,22 +103,30 @@
                     <a href="/admin/community/{{localUrl}}?id={{item}}">{{item}}</a>
                     {% endfor %}
                 </div>
+                {% if localUrl != undefined %}
                 <a class="btn" href="/admin/upload?title=information&localUrl={{localUrl}}">WRITE</a>
+                {% endif %}
                 <a class="main_btn btn" href="/admin/main">MAIN</a>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        const visible = document.querySelectorAll('.visible');
-        visible.forEach(v=>{
-            if(v.check){
 
+    <script type="text/javascript">
+        const itemInfo = document.querySelectorAll('.itemInfo');
+        itemInfo.forEach(v=>{
+            let list = v.value.split(",");
+            if(list[1] == 1){
+                return result=list[0]
             }
         })
-        
+        const visible = document.querySelectorAll('.visible');
+        visible.forEach(v=>{
+            if(v.value == result){
+                v.checked = true;
+            }
+        })
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>
-
 </html>

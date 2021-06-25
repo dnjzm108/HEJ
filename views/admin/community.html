@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COMMUNITY</title>
-    <!-- <link rel="stylesheet" href="/css/info/index.css">
-    <link rel="stylesheet" href="/css/info/list.css"> -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
     <style>
         #infom {
             margin-top: 50px;
@@ -19,7 +18,6 @@
             margin-bottom: 30px;
         }
     </style>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let idArr = document.querySelector('#idArr').value;
@@ -31,7 +29,6 @@
                 pre.innerHTML = `${content.value}`
             })
         });
-
     </script>
 </head>
 
@@ -75,14 +72,15 @@
                     {% endfor %}
                 </table>
             </div>
-
             <div class="footer center">
                 <div id="pagenation">
                     {% for item in pagin %}
                     <a style="border: none;" href="/admin/community/{{localUrl}}?id={{item}}">{{item}}</a>
                     {% endfor %}
                 </div>
+                {% if localUrl != undefined %}
                 <a class="btn" href="/admin/upload?title=community&localUrl={{localUrl}}">WRITE</a>
+                {% endif %}
                 <a class="main_btn btn" href="/admin/main">MAIN</a>
             </div>
         </div>

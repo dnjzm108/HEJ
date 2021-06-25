@@ -21,7 +21,6 @@
 </head>
 
 <body>
-
     <div id="wrap" class="w100">
         <div id="main" class="container">
             <div id="infom">
@@ -66,12 +65,13 @@
                     <a style="border: none;" href="/admin/hired/{{localUrl}}/?id={{item}}">{{item}}</a>
                     {% endfor %}
                 </div>
+                {% if localUrl != undefined %}
                 <a class="write_btn btn" href="/admin/upload?title=hired&localUrl={{localUrl}}">WRITE</a>
+                {% endif %}
                 <a class="main_btn btn" href="/admin/main">MAIN</a>
             </div>
         </div>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>
