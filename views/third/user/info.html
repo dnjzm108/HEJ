@@ -9,26 +9,31 @@
     <link rel="stylesheet" href="/css/third/info.css">
 </head>
 
-<body >
+<body>
 
 
     {% if checked=="0" %}
+    <div id="wrap">
     <div class="box2">
-        <div class="info_image">
-            <a href="/"><img src="/uploads/logo_bottom_2018.png"></a>
-        </div>
+       <h2>비밀번호 확인</h2>
         <form id="info_pwcheck" method="POST" action="/user/info_pwcheck">
-            
-                <ul class="pwcheck">
-                    <li>아이디:       <span> {{userid}}</span></li>
-                    <li>비밀번호:   <input id="pw" type="text" name="userpw">
+
+            <ul class="pwcheck">
+                <span class="ps_box3">
+                    <li class="int">{{userid}}</li>
+                </span>
+                <span class="ps_box3">
+                    <li><input id="pw" type="password" class= "int2" placeholder="비밀번호" name="userpw"></li>
+                </span>
+                    <li class="">
+                        <input type="submit" class="btn3" value="확인">
                     </li>
-                    <li>
-                        <input type="submit" value="확인">
-                    </li>
+               
+
             </ul>
         </form>
     </div>
+</div>
     {% if flag == '0' %}
     <script>
         alert('비밀번호가 틀렸습니다')
@@ -44,9 +49,11 @@
     <div id="wrap">
 
         <div class="box">
+
             <div class="info_image">
                 <a href="/"><img src="/uploads/logo_new_2018.png"></a>
             </div>
+            <h4>내 정보</h4>
             <table>
                 <!-- <tr>
         <td>번호</td>
@@ -94,8 +101,8 @@
                 </tr>
             </table>
             <div class="btn">
-                <a href="/user/info_modify?id={{id}}">수정</a>
-                <a href="/user/index">이전</a>
+                <a href="/user/info?checked=0&id={{id}}">수정</a>
+                <a href="/">이전</a>
             </div>
         </div>
     </div>
