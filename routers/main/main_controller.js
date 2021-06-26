@@ -22,6 +22,7 @@ const io = socket(server);
 const { community, user, sequelize, qanda, comment } = require('../../models');
 const search = require('../../serach');
 const pagination = require('../../pagination');
+// const comment = require('../../models/comment');
 
 
 const kakao = {
@@ -364,13 +365,18 @@ let education = async (req, res) => {
 let view = async (req, res) => {
     let { id, table, localUrl } = req.query;
     let infoView = await search[table].findOne({ where: { id } })
+    let see = await comment.findAll({
+        where:{idx:id}
+    })
+    
     let infoList = infoView.dataValues;
     let infodate = moment(infoList.date).format("MMM Do YY");
     res.render('./main/menu/menu_view.html', {
         infoList,
         infodate,
         table,
-        localUrl
+        localUrl,
+        see
     });
 }
 

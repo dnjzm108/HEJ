@@ -133,7 +133,7 @@
                 <label for="number">number</label></br>
                 <input id="number" type="text"></br>
                 <label for="content">content</label>
-                <input id="content" type="text">
+                <textarea name="content" id="content" cols="30" rows="10"></textarea>
                 <input id="" type="submit" value="apply">
             </form>
         </div>
@@ -209,11 +209,10 @@
         function apply() {
             if (fleg == '0') {
                 apply_form.style.display = 'block';
-                btn_box.style.bottom = '30vh'
+            
                 fleg = 1;
             } else {
                 apply_form.style.display = 'none';
-                btn_box.style.bottom = '0vh'
                 fleg = 0;
             }
         }

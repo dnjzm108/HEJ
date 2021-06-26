@@ -62,6 +62,7 @@ a{
     position: absolute;
     left: 200px;
     z-index: 1;
+    background: silver;
 }
 
 #sub_header > ul{
@@ -231,11 +232,19 @@ td{
     position: relative; 
     left: 50%;
     transform: translate(-50%);
-    transform: rotateX(-20deg) rotateY(-20deg) rotateZ(-20deg);
     transform-style: preserve-3d;
+    animation: rint 10s linear 0s infinite;
     margin: 20px 0;
 }
-#square>div{
+@keyframes rint{
+    from{
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    to{
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+#square > div{
     width: 40px;
     height: 40px;
     position: absolute;

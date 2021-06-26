@@ -318,19 +318,17 @@ a{
     width: 20vw;
     height: 30vh;
     position: absolute;
-    right: 0;
-    bottom: 0;
+    right: 5px;
+    bottom: 60px;
     animation: 5s form;
     background: white;
 }
 #apply_form>#name,#age,#number{
-    color: white;
     width: 20vw;
 }
 #apply_form>#content{
     width: 20vw;
     height: 14vh;
-    color: white;
 }
 
 /* @keyframes form{
