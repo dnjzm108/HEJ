@@ -61,7 +61,7 @@
                     <tbody>
                         <tr>
                             <td>{{item.num}}</td>
-                            <td><a href="/admin/view?id={{item.id}}&table=community&localUrl={{localUrl}}">{{item.title}}</a></td>
+                            <td><a href="/admin/view?id={{item.id}}&table=community&localUrl={{item.type}}">{{item.title}}</a></td>
                             {% if localUrl == undefined %}
                             <td><a href="/admin/community/{{item.type}}">{{item.type}}</a></td>
                             {% endif %}

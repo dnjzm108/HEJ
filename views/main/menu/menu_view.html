@@ -20,33 +20,83 @@
 </head>
 
 <body> -->
+{% if location == 0 %}
 {% include "../template/top.html" %}
+{% else %}
+<!DOCTYPE html>
+<html lang="en">
 
-<div id="view_box">
-    <p class="w800">제목 : <span>{{infoList.title}}</span></p>
-    <p class="w800">작성자 : {{infoList.writer}}</p>
-    <p class="w800">작성일 : {{infodate}}</p>
-    <p class="con">내용 : {{infoList.content}}</p>
-    <div id="footer" class="center">
-        <a href="/community">MENU</a>
-        <a href="/community/delete?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">DELETE</a>
-        <a href="/community/modify?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">MODIFY</a>
-        <table id="comment">
-            <tr>
-                <td>이름</td>
-                <td>내용</td>
-            </tr>
-            {% for item in see %}
-            <tr>
-                <td>{{item.userid}}</td>
-                <td>{{item.content}}</td>
-            </tr>
-            
-          
-{% endfor %}
-             답글 </table>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/main/view.css">
+</head>
+
+<body>
+    {% endif %}
+
+    <div id="content">
+        <h1>COMMUNITY</h1>
+        <div id="menu_border">
+            <div id="side_menu">
+                <a id="main_tag" href="/community">커뮤니티</a>
+                <a class="tags" href="/community/notice">공지사항</a>
+                <a class="tags" href="/community/qanda">Q&A</a>
+                <a class="tags" href="/community/board">수강후기</a>
+            </div>
+            <div id="view_box">
+                <p class="w800">제목 : <span>{{infoList.title}}</span></p>
+                <p class="w800">작성자 : {{infoList.writer}}</p>
+                <p class="w800">작성일 : {{infodate}}</p>
+                <p class="con">{{infoList.content}}</p>
+                <div id="footer" class="center">
+                    <div id="menu_box">
+                        {% if location == 0 %}
+                        <a href="/community">MENU</a>
+                        <a href="/community/delete?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">DELETE</a>
+                        <a href="/community/modify?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">MODIFY</a>
+                        {% else %}
+                        <a href="/admin/community">MENU</a>
+                        {% endif %}
+                    </div>
+                    <table id="comment">
+                        {% for item in see %}
+                        <tr>
+                            <td>{{item.userid}}</td>
+                            <td>{{item.content}}
+                                {% if location != 0 %}
+                                <a href="/comment/delete">삭제하기</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    {% if location != 0 %}
+                    <form id="comment_box" method="POST" action="/community/comment">
+                        <textarea name="content" id="comment_write" cols="30" rows="10"></textarea>
+                        <input type="hidden" name="userid" value="관리자">
+                        <input type="hidden" name="id" value="{{id}}">
+                        <input type="hidden" name="localUrl" value="{{localUrl}}">
+                        <input type="hidden" name="table" value="{{table}}">
+                        <input id="comment_btn" type="submit" value="답변하기">
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div id="real_footer">
+            <div id="real_footer_con">
+                <img src="http://www.kiweb.or.kr/images/main_new/logo_bottom_2018.png">
+                <div id="foot_ment">
+                    <span>서울특별시 강동구 천호대로 995 금복빌딩 3,4층 경일게임아카데미(지하철 5,8호선 1번출구 10m이내) </span>
+                    <p>TEL : 02-479-4050 FAX : 02-479-4056 대표자 : 박병준 개인정보관리책임자 : 서혁준 </p>
+                    <p>사업자번호 : 212-81-89247</p>
+                    <p>Copyright © 2016. Kyungil Technical College. All rights reserved. </p>
+
+                </div>
+            </div>
+        </div>
     </div>
-
-</div>
-
-{% include "../template/bottom.html" %}
+    {% include "../template/bottom.html" %}

@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     content: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.TEXT('long'),
       allowNull: false
     },
     idx: {

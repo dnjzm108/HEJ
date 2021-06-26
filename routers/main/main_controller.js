@@ -269,11 +269,11 @@ let community_delete = async (req, res) => {
 
 //comment start
 let comment_send = async (req, res) => {
-    let { userid, content, id } = req.body;
+    let { table,localUrl,userid , content , id } = req.body;
     let result = await comment.create({
-        userid, content, idx: id
+        userid, content, idx : id
     })
-    res.redirect(`/community/view?id=${id}`);
+    res.redirect(`/admin/view?id=${id}&table=${table}&localUrl=${localUrl}`);
 }
 let comment_delete = async (req, res) => {
     let { id, idx } = req.query;
@@ -305,7 +305,16 @@ let information = async (req, res) => {
     let { localUrl } = req.params;
 
     let resultsall = await search['information'].findAll({ where: { type: `${localUrl}`, visibility: 1 }, raw: true });
-
+    let userid;
+    if (session.authData != null) {
+        if (session.authData.kakao != null) {
+            userid = session.authData.kakao.properties.nickname;
+        } else if (session.authData.local != null) {
+            userid = session.authData.local.userid
+        } else if (session.authData.google != null) {
+            userid = session.authData.google.username
+        }
+    }
     let infoList = resultsall.map(v => {
         return {
             ...v,
@@ -318,7 +327,8 @@ let information = async (req, res) => {
         idArr += v.id + ','
     })
     let edList = await search['education'].findAll({ where: { visibility: 1 } });
-    res.render('./main/menu/information_list.html', { infoList, idArr, localUrl, edList })
+    res.render('./main/menu/information_list.html', {
+         infoList, idArr, localUrl, edList,userid,session:session.authData })
 }
 
 let hired = async (req, res) => {
@@ -327,6 +337,16 @@ let hired = async (req, res) => {
     let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'hired' }
     let pagin = await pagination(page);
     let result = pagin.result;
+    let userid;
+    if (session.authData != null) {
+        if (session.authData.kakao != null) {
+            userid = session.authData.kakao.properties.nickname;
+        } else if (session.authData.local != null) {
+            userid = session.authData.local.userid
+        } else if (session.authData.google != null) {
+            userid = session.authData.google.username
+        }
+    }
     let hireList = result.map(v => {
         v.num = pagin.totalrecord - pagin.offset;
         pagin.totalrecord--;
@@ -338,7 +358,8 @@ let hired = async (req, res) => {
     res.render('./main/menu/hired_list.html', {
         pagin: pagin.page_hired,
         hireList,
-        localUrl
+        localUrl,
+        userid,session:session.authData
     })
 }
 
@@ -347,6 +368,16 @@ let education = async (req, res) => {
     let page = { id: `${id}`, table: 'education' };
     let pagin = await pagination(page);
     let result = pagin.result;
+    let userid;
+    if (session.authData != null) {
+        if (session.authData.kakao != null) {
+            userid = session.authData.kakao.properties.nickname;
+        } else if (session.authData.local != null) {
+            userid = session.authData.local.userid
+        } else if (session.authData.google != null) {
+            userid = session.authData.google.username
+        }
+    }
     let edList = result.map(v => {
         v.num = pagin.totalrecord - pagin.offset;
         pagin.totalrecord--;
@@ -359,6 +390,7 @@ let education = async (req, res) => {
     res.render('./main/menu/education.html', {
         edList,
         pagin: pagin.page_hired,
+        userid,session:session.authData
     })
 }
 
@@ -368,7 +400,14 @@ let view = async (req, res) => {
     let see = await comment.findAll({
         where:{idx:id}
     })
-    
+    let result = await community.findAll({
+        where: { id }
+    })
+    let view = result[0].dataValues;
+    let hitNum = await community.update({
+        hit: view.hit + 1
+    }, { where: { id } });
+    let location = 0;
     let infoList = infoView.dataValues;
     let infodate = moment(infoList.date).format("MMM Do YY");
     res.render('./main/menu/menu_view.html', {
@@ -376,7 +415,8 @@ let view = async (req, res) => {
         infodate,
         table,
         localUrl,
-        see
+        see,
+        id,location
     });
 }
 

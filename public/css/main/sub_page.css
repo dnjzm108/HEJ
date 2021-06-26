@@ -15,16 +15,13 @@ ul,li{
 a{
     text-decoration: none;
 }
-
-.center{
-    width: 80vw;
-    margin-left: 50%;
-    transform: translateX(-50%);
+textarea{
+    resize: none;
 }
 
 #header{
     width: 100vw;
-    height: 90px;
+    height: 100px;
 }
 
 #header > ul{
@@ -111,6 +108,7 @@ a{
 }
 #content{
     margin-top: 5vh;
+    min-height: 600px;
 }
 
 #logo{
@@ -133,43 +131,71 @@ a{
     text-align: center;
 }
 
-#atags{
-    margin-top: 20px;
-    width: auto;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-}
 
-#atags > a{
+
+#list_subject{
+    height: 60px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#list_subject_law{
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+#board_list{
+    width: 100%;
+    height: 100%;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+#board_list>tbody>tr{
+    display: block;
+    height: 40px;
+    box-sizing: border-box;
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+}
+#board_list>tbody>tr>td:nth-child(1){
+    width: 60px;
+}
+#board_list>tbody>tr>td:nth-child(2){
+    width: 450px;
+}
+#board_list>tbody>tr>td:nth-child(3){
+    width: 87px;
+}
+#board_list>tbody>tr>td:nth-child(4){
+    width: 87px;
+}
+#board_list>tbody>tr>td:nth-child(5){
+    width: 87px;
+}
+#board_list>tbody>tr>td:nth-child(6){
+    width: 87px;
+}
+.page{
+    width: 20px;
+    height: 20px;
+    font-size: 12px; 
     display: inline-block;
-    width: auto;
-    height: 50px;
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid #2e2b2bd7;
-    box-sizing: border-box;
-    color: #2e2b2bd7;
-    overflow: hidden;
+    z-index: 10;
+    color: #999 ;
+    line-height: 22px;
+    margin-right: 5px;
+    border: 1px solid #c7c7c7;
+
 }
-
-#sub_content{
-    width: 100vw;
-    min-height: 50vh;
-    margin-top: 3vh;
-    margin-left: 50%;
-    padding: 20px;
-    box-sizing: border-box;
-    transform: translateX(-50%);
-    text-align: center;
-}
-
-
 
 #footer{
     width:100%;
-    height: 200px;
    
+}
+#main_tag{
+    font-size: 32px;
+    position: relative;
+    bottom: 0;
 }
 
 #footer > #pagenation{
@@ -178,46 +204,11 @@ a{
     text-align: center;
     padding : 20px;
 }
-#list{
-    width: 1200px;
-    margin: 0 auto;
-}
 
-tr{
-    color: #000;
-    text-align: center;
-    height: 20px;
-} 
-
-
-tr:nth-child(1)> td{color:#000000}
-
-tr:nth-child(1) > td:nth-child(1){width: 100px;}
-tr:nth-child(1) > td:nth-child(2){width: 1200px;}
-tr:nth-child(1) > td:nth-child(3){width: 150px;}
-tr:nth-child(1) > td:nth-child(4){width: 120px;}
-tr:nth-child(10) > td{border-bottom: none;} 
-
-td{
-    color:#000;
-    padding: 10px;
-    height: 50px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #000000;
-    border-right: 1px solid #666;
-    box-shadow: 3px 3px 3px 3px #2222;
-}
-.line{
-    width: 100px;
-    margin: 0 auto;
-    position: relative;
-    top: -15px;
-    border-bottom: 1px solid black;
-}
 #fixed{
     position: fixed;
     right: 0;
-    bottom: 10%;
+    bottom: 25%;
     border: 1px solid black;
     box-shadow: 3px 3px 3px 3px #2222;
     padding: 10px;
@@ -277,4 +268,71 @@ td{
 #square > div:nth-child(6){
     transform: rotateX(270deg) translate3d(0px, 0px, 20px);
     border: 1px solid black;
+}
+
+#menu_border{
+    width: 1200px;
+    margin: 0 auto;
+
+}
+#side_menu{
+    width: 260px;
+    height: 100%;
+    display: inline-block;
+    float: left;
+    margin-right: 30px;
+    padding: 10px 0 0 20px;
+    box-sizing: border-box;
+}
+#side_menu>a{
+    display: block;
+    width: 190px;
+    height: 50px;
+}
+#sub_content{
+    width: 905px;
+    display: inline-block;
+}
+#main_tag{
+    margin-bottom: 30px;
+}
+
+#write_box{
+    width: 900px;
+    height: 50px;
+    text-align: center;
+}
+#title{
+    width: 800px;
+}
+#cont{
+    width: 800px;
+    height: 400px;
+}
+.mar20{
+    margin-top: 20px;
+}
+#real_footer{
+    width: 100vw;
+    height: 200px;
+    background: black;
+    padding: 20px 0;
+    margin-top: 50px;
+    box-sizing: border-box;
+}
+#real_footer_con{
+    width: 850px;
+    height: 100px;
+    margin: 40px auto 0 ;
+}
+#bottom_tag{
+    display: inline-block;
+    float: right;
+}
+#foot_ment{
+    float: right;
+    color: #aeaeae;
+}
+#foot_ment>p:nth-child(4){
+    margin-top: 20px;
 }

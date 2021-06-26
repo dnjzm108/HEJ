@@ -1,70 +1,92 @@
 {% include "../template/top.html" %}
 
 <div id="content_wrap">
-    <div id="content" class="center">
+    <div id="content">
         <h1>COMMUNITY</h1>
-        <div id="atags">
-            <a class="tags" href="/community">전체</a>
-            <a class="tags" href="/community/notice">공지사항</a>
-            <a class="tags" href="/community/qanda">Q & A</a>
-            <a class="tags" href="/community/board">수강후기</a>
-        </div>
-        <div id="sub_content">
-
-            <table id="list">
-                <tr>
-                    <td>No.</td>
-                    <td>title</td>
-                    {% if localUrl == undefined %}
-                    <td>Category</td>
-                    {% endif %}
-                    <td>writer</td>
-                    <td>Date</td>
-                </tr>
-                {% for item in commList %}
-                <tr>
-                    <td>{{item.num}}</td>
-                    <td><a href="/view?id={{item.id}}&table=community&localUrl={{item.type}}">{{item.title}}</a></td>
-                    {% if localUrl == undefined %}
-                    <td><a href="/community/{{item.type}}">{{item.type}}</a></td>
-                    {% endif %}
-                    <td>{{item.writer}}</td>
-                    <td>{{item.write_date}}</td>
-                </tr>
-                {% endfor %}
-            </table>
-            <textarea id="localUrl" style="display: none;">{{localUrl}}</textarea>
-        </div>
-        <div id="footer">
-            <div id="pagenation">
-                {% for item in pagin %}
-                <a style="border: none;" href="/community/{{localUrl}}/?id={{item}}">{{item}}</a>
-                {% endfor %}
+        <div id="menu_border">
+            <div id="side_menu">
+                <a id="main_tag" href="/community">커뮤니티</a>
+                <a class="tags" href="/community/notice">공지사항</a>
+                <a class="tags" href="/community/qanda">Q&A</a>
+                <a class="tags" href="/community/board">수강후기</a>
             </div>
-            <a class="main_btn btn" href="/">MAIN</a>
-            {% if (localUrl == "qanda") or (localUrl == "board") %}
-            <a href="/community/write?type={{localUrl}}">write</a>
-            {% endif %}
+            <div id="sub_content">
+                <div id="list_subject">
+                    <h1>커뮤니티</h1>
+                    <div id="list_subject_law"></div>
+                </div>
+                <table id="board_list">
+                    <tr>
+                        <td>No.</td>
+                        <td>title</td>
+                        {% if localUrl == undefined %}
+                        <td>Category</td>
+                        {% endif %}
+                        <td>writer</td>
+                        <td>Date</td>
+                        <td>hit</td>
+                    </tr>
+                    {% for item in commList %}
+                    <tr>
+                        <td>{{item.num}}</td>
+                        <td><a href="/view?id={{item.id}}&table=community&localUrl={{item.type}}">{{item.title}}</a>
+                        </td>
+                        {% if localUrl == undefined %}
+                        <td><a href="/community/{{item.type}}">{{item.type}}</a></td>
+                        {% endif %}
+                        <td>{{item.writer}}</td>
+                        <td>{{item.write_date}}</td>
+                        <td>{{item.hit}}</td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+                <div id="bottom_tag">
+                    {% if (localUrl == "qanda") or (localUrl == "board") %}
+                    <a href="/community/write?type={{localUrl}}">write</a>
+                    {% endif %}
+                </div>
+                <div id="footer">
+                    <div id="pagenation">
+                        {% for item in pagin %}
+                        <a class="page" href="/community/{{localUrl}}/?id={{item}}">{{item}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <textarea id="localUrl" style="display: none;">{{localUrl}}</textarea>
+            </div>
         </div>
+
     </div>
     {% include "../template/fixed.html" %}
 </div>
 
+<div id="real_footer">
+    <div id="real_footer_con">
+        <img src="http://www.kiweb.or.kr/images/main_new/logo_bottom_2018.png">
+        <div id="foot_ment">
+            <span>서울특별시 강동구 천호대로 995 금복빌딩 3,4층 경일게임아카데미(지하철 5,8호선 1번출구 10m이내) </span>
+            <p>TEL : 02-479-4050 FAX : 02-479-4056 대표자 : 박병준 개인정보관리책임자 : 서혁준 </p>
+            <p>사업자번호 : 212-81-89247</p>
+            <p>Copyright © 2016. Kyungil Technical College. All rights reserved. </p>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     const tags = document.querySelectorAll('.tags');
     const localUrl = document.querySelector('#localUrl').innerHTML;
 
-    tags.forEach(v=>{
-        let tagName = v.href.replace('http://localhost:3000/community/','');
-        if(tagName == localUrl){
-            v.setAttribute('style','background-color:#ededed');
+    tags.forEach(v => {
+        let tagName = v.href.replace('http://localhost:3000/community/', '');
+        if (tagName == localUrl) {
+            v.setAttribute('style', 'background-color:#ededed');
         }
     })
 </script>
 {% if msg != undefiend %}
 <script type="text/javascript">
-alert('{{msg}}')
+    alert('{{msg}}')
 </script>
 {% endif %}
 
