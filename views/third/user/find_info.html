@@ -1,52 +1,90 @@
-{% include "../layout/top.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% if flag == '0' %}
-<form action="/user/find_check?check=0" method="post">
-    <table>
-        <tr class="">
-            <td>이름을 입력해주세요:</td>
-            <td>
-                <input type="text" class="" name="user_name"  required>
-            </td>
-        </tr>
-        <tr class="">
-            <td>이메일을 입력해주세요:</td>
-            <td>
-                <input type="text" class="" name="user_email" required>
-            </td>  
-        </tr>
-        <tr>
-            <td>
-                <input type="submit" name="search" value="아이디 찾기">
-                <a href="/user/login">취소</a>
-            </td>
-        </tr>
-    </table>
-    </form>
-{% endif %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/third/find_info.css">
 
-{% if flag == '1' %}
-<form action="/user/find_check?check=1" method="post">
-    <table>
-        <tr class="">
-            <td>이름을 입력해주세요:</td>
-            <td>
-                <input type="text" class="" name="user_name"  required>
-            </td>
-        </tr>
-        <tr class="">
-            <td>이메일을 입력해주세요:</td>
-            <td>
-                <input type="text" class="" name="user_email" required>
-            </td>  
-        </tr>
-        <tr>
-            <td>
-                <input type="submit" name="search" value="비밀번호 찾기">
-                <a href="/user/login">취소</a>
-            </td>
-        </tr>
-    </table>
-</form>
-{% endif %}
-{% include "../layout/bottom.html" %}
+</head>
+
+<body>
+
+
+    {% if flag == '0' %}
+    <div id="wrap">
+        <div id="container" style="height:894px">
+            <h1>아이디를 잃어버리셨나요? 찾으세요!</h1>
+            <div id="content_header">
+                <h5>아이디 찾기</h5>
+            </div>
+            <form action="/user/find_check?check=0" method="post">
+                <div class="box">
+                    <div id="div_email" class="box_inn selected">
+
+                        <div class="box_inn_sub">
+                            <p class="dsc">회원정보에 등록한 이름과 이메일이 같아야, 아이디를 찾을 수 있습니다.</p>
+                            <dl>
+                                <dt>
+                                    <label for="phoneNm" class="label_txt">
+                                        이름
+                                    </label>
+                                </dt>
+
+                                <dd>
+                                    <input type="text" maxlength="40"  class="input_txt"
+                                        name="user_name" required>
+                                </dd>
+                                <dt>
+                                    <label for="t_pn1" class="label_txt">
+                                        이메일
+                                    </label>
+                                </dt>
+                                <dd>
+                                    <input type="text" class="input_txt" name="user_email" required>
+                                </dd>
+
+                            </dl>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="btn_area">
+                    <a class="btn2" href="/user/login">취소</a>
+                    <input type="submit" name="search" class="btn2" value="아이디 찾기">
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if flag == '1' %}
+    <div id="wrap">
+        <div class="box">
+            <form action="/user/find_check?check=1" method="post">
+                <table>
+                    <tr class="">
+                        <td>이름을 입력해주세요:</td>
+                        <td>
+                            <input type="text" class="" name="user_name" required>
+                        </td>
+                    </tr>
+                    <tr class="">
+                        <td>이메일을 입력해주세요:</td>
+                        <td>
+                            <input type="text" class="" name="user_email" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="submit" name="search" value="비밀번호 찾기">
+                            <a href="/user/login">취소</a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    {% include "../layout/bottom.html" %}
