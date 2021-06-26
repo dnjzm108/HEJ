@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     scroll:{
       type: DataTypes.INTEGER,
-      allowNull:false,
+      allowNull:true,
     },
     pop_width:{
       type: DataTypes.MEDIUMINT,

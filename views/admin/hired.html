@@ -26,9 +26,9 @@
             <div id="infom">
                 <h1>HIRED</h1>
                 <div id="atags">
-                    <a class="btn" href="/admin/hired">전체</a>
-                    <a class="btn" href="/admin/hired/interview">인터뷰</a>
-                    <a class="btn" href="/admin/hired/portfolio">포트폴리오</a>
+                    <a class="btn atag" href="/admin/hired">전체</a>
+                    <a class="btn atag" href="/admin/hired/interview">인터뷰</a>
+                    <a class="btn atag" href="/admin/hired/portfolio">포트폴리오</a>
                 </div>
             </div>
             <div id="board">
@@ -48,7 +48,7 @@
                     <tbody>
                         <tr>
                             <td>{{item.num}}</td>
-                            <td><a href="/admin/view?id={{item.id}}&table=hired&localUrl={{localUrl}}">{{item.title}}</a></td>
+                            <td><a href="/admin/view?id={{item.id}}&table=hired&localUrl={{item.type}}">{{item.title}}</a></td>
                             {% if localUrl == undefined %}
                             <td><a href="/admin/hired/{{item.type}}">{{item.type}}</a></td>
                             {% endif %}
@@ -72,6 +72,16 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+    const atag = document.querySelectorAll('.atag');
+    atag.forEach(v=>{
+        let tagName = v.href.replace('http://localhost:3000/admin/hired/','');
+        if(tagName == '{{localUrl}}'){
+            v.setAttribute('style','background-color:#ededed;');
+            return;
+        };
+    });
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>

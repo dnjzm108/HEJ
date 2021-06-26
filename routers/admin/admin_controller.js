@@ -3,6 +3,7 @@ const moment = require('moment');
 const ctoken = require('../../jwt');
 const search = require('../../serach');
 const pagination = require('../../pagination');
+const chash = require('../../chash');
 const router = require('.');
 const { Op } = require("sequelize");
 // const {Sequelize} = require('../../models/index.js');
@@ -30,14 +31,26 @@ let login_success = async (req, res) => {
             authority_level: '3'
         }
     })
-    if (loginSuccess == null) {
-        res.redirect('/admin/admin_login?flag=0&msg=NOT AUTHORIZED.');
-    } else {
+    let userpw = chash(adminpw)
+    let userAdmin = await user.findOne({
+        where: {
+            userid: adminid,
+            userpw,
+            authority_level: '3'
+        }
+    })
+    if (loginSuccess != null || userAdmin != null) {
         let adminToken = ctoken(adminpw);
         res.cookie('AccessToken', adminToken, {});
         res.redirect('/admin/main');
+    } else {
+        res.redirect('/admin/admin_login?flag=0&msg=NOT AUTHORIZED.');
     }
 };
+
+// else if(userAdmin == null){
+//     res.redirect('/admin/admin_login?flag=0&msg=NOT AUTHORIZED.')
+// }
 
 /*========================WRITE PAGE========================*/
 
@@ -48,21 +61,31 @@ let upload = (req, res) => {
 
 let upload_success = async (req, res) => {
     let { localUrl, title, content, writer, type } = req.body;
-    if(localUrl == 'education'){
-        let { edName, edPeriod, time, fee , hashtag, localUrl, title, content, writer } = req.body;
-        let edResult = await search[localUrl].create({edName,ed_start_period:edPeriod[0],ed_end_period:edPeriod[1],time,fee,hashtag,title,content,writer,type});
-        await search[localUrl].update({visibility:1},{where:{id:edResult.id}});
-        await search[localUrl].update({visibility:0},{where:{id:{[Op.ne]:edResult.id}}});
+    if (localUrl == 'education') {
+        let { edName, edPeriod, time, fee, hashtag, localUrl, title, content, writer } = req.body;
+        let edResult = await search[localUrl].create({ edName, ed_start_period: edPeriod[0], ed_end_period: edPeriod[1], time, fee, hashtag, title, content, writer, type });
+        await search[localUrl].update({ visibility: 1 }, { where: { id: edResult.id } });
+        await search[localUrl].update({ visibility: 0 }, { where: { id: { [Op.ne]: edResult.id } } });
         res.redirect('/admin/education');
         return;
     }
 
-    let result = await search[localUrl].create({ title, content, writer, type });
-    if(localUrl == 'information'){
-        await search[localUrl].update({visibility:1},{where:{type,id:result.id}});
-        await search[localUrl].update({visibility:0},{where:{type,id:{[Op.ne]:result.id}}});
+    if (localUrl == 'hired') {
+        let thumbnail = req.file == undefined ? '' : `/uploads/user_image/${req.file.filename}`;
+        let { title, content, writer, type } = req.body;
+        await search[localUrl].create({title,content,writer,type, thumbnail});
+        res.redirect(`/admin/hired/${type}`);
+        return;
     }
+
+    let result = await search[localUrl].create({ title, content, writer, type });
+    if (localUrl == 'information') {
+        await search[localUrl].update({ visibility: 1 }, { where: { type, id: result.id } });
+        await search[localUrl].update({ visibility: 0 }, { where: { type, id: { [Op.ne]: result.id } } });
+    }
+
     /* 각각의 board로 redirect 될 수 있도록 */
+    
     if (type != null) {
         res.redirect(`/admin/${localUrl}/${type}`);
     }
@@ -73,6 +96,7 @@ let upload_success = async (req, res) => {
 
 let view = async (req, res) => {
     let { id, table, localUrl } = req.query;
+    console.log(localUrl)
     let infoView = await search[table].findOne({ where: { id } })
     let infoList = infoView.dataValues;
     let infodate = moment(infoList.date).format("MMM Do YY");
@@ -95,19 +119,21 @@ let postDel = async (req, res) => {
 };
 
 let modify = async (req, res) => {
-    let { id, table } = req.query;
+    let { id, table, localUrl } = req.query;
     let modify_result = await search[table].findOne({ where: { id } });
     let moList = modify_result.dataValues;
     res.render('./admin/modify.html', {
         moList,
         table,
+        localUrl
     });
 };
 
 let modify_success = async (req, res) => {
     let { title, content, modifyId, table } = req.body;
     await search[table].update({ title, content }, { where: { id: modifyId } });
-    res.redirect(`/admin/view?id=${modifyId}&table=${table}`);
+    // res.redirect(`/admin/view?id=${modifyId}&table=${table}`);
+    res.redirect(`/admin/${table}`)
 };
 
 /*========================= 학원소개 ==========================*/
@@ -131,8 +157,8 @@ let Information = async (req, res) => {
 
 let information_update = async (req, res) => {
     let { visibility, local } = req.body;
-    await information.update({ visibility:1 }, { where: {id:visibility} });
-    await information.update({visibility:0},{where:{id :{[Op.ne]: visibility},type:local}});
+    await information.update({ visibility: 1 }, { where: { id: visibility } });
+    await information.update({ visibility: 0 }, { where: { id: { [Op.ne]: visibility }, type: local } });
     res.redirect(`/admin/information/${local}`);
 }
 
@@ -181,10 +207,10 @@ let educationT = async (req, res) => {
     });
 };
 
-let education_update = async (req,res)=>{
-    let {visibility} = req.body;
-    await education.update({visibility:0},{where:{id:{[Op.ne]:null}}});
-    await education.update({visibility:1},{where:{id:visibility}});
+let education_update = async (req, res) => {
+    let { visibility } = req.body;
+    await education.update({ visibility: 0 }, { where: { id: { [Op.ne]: null } } });
+    await education.update({ visibility: 1 }, { where: { id: visibility } });
     res.redirect('/admin/education');
 }
 /*========================= 팝업 게시판 ================================= */

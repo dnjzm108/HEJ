@@ -11,10 +11,10 @@
 <body>
     <form action="/admin/authority" method="POST">
         <ul>
-            <select name="authority_level">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+            <select id="authority_level" name="authority_level">
+                <option class="authority_option" value="1">1</option>
+                <option class="authority_option" value="2">2</option>
+                <option class="authority_option" value="3">3</option>
             </select>
             <li>{{userList.userid}}</li>
             <li>{{userList.userpw}}</li>
@@ -27,8 +27,17 @@
             <li>{{userList.userdt}}</li>
         </ul>
         <textarea style="display: none;" name="userid">{{userList.userid}}</textarea>
-        <input type="submit">
+        <input type="submit" value="저장">
+        <a href="/admin/user" class="btn">목록</a>
     </form>
+    <script type="text/javascript">
+        const authorityOption = document.querySelectorAll('.authority_option');
+        authorityOption.forEach(v=>{
+            if(v.value == "{{userList.authority_level}}"){
+                v.selected = true;
+            }
+        })
+    </script>
 </body>
 
 </html>

@@ -22,6 +22,7 @@ const io = socket(server);
 const { community, user, sequelize, qanda, comment } = require('../../models');
 const search = require('../../serach');
 const pagination = require('../../pagination');
+const { resolveSoa } = require('dns');
 
 
 const kakao = {
@@ -134,8 +135,9 @@ let main = async (req, res) => {
         idArr += v.id + ','
         type.push(v.type);
     });
+    let {msg} = req.query;
     res.render('./main/apple.html', {
-        id, pw, popup, idArr, userid, session: session.authData
+        id, pw, popup, idArr, userid, session: session.authData, msg
     });
 };
 
@@ -151,7 +153,6 @@ let login = (req, res) => {
 let community_list = async (req, res) => {
     let { localUrl } = req.params;
     let { id } = req.query;
-    console.log(localUrl,"=============")
     let page = { localUrl: `${localUrl}`, id: `${id}`, table: 'community' }
     let pagin = await pagination(page);
     let result = pagin.result;
@@ -184,9 +185,11 @@ let community_list = async (req, res) => {
             }
         })
     }
+    let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
     res.render('./main/menu/community_list.html', {
         pagin: pagin.page_hired,
-        commList,userid,localUrl,session:session.authData,msg
+        commList,userid,localUrl,session:session.authData,msg,
+        edMenu
     });
 
 }
@@ -210,9 +213,9 @@ let community_write_send = async (req, res) => {
     let write = await community.create({
         title, userid, content, community_image, type,writer:userid,
         hit: 0,
-    })
+    });
     res.redirect('/community')
-}
+};
 let community_view = async (req, res) => {
     let id = req.query.id;
     let result = await community.findAll({
@@ -251,6 +254,7 @@ let community_modify = async (req, res) => {
         modify
     })
 }
+
 let community_modify_send = async (req, res) => {
     let { title, userid, content, type, id, community_image1 } = req.body;
     let community_image = req.file == undefined ? community_image1 : `/uploads/community/${req.file.filename}`;
@@ -258,12 +262,13 @@ let community_modify_send = async (req, res) => {
         title, userid, content, community_image, type
     }, { where: { id } });
     res.redirect(`/community/view?id=${id}`);
-}
+};
+
 let community_delete = async (req, res) => {
     let {id,localUrl} = req.query
     let result = await community.destroy({ where: { id } });
     res.redirect(`/community/${localUrl}`);
-}
+};
 //  community end
 
 //comment start
@@ -288,7 +293,7 @@ let comment_modify = async (req, res) => {
         content
     }, { where: { id } });
     res.redirect('/community');
-}
+};
 //comment end
 
 let test = (req, res) => {
@@ -316,8 +321,8 @@ let information = async (req, res) => {
     infoList.forEach(v => {
         idArr += v.id + ','
     })
-    let edList = await search['education'].findAll({ where: { visibility: 1 } });
-    res.render('./main/menu/information_list.html', { infoList, idArr, localUrl, edList })
+    let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
+    res.render('./main/menu/information_list.html', { infoList, idArr, localUrl, edMenu });
 }
 
 let hired = async (req, res) => {
@@ -334,14 +339,17 @@ let hired = async (req, res) => {
             date: moment(v.date).format("MMM Do YY")
         }
     })
+    let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
     res.render('./main/menu/hired_list.html', {
         pagin: pagin.page_hired,
         hireList,
-        localUrl
+        localUrl,
+        edMenu
     })
 }
 
 let education = async (req, res) => {
+    let {localUrl} = req.params;
     let { id } = req.query;
     let page = { id: `${id}`, table: 'education' };
     let pagin = await pagination(page);
@@ -355,9 +363,12 @@ let education = async (req, res) => {
             num: v.num
         }
     });
+    let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
     res.render('./main/menu/education.html', {
         edList,
         pagin: pagin.page_hired,
+        edMenu,
+        localUrl
     })
 }
 
