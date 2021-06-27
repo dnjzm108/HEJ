@@ -6,11 +6,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     title: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(200),
       allowNull: true
     },
     writer: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(100),
       allowNull: true
     },
     write_date: {
@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     community_image: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(200),
       allowNull: true
     },
     hit: {

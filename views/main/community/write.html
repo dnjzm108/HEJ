@@ -1,38 +1,87 @@
 {% include "../template/top.html" %}
 
 {% if modify == undefiend %}
-<div id="write_box">
-    <form id="form" action="/community/write" method="POST" enctype="multipart/form-data">
-        <p>제목</p>
-        <input class="w500" type="text" name="title" id="title">
-        <p>작성자 : {{userid}} 님</p>
-        <input class="w500" type="hidden" name="userid" id="userid" value="{{userid}}">
-        <p>이미지</p>
-        <input class="w500" type="file" name="community_image" id="community_image">
-        <p>쓰는곳 : {{type}}</p>
-        <input type="hidden" name="type" value="{{type}}">
-        <p>내용</p>
-        <input id="cont" type="textarea" name="content" id="content">
-        <input type="submit" value="저장">
+<div id="content">
+    <h1>COMMUNITY</h1>
+    <div id="menu_border">
+        <div id="side_menu">
+            <a id="main_tag" href="/community">커뮤니티</a>
+            <a class="tags" href="/community/notice">공지사항</a>
+            <a class="tags" href="/community/qanda">Q&A</a>
+            <a class="tags" href="/community/board">수강후기</a>
+        </div>
+        <div id="sub_content">
+            <div id="write_box">
+                <form id="form" action="/community/write" method="POST" enctype="multipart/form-data">
+                    <p>제목</p>
+                    <input class="w500" type="text" name="title" id="title">
+                    <p style="display: none;">작성자 : {{userid}} 님</p>
+                    <input class="w500" type="hidden" name="userid" id="userid" value="{{userid}}">
+                    <p>이미지</p>
+                    <input class="w500" type="file" name="community_image" id="community_image">
+                    <p style="display: none;">쓰는곳 : {{type}}</p>
+                    <input type="hidden" name="type" value="{{type}}">
+                    <p>내용</p>
+                    <textarea id="cont" name="content" id="" cols="30" rows="10"></textarea>
+                    <input type="submit" value="저장">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="real_footer">
+        <div id="real_footer_con">
+            <img src="http://www.kiweb.or.kr/images/main_new/logo_bottom_2018.png">
+            <div id="foot_ment">
+                <span>서울특별시 강동구 천호대로 995 금복빌딩 3,4층 경일게임아카데미(지하철 5,8호선 1번출구 10m이내) </span>
+                <p>TEL : 02-479-4050 FAX : 02-479-4056 대표자 : 박병준 개인정보관리책임자 : 서혁준 </p>
+                <p>사업자번호 : 212-81-89247</p>
+                <p>Copyright © 2016. Kyungil Technical College. All rights reserved. </p>
+            </div>
+        </div>
+    </div>
 </div>
-</form>
 {% endif%}
 {% if modify != undefiend %}
-<div id="write_box">
-    <form id="form" action="/community/write" method="POST" enctype="multipart/form-data">
-        <p>제목</p>
-        <input class="w500" type="text" name="title" id="title" value="{{modify.title}}">
-        <p>작성자 : {{modify.userid}} 님</p>
-        <input class="w500" type="hidden" name="userid" id="userid" value="{{modify.userid}}">
-        <p>이미지</p>
-        <input class="w500" type="file" name="community_image" id="community_image" value="{{modify.community_image}}">
-        <p>쓰는곳 : {{modify.type}}</p>
-        <input type="hidden" name="type" value="{{modify.type}}">
-        <p>내용</p>
-        <input id="cont" type="textarea" name="content" id="content" value="{{modify.content}}">
-        <input type="submit" value="저장">
+<div id="content">
+    <h1>COMMUNITY</h1>
+    <div id="menu_border">
+        <div id="side_menu">
+            <a id="main_tag" href="/community">커뮤니티</a>
+            <a class="tags" href="/community/notice">공지사항</a>
+            <a class="tags" href="/community/qanda">Q&A</a>
+            <a class="tags" href="/community/board">수강후기</a>
+        </div>
+        <div id="sub_content">
+            <div id="write_box">
+                <form id="form" action="/community/write" method="POST" enctype="multipart/form-data">
+                    <p>제목</p>
+                    <input class="w500" type="text" name="title" id="title" value="{{modify.title}}">
+                    <p style="display: none;">작성자 : {{modify.userid}} 님</p>
+                    <input class="w500" type="hidden" name="userid" id="userid" value="{{modify.userid}}">
+                    <p>이미지</p>
+                    <input class="w500" type="file" name="community_image" id="community_image"
+                        value="{{modify.community_image}}">
+                    <p style="display: none;">쓰는곳 : {{modify.type}}</p>
+                    <input type="hidden" name="type" value="{{modify.type}}">
+                    <p>내용</p>
+                    <textarea id="cont" name="content" id="" cols="30" rows="10" value="{{modify.content}}"></textarea>
+                    <input type="submit" value="저장">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="real_footer">
+        <div id="real_footer_con">
+            <img src="http://www.kiweb.or.kr/images/main_new/logo_bottom_2018.png">
+            <div id="foot_ment">
+                <span>서울특별시 강동구 천호대로 995 금복빌딩 3,4층 경일게임아카데미(지하철 5,8호선 1번출구 10m이내) </span>
+                <p>TEL : 02-479-4050 FAX : 02-479-4056 대표자 : 박병준 개인정보관리책임자 : 서혁준 </p>
+                <p>사업자번호 : 212-81-89247</p>
+                <p>Copyright © 2016. Kyungil Technical College. All rights reserved. </p>
+            </div>
+        </div>
+    </div>
 </div>
-</form>
 {% endif %}
 
 {% include "../template/bottom.html" %}

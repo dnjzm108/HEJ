@@ -88,7 +88,7 @@
                     {% endif %}
                     {% if session.local %}
                     <div> <a href="/user/logout">logout</a> </div>
-                    <div> <a href="user/info?checked=0">mypage</a> </div>
+                    <div> <a href="user/info?checked=1">mypage</a> </div>
                     {% endif %}
                     {% endif %}
                     <div> <a id="cha_btn" data-value="0">chat</a> </div>
@@ -139,8 +139,7 @@
                     <h2>수업 만족도</h2>
                     <h3>97.87%</h3>
                 </div>
-            </div>
-            -->
+            </div> -->
             <form id="apply_form">
                 <label for="name">name</label>
                 <input id="name" type="text"><br />
@@ -149,7 +148,7 @@
                 <label for="number">number</label></br>
                 <input id="number" type="text"></br>
                 <label for="content">content</label>
-                <input id="content" type="text">
+                <textarea name="content" id="content" cols="30" rows="10"></textarea>
                 <input id="" type="submit" value="apply">
             </form>
         </div>
@@ -230,11 +229,10 @@
         function apply() {
             if (fleg == '0') {
                 apply_form.style.display = 'block';
-                btn_box.style.bottom = '30vh'
+            
                 fleg = 1;
             } else {
                 apply_form.style.display = 'none';
-                btn_box.style.bottom = '0vh'
                 fleg = 0;
             }
         }

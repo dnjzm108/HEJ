@@ -1,4 +1,4 @@
-const { information, admin, hired: hiredTd, education, popup: popupTd, user, community: communityTd } = require('../../models/index');
+const { comment,information, admin, hired: hiredTd, education, popup: popupTd, user, community: communityTd } = require('../../models/index');
 const moment = require('moment');
 const ctoken = require('../../jwt');
 const search = require('../../serach');
@@ -107,13 +107,31 @@ let view = async (req, res) => {
     console.log(localUrl)
     let infoView = await search[table].findOne({ where: { id } })
     let infoList = infoView.dataValues;
+    let location = 1;
+    let see = await comment.findAll({
+        where:{idx:id}
+    })
     let infodate = moment(infoList.date).format("MMM Do YY");
-    res.render('./admin/view.html', {
-        infoList,
-        infodate,
-        table,
-        localUrl
-    });
+    if(localUrl == 'qanda' || localUrl =='board'){
+        res.render('./main/menu/menu_view.html',{
+            infoList,
+            infodate,
+            table,
+            localUrl,
+            see,
+            id
+        })
+    }else{
+        res.render('./admin/view.html', {
+            infoList,
+            infodate,
+            table,
+            localUrl,
+            location,
+            
+        });
+    }
+    
 };
 
 let postDel = async (req, res) => {

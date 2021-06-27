@@ -14,6 +14,11 @@ a{
     width: 100%;
     height:100%;
     text-align: center;
+    margin: 0 auto;
+}
+
+.address2{
+    margin-bottom:15px;
 }
 
 h4{text-align: left;
@@ -21,11 +26,10 @@ h4{text-align: left;
     font-size:20px;
     color:#666;
 }
-
 .box{
     margin-top:40px;
     width: 900px;
-    height: 1000px;
+    height: 2000px;
     margin: 0 auto;
     padding:50px 100px;
     box-sizing: border-box;
@@ -37,20 +41,24 @@ h4{text-align: left;
     margin-bottom: 80px;
 }
 
+.info_title{
+    width:550px;
+    font-weight: bold;
+    /* text-align:left; */
+}
+
 td{
-    width: 1000px;
+    width: 900px;
     text-align: left;
     text-indent: 20px;
-    line-height: 90px;
+    line-height: 70px;
     font-size: 17px;
     border: 1px solid #dadada;
     background: white;
 }
 
-.info_title{
-    width:250px;
-    font-weight: bold;
-    /* text-align:left; */
+td>input{
+    text-indent:20px;
 }
 
 tr>td>img{
@@ -59,11 +67,45 @@ tr>td>img{
     height: 200px;
 }
 .btn{
-    margin-top: 20px;
+    margin-top: 15px;
     float:right;
+    width:120px;
+    height:40px;
+    padding-right:6.5px;
+    margin-right:86px;
+    background:rgba(102,186,255);
+    /* border-radius: 5px; */
+    color:white;
+    font-size:15px;
+    line-height:40px;
+    font-weight:bold;
+    text-align:left;
+    border: solid 1px rgba(0,0,0,.08);
 }
 
-.btn>a{
+.btn2{
+    margin-top: 15px;
+    float:right;
+    width:102px;
+    height:42px;
+    margin-left:5px;
+    background:white;
+    /* border-radius: 5px; */
+    color:#000;
+    font-size:15px;
+    line-height:40px;
+    font-weight:bold;
+    border: solid 1px #000;
+    box-sizing: border-box;
+}
+
+.btn2:hover{
+    background:rgba(102,186,255);
+    color:white;
+    border:1px solid rgba(0,0,0,.08);
+}
+
+.btn> .aa{
     display:inline-block;
     width:100px;
     height:40px;
@@ -77,21 +119,15 @@ tr>td>img{
 }
 
 .btn>a:hover{
-    background:rgba(102,186,255);
+    background:#000;
     color:white;
-    border:1px solid rgba(0,0,0,.08);
 }
 
 
 /* /////비밀번호쳌//// */
 
-h2{
-    font-size:36px;
-    margin-bottom:60px;
-}
-
 .pwcheck>li{
-    line-height: 60px;
+    line-height: 50px;
 }
 
 .pwcheck>li>span{
@@ -99,47 +135,23 @@ h2{
     text-indent: 100px;
 }
 
-.box2{
-    margin-top:100px;
-    width: 900px;
-    height: 1000px;
-    margin: 0 auto;
-    padding:180px 100px;
-    box-sizing: border-box;
-    text-align: center;
-    /* border: 1px solid #000000; */
-}
-
-.ps_box3{
+.ps_box{
     display:block;
     position:relative;
-    margin: 5px auto;
-    width:600px;
+    /* margin: 0 auto; */
+    width:500px;
     height:51px;
     border: 1px solid #dadada;
     padding:10px 110px 10px 14px;
     box-sizing: border-box;
     background:#fff;
+    text-indent: 100px;
 }
 
-.ps_box3>li{
-    text-align:left;
-}
-
-.btn3{
-    width:600px;
-    height:51px;
-    background:rgba(102,186,255);
-    color:white;
-    border:1px solid rgba(0,0,0,.08);
-    font-weight:bold;
-}
-
-
-.int2{
+.int{
     display:block;
     position:relative;
-    width:500px;
+    width:100%;
     height:29px;
     padding-right:25px;
     line-height:29px;
@@ -147,16 +159,31 @@ h2{
     font-size:15px;
     z-index:10;
 }
-/* ////정보수정/////// */
+
+.change_address{
+    line-height:70px;
+}
 
 .ps_box{
     display:block;
     position:relative;
-    margin: 0 auto;
-    width:500px;
+    /* margin: 0 auto; */
+    margin-left: 20px;
+    width:450px;
     height:51px;
     border: 1px solid #dadada;
     padding:10px 110px 10px 14px;
+    box-sizing: border-box;
+    background:#fff;
+}
+
+.ps2_box{
+    display:inline-block;
+    position:relative;
+    width:200px;
+    height:51px;
+    border: 1px solid #dadada;
+    padding:10px 40px 10px 14px;
     box-sizing: border-box;
     background:#fff;
 }
@@ -173,14 +200,3 @@ h2{
     z-index:10;
 }
 
-.int_address2{
-    display:block;
-    position:relative;
-    width: 170px;
-    height:29px;
-    padding-right:25px;
-    line-height:29px;
-    border:none;
-    font-size:15px;
-    z-index:10;
-}
