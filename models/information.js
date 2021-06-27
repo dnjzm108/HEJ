@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     content: {
       type: DataTypes.TEXT('long'),
-      allowNull: false
+      allowNull: true
     },
     writer:{
       type: DataTypes.STRING(100),
@@ -24,6 +24,30 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       defaultValue:0,
     },
+    thumbnail:{
+      type:DataTypes.TEXT,
+      allowNull:true
+    },
+    // staffComment:{
+    //   type:DataTypes.STRING(100),
+    //   allowNull: true
+    // },
+    // staffPosition:{
+    //   type: DataTypes.STRING(100),
+    //   allowNull:true
+    // },
+    // staffName:{
+    //   type: DataTypes.STRING(100),
+    //   allowNull:true
+    // },
+    // staffCareer:{
+    //   type:DataTypes.STRING(100),
+    //   allowNull:true
+    // },
+    // staffExplanation:{
+    //   type:DataTypes.STRING(100),
+    //   allowNull:true
+    // },
     date:{
       type:Sequelize.DATE,
       allowfull:true,

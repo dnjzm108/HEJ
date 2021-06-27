@@ -20,10 +20,6 @@ module.exports = function(sequelize, DataTypes) {
       type:DataTypes.DATE,
       allowNull:false,
     },
-    type:{
-      type:DataTypes.INTEGER,
-      allowNull:false,
-    },
     visibility:{
       type: DataTypes.INTEGER,
       allowNull: false,

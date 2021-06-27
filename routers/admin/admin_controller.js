@@ -78,6 +78,14 @@ let upload_success = async (req, res) => {
         return;
     }
 
+    // if(type == 'staff'){
+    //     let thumbnail = req.file == undefined ? '' : `/uploads/user_image/${req.file.filename}`;
+    //     let {title, writer, type, staffComment, staffPosition, staffName, staffCareer, staffExplanation } = req.body;
+    //     await search[localUrl].create({title,writer,type,thumbnail,staffComment,staffPosition,staffName,staffCareer,staffExplanation});
+    //     res.redirect('/admin/information/staff');
+    //     return;
+    // }
+
     let result = await search[localUrl].create({ title, content, writer, type });
     if (localUrl == 'information') {
         await search[localUrl].update({ visibility: 1 }, { where: { type, id: result.id } });
@@ -117,6 +125,8 @@ let postDel = async (req, res) => {
         res.redirect(`/admin/${table}/${localUrl}`);
     }
 };
+
+/*=======================MODIFY PAGE=======================*/
 
 let modify = async (req, res) => {
     let { id, table, localUrl } = req.query;
@@ -242,8 +252,8 @@ let popup_upload = (req, res) => {
 };
 
 let popup_upload_success = async (req, res) => {
-    let { writer, visibility, title, period, type, scroll, size, location, hyperlink, content } = req.body;
-    await popupTd.create({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content });
+    let { writer, visibility, title, type, period, scroll, size, location, hyperlink, content } = req.body;
+    await popupTd.create({ writer, visibility, type, title, popup_start_date: period[0], popup_end_date: period[1], scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content });
     res.redirect('/admin/popup');
 };
 
@@ -282,8 +292,8 @@ let popup_modify = async (req, res) => {
 };
 
 let popup_modify_success = async (req, res) => {
-    let { writer, visibility, title, period, type, scroll, size, location, hyperlink, content, modifyId, table } = req.body;
-    await search[table].update({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content }, { where: { id: modifyId } });
+    let { writer, visibility, title,type, period, scroll, size, location, hyperlink, content, modifyId, table } = req.body;
+    await search[table].update({ writer, type, visibility, title, popup_start_date: period[0], popup_end_date: period[1], scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content }, { where: { id: modifyId } });
     res.redirect(`/admin/popup_view?id=${modifyId}&table=${table}`);
 };
 

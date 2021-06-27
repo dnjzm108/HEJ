@@ -105,8 +105,8 @@
                     <input type="text" class="form-control" name="title" id="title">
                 </div>
 
-                {% if localUrl == "staff" %}
-                <div id="staff_image_wrap">
+                <!-- if localUrl == "staff"  -->
+                <!-- <div id="staff_image_wrap">
                     <label for="staff_image">직원 사진</label>
                     <input type="file" id="staff_image" name="thumbnail">
                 </div>
@@ -124,24 +124,24 @@
                 </div>
                 <div id="staff_career_wrap">
                     <label for="staff_career">경력</label>
-                    <input type="text" id="staff_career" name="staffCareer">
+                    <input type="text" class="form-control" id="staff_career" name="staffCareer">
                 </div>
                 <div id="staff_explanation_wrap">
                     <label for="staff_explanation">설명</label>
                     <input type="text" id="staff_explanation" name="staffExplanation" class="form-control">
-                </div>
-                {% endif %}
-
+                </div> -->
+                
                 {% if title == "hired" %}
                 <div id="thumbnail_wrap">
                     <label for="thumbnail">썸네일</label>
                     <input type="file" id="thumbnail" name="thumbnail">
                 </div>
                 {% endif %}
-
+                
                 <div id="summernote">
                 </div>
                 <textarea style="display: none;" name="content" id="result"></textarea>
+                
                 {% if title == "education" %}
                 <label for="hashtag">해시태그</label>
                 <input type="text" name="hashtag" id="hashtag" class="form-control" placeholder="#">
@@ -182,7 +182,9 @@
             //     alert('Enter the content');
             //     return
             // }
-            result.innerHTML = markupStr;
+            if(result != null){
+                result.innerHTML = markupStr;   
+            }
             info_form.submit();
         }
     </script>

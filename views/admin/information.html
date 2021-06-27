@@ -77,7 +77,7 @@
                                 {% if localUrl != undefined %}
                                 <td><input class="visible" type="radio" name="visibility" value="{{item.id}}"></td>
                                 {% endif %}
-                                <td><a href="/admin/view?id={{item.id}}&table=information&localUrl={{localUrl}}">{{item.title}}</a></td>
+                                <td><a href="/admin/view?id={{item.id}}&table=information&localUrl={{item.type}}">{{item.title}}</a></td>
                                 {% if localUrl == undefined %}
                                 <td><a href="/admin/information/{{item.type}}">{{item.type}}</a></td>
                                 {% endif %}
