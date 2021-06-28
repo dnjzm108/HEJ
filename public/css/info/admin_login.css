@@ -1,0 +1,58 @@
+~*{
+    margin:0px;
+    padding:0px;
+}
+
+ul,li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+.w100{
+    width: 100%;
+}
+
+.textLeft{
+    text-align: left;
+}
+
+.textLeft > label{
+    font-size: 12px;
+}
+
+.header{
+    margin-bottom: 8px;
+}
+
+#wrap{
+    height: 350px;
+    width: 1200px;
+    text-align: center;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#container{
+    width: 350px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.loginBtn{
+    width: 350px;
+    border: none;
+    height: 40px;
+    background-color: black;
+    color: #fff;
+    border: 1px solid #1a1818;
+}
+
+.loginInput{
+    height: 40px;
+    border: 1px solid #ededed;
+}

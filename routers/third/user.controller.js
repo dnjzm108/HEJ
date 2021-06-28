@@ -114,7 +114,7 @@ let login_check = async (req, res) => {
 let logout = async (req, res) => {
     if (session.authData.local) {
         delete session.authData;
-        res.redirect('/user/login');
+        res.redirect('/');
     } else if (session.authData.kakao) {
         const { access_token } = session.authData.kakao;
         let unlink;

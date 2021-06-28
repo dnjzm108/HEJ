@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USERADMIN</title>
+    <title>USER CONTROL</title>
     <!-- <link rel="stylesheet" href="/css/info/index.css">
     <link rel="stylesheet" href="/css/info/list.css"> -->
     <style>
@@ -43,9 +43,7 @@
                     <tbody>
                         <tr>
                             <td>{{item.num}}</td>
-                            <td><a style="color: #fff"
-                                    href="/admin/user_view?id={{item.id}}&table=user">{{item.userid}}</a>
-                            </td>
+                            <td><a href="/admin/user_view?id={{item.id}}&table=user">{{item.userid}}</a></td>
                             <td>{{item.authority_level}}</td>
                             <td>{{item.userdt}}</td>
                         </tr>

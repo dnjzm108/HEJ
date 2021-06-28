@@ -38,10 +38,10 @@
             <div id="infom" style="margin-bottom: 100px;">
                 <h1>COMMUNITY</h1>
                 <div id="atags">
-                    <a class="btn" href="/admin/community">전체</a>
-                    <a class="btn" href="/admin/community/notice">공지사항</a>
-                    <a class="btn" href="/admin/community/board">게시판</a>
-                    <a class="btn" href="/admin/community/qanda">Q and A</a>
+                    <a class="btn atag" href="/admin/community">전체</a>
+                    <a class="btn atag" href="/admin/community/notice">공지사항</a>
+                    <a class="btn atag" href="/admin/community/board">게시판</a>
+                    <a class="btn atag" href="/admin/community/qanda">Q and A</a>
                 </div>
             </div>
             <div id="board" style="margin-bottom: 50px;">
@@ -78,13 +78,23 @@
                     <a style="border: none;" href="/admin/community/{{localUrl}}?id={{item}}">{{item}}</a>
                     {% endfor %}
                 </div>
-                {% if localUrl != undefined %}
+                {% if localUrl == "notice" %}
                 <a class="btn" href="/admin/upload?title=community&localUrl={{localUrl}}">WRITE</a>
                 {% endif %}
                 <a class="main_btn btn" href="/admin/main">MAIN</a>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        const atag = document.querySelectorAll('.atag');
+        atag.forEach(v=>{
+            let tagName = v.href.replace('http://localhost:3000/admin/community/')
+            let local = 'undefined{{localUrl}}'
+            if(tagName == local){
+                v.setAttribute('style','background-color: #ededed')
+            }
+        })
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>

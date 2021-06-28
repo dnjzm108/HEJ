@@ -24,39 +24,61 @@
                 <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
 
                 <div id="">
-                    게시기간:
-                    <input type="date" name="period" value="startingdate"> ~
-                    <input type="date" name="period" value="enddate"><br />
-                    팝업형태 :
-                    <label for="normalpop">일반팝업</label>
-                    <input id="normalpop" type="radio" name="type" value="1">
-                    <label for="layerPop">레이어팝업</label>
-                    <input id="layerPop" type="radio" name="type" value="0"><br />
-                    보이기: 
-                    <label for="visible">VISIBLE</label>
-                    <input id="visible" type="radio" class="visibility" name="visibility" value="1">
-                    <label for="invisible">INVISIBLE</label>
-                    <input id="invisible" type="radio" class="visibility" name="visibility" value="0"><br/>
-                    스크롤 여부 :
-                    <label for="scrollallow">허용함</label>
-                    <input id="scrollallow" type="radio" name="scroll" value="1">
-                    <label for="scrolldeny">허용안함</label>
-                    <input id="scrolldeny" type="radio" name="scroll" value="0"><br />
-                    크기 :
-                    <label for="sizeX">가로</label>
-                    <input id="sizeX" type="text" name="size">
-                    <label for="sizeY">세로</label>
-                    <input id="sizeY" type="text" name="size"><br />
-                    위치 :
-                    <label for="locationX">X</label>
-                    <input id="locationX" type="text" name="location">
-                    <label for="locationY">Y</label>
-                    <input id="locationY" type="text" name="location"><br />
-                    <label for="hyperlink">링크주소</label>
-                    <input id="hyperlink" type="text" name="hyperlink">
+                    <div id="period">
+                        게시기간:
+                        <input type="date" name="period" value="startingdate"> ~
+                        <input type="date" name="period" value="enddate">
+                    </div>
+
+                    <div id="popup">
+                        팝업형태 :
+                        <label for="normalpop">일반팝업</label>
+                        <input id="normalpop" type="radio" name="type" value="1">
+                        <label for="layerPop">레이어팝업</label>
+                        <input id="layerPop" type="radio" name="type" value="0">
+                    </div>
+
+                    <div id="visibility">
+                        보이기:
+                        <label for="visible">VISIBLE</label>
+                        <input id="visible" type="radio" class="visibility" name="visibility" value="1">
+                        <label for="invisible">INVISIBLE</label>
+                        <input id="invisible" type="radio" class="visibility" name="visibility" value="0">
+                    </div>
+
+                    <div id="scroll">
+                        스크롤 여부 :
+                        <label for="scrollallow">허용함</label>
+                        <input id="scrollallow" type="radio" name="scroll" value="1">
+                        <label for="scrolldeny">허용안함</label>
+                        <input id="scrolldeny" type="radio" name="scroll" value="0">
+                    </div>
+
+                    <div id="size">
+                        크기 :
+                        <label for="sizeX">가로</label>
+                        <input id="sizeX" type="text" name="size">px
+                        <label for="sizeY">세로</label>
+                        <input id="sizeY" type="text" name="size">px
+                    </div>
+
+                    <div id="location">
+                        위치 :
+                        <label for="locationX">X</label>
+                        <input id="locationX" type="text" name="location">px
+                        <label for="locationY">Y</label>
+                        <input id="locationY" type="text" name="location">px
+                    </div>
+                    <div id="link">
+                        링크주소 :
+                        <input id="hyperlink" type="text" name="hyperlink">
+                    </div>
                 </div>
-                <label for="title">제목</label>
-                <input id="title" class="form-control" type="text" name="title"> <br />
+                <div id="titleInput">
+                    <label for="title">제목</label>
+                    <input id="title" class="form-control" type="text" name="title">
+                </div>
+
                 <div id="summernote">
                 </div>
                 <textarea style="display: none;" name="content" id="result"></textarea>
@@ -89,6 +111,26 @@
             result.innerHTML = markupStr
             popupForm.submit();
         }
+
+        const normalpop = document.querySelector('#normalpop');
+        const layerPop = document.querySelector('#layerPop');
+        const hyperlink = document.querySelector('#hyperlink');
+        const scrollAllow = document.querySelector('#scrollallow');
+        const scrollDeny = document.querySelector('#scrolldeny');
+        layerPop.addEventListener('click', () => {
+            hyperlink.value = "";
+            hyperlink.readOnly = true;
+            scrollAllow.checked = false;
+            scrollAllow.onclick = function(){return true};
+            scrollDeny.onclick = function(){return true};
+        })
+        normalpop.addEventListener('click', () => {
+            hyperlink.readOnly = false;
+            scrollAllow.checked = true;
+            scrollAllow.onclick = function(){return false;};
+            scrollDeny.onclick = function(){return false};
+        })
+
     </script>
 </body>
 

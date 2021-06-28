@@ -52,5 +52,12 @@
         }
     })
 </script>
-
+<script type="text/javascript">
+const tags = document.querySelectorAll('.tags');
+    tags.forEach(v=>{
+        if(v.innerHTML == "{{localUrl}}"){
+            v.setAttribute('style','background-color:#ededed');
+        }
+    })
+</script>
 {% include "../template/bottom.html" %}

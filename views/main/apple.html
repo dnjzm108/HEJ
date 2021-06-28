@@ -11,32 +11,48 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Viaoda+Libre&display=swap"
         rel="stylesheet">
-        
+    {% if popup != "" %}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let idArr = document.querySelector('#idArr').value;
             idArr = idArr.split(',');
             idArr.splice(idArr.length - 1, 1);
             idArr.forEach(v => {
+                let type = document.querySelector('#type' + v);
+                let hyperlink = document.querySelector('#hyperlink' + v);
+                let title = document.querySelector('#title' + v);
                 let content = document.querySelector('#content' + v);
-                let pre = document.querySelector('#pre' + v);
-                let setting = document.querySelector('#setting' + v);
-                let popupContent = document.querySelector('#popup_content' + v)
-                popupContent.style.cssText = `${setting.value};border:1px solid #000`;
-                pre.innerHTML = `${content.value}`
-            })
+                let setting2 = document.querySelector('#setting2' + v);
+                if (type.value == 1) {
+                    function normalpopup() {
+                        let url = hyperlink.value;
+                        let name = title.value;
+                        let option = setting2.value;
+                        window.open(url, name, option);
+                    }
+                    normalpopup();
+                } 
+                else if (type.value == 0) {
+                    let pre = document.querySelector('#pre' + v);
+                    let setting = document.querySelector('#setting' + v);
+                    let popupContent = document.querySelector('#popup_content' + v);
+                    popupContent.style.cssText = `${setting.value};border:1px solid #000`;
+                    pre.innerHTML = `${content.value}`;
+                }
+            });
         });
-            // document.querySelector('.abc').style.cssText  = 'background-color:red; width:300px; height:300px;';
+        // document.querySelector('.abc').style.cssText  = 'background-color:red; width:300px; height:300px;';
+
+        // if ('{{item.hyperlink}}' != "") {
+        //     setTimeout(function () {
+        //         var url = "{{item.hyperlink}}";
+        //         var name = "{{item.title}}";
+        //         var option = "width = {{item.pop_width}}, height = {{item.pop_height}}, top = {{item.pop_locationY}}, left = {{item.pop_locationX}}, location = no";
+        //         window.open(url, name, option);
+        //     }, 2000)
+        // }
     </script>
-    {% if popup != "" %}
-    <script type="text/javascript">
-        setTimeout(function () {
-            var url = "https://chlolisher.tistory.com/101";
-            var name = "popup test";
-            var option = "width = 500, height = 500, top = 100, left = 200, location = no";
-            window.open(url, name, option)
-        }, 2000)
-    </script>
+
     {% endif %}
 </head>
 
@@ -153,6 +169,11 @@
                 style="float:right; color:#fff; background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer"
                 id="popup_close{{item.id}}">닫기</button>
         </div>
+        <input type="hidden" id="hyperlink{{item.id}}" value="{{item.hyperlink}}">
+        <input type="hidden" id="title{{item.id}}" value="{{item.title}}">
+        <input type="hidden" id="setting2{{item.id}}"
+            value="width = {{item.pop_width}}, height = {{item.pop_height}}, top = {{item.pop_locationY}}, left = {{item.pop_locationX}}, location = no">
+        <input type="hidden" id="type{{item.id}}" value="{{item.type}}">
     </div>
     {% endfor %}
     {% endif %}
@@ -170,9 +191,11 @@
             window.open(url, name, option);
         }
         chatBtn.addEventListener('click', popup)
-    </script>
 
-    <script type="text/javascript">
+        let msg = '{{msg}}'
+        if (msg != '') {
+            alert('{{msg}}');
+        }
 
         let a = 0;
         const square = document.querySelector('#square');
@@ -198,8 +221,6 @@
             square.style.animation = 'none'
             square.style.transform = `rotateX(${X}deg) rotateY(${X}deg)`;
         }
-    </script>
-    <script type="text/javascript">
 
         let consult_btn = document.querySelector('#consult_btn');
         let apply_form = document.querySelector('#apply_form');
@@ -216,8 +237,6 @@
             }
         }
         consult_btn.addEventListener('click', apply)
-
-
     </script>
 </body>
 
