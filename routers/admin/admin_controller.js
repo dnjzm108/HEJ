@@ -131,7 +131,6 @@ let view = async (req, res) => {
             
         });
     }
-    
 };
 
 let postDel = async (req, res) => {
