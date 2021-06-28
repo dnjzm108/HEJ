@@ -22,11 +22,12 @@ textarea{
 #header{
     width: 100vw;
     height: 100px;
+    position: relative;
 }
 
 #header > ul{
     width: 1200px;
-    height: 20vh;
+    height: 100px;
     margin: 0 auto;
     line-height: 75px;
 }
@@ -51,30 +52,32 @@ textarea{
 }
 #sub_header{
     display: none;
-    width: 1200px;
+    width: 100vw;
     height: 100px;
-    margin: 0 auto;
     position: absolute;
-    left: 200px;
     z-index: 1;
     background: silver;
 }
+#just{
+    width: 800px;
+    margin: 0 auto;
+}
 
-#sub_header > ul{
+#just > ul{
     width: 200px;
     float: left;
     margin-right: 40px;
 }
-#sub_header > ul:nth-child(1){
+#just > ul:nth-child(1){
     margin-left: 160px;
 }
 
-#sub_header > ul >li{
+#just > ul >li{
     width: 200px;
     text-align: center;
 }
 
-#sub_header > ul > li > a{
+#just > ul > li > a{
     font-size:15px;
 }
 
@@ -124,7 +127,7 @@ textarea{
 
 #content > h1{
     font-size: 5vh;
-    margin-left: 58%;
+    margin-left: 60% ;
     transform: translateX(-50%);
     text-align: center;
 }
@@ -219,7 +222,7 @@ textarea{
     width: 40px;
     height: 40px;
     position: relative; 
-    left: 50%;
+    left: 58%;
     transform: translate(-50%);
     transform-style: preserve-3d;
     animation: rint 10s linear 0s infinite;
@@ -301,6 +304,11 @@ textarea{
     padding: 10px 0;
     text-align: center;
 }
+#write_table_law{
+    margin: 20px auto;
+    width: 95%;
+    border-top: 1px solid black;
+}
 #write_table>tr{
     width: 870px;
 }
@@ -331,7 +339,7 @@ textarea{
 #real_footer{
     width: 100vw;
     height: 200px;
-    background: black;
+    background: #323232;;
     padding: 20px 0;
     margin-top: 50px;
     box-sizing: border-box;
