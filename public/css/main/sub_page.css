@@ -299,15 +299,29 @@ textarea{
 
 #write_box{
     width: 900px;
-    height: 50px;
+    min-height: 400px;
+    padding: 10px 0;
     text-align: center;
 }
+#write_table>tr{
+    width: 870px;
+}
+.first>td:nth-child(1){
+    width: 105px;
+    height: 40px;
+}
+.first>td:nth-child(2){
+    width: 765px;
+    height: 40px;
+}
+
 #title{
     width: 800px;
 }
 #cont{
-    width: 800px;
-    height: 400px;
+    width: 745px;
+    height: 250px;
+    margin: 10px 20px;
 }
 .mar20{
     margin-top: 20px;
