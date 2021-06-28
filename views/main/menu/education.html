@@ -6,11 +6,9 @@
         <div id="menu_border">
             <div id="side_menu">
                 <a id="main_tag" href="/education">교육과정</a>
-                <a class="tags" href="/education/intro">블록체인</a>
-                <a class="tags" href="/education/history">연혁</a>
-                <a class="tags" href="/education/popup">교직원소개</a>
-                <a class="tags" href="/education/facility">시설소개</a>
-                <a class="tags" href="/education/location">오시는 길</a>
+                {% for item in edMenu %}
+                <a class="tags" href="/education/{{item.title}}">{{item.title}}</a>
+                {% endfor %}
             </div>
             <div id="sub_content">
                 <div id="list_subject">
