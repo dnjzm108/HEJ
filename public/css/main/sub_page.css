@@ -48,8 +48,6 @@ textarea{
 
 #headerImg{
     margin-top: 20px;
-    width: 147px;
-    height:61px;
 }
 #sub_header{
     display: none;
@@ -126,7 +124,7 @@ textarea{
 
 #content > h1{
     font-size: 5vh;
-    margin-left: 50%;
+    margin-left: 58%;
     transform: translateX(-50%);
     text-align: center;
 }
@@ -306,6 +304,10 @@ textarea{
 #write_table>tr{
     width: 870px;
 }
+.first{
+    width: 100%;
+    border-top: 1px solid black;
+}
 .first>td:nth-child(1){
     width: 105px;
     height: 40px;
@@ -316,7 +318,7 @@ textarea{
 }
 
 #title{
-    width: 800px;
+    width: 747px;
 }
 #cont{
     width: 745px;
@@ -335,7 +337,7 @@ textarea{
     box-sizing: border-box;
 }
 #real_footer_con{
-    width: 850px;
+    width: 900px;
     height: 100px;
     margin: 40px auto 0 ;
 }
