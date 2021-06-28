@@ -133,7 +133,7 @@ a{
 }
 
 #question{
-    color: green;
+    color: rgba(105, 105, 238, 0.568);
     font-size: 3.8vw;
     font-weight: bold;
 }
