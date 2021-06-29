@@ -23,6 +23,7 @@
                 let title = document.querySelector('#title' + v);
                 let content = document.querySelector('#content' + v);
                 let setting2 = document.querySelector('#setting2' + v);
+                
                 if (type.value == 1) {
                     function normalpopup() {
                         let url = hyperlink.value;
@@ -31,26 +32,39 @@
                         window.open(url, name, option);
                     }
                     normalpopup();
-                } 
+                }
                 else if (type.value == 0) {
                     let pre = document.querySelector('#pre' + v);
                     let setting = document.querySelector('#setting' + v);
                     let popupContent = document.querySelector('#popup_content' + v);
-                    popupContent.style.cssText = `${setting.value};border:1px solid #000`;
+                    popupContent.style.cssText = `${setting.value};border:1px solid #000;`;
                     pre.innerHTML = `${content.value}`;
+
+                    let checkCookie = getCookie('popupCookie');
+                    // console.log(checkCookie)
+                    if (checkCookie == 'popupEnd') {
+                        popupContent.setAttribute('style', 'display:none')
+                    }
+                }
+
+                console.log(getCookie('popupCookie'))
+                function getCookie(name) {
+                    let cookie = document.cookie;
+                    if (document.cookie != "") {
+                        let cookie_array = cookie.split("; ");
+                        console.log(cookie_array)
+                        for (let index in cookie_array) {
+                            let cookie_name = cookie_array[index].split("=");
+                            if (cookie_name[0] == "popupCookie") {
+                                return cookie_name[1];
+                            }
+                        }
+                    }
+                    return;
                 }
             });
         });
-        // document.querySelector('.abc').style.cssText  = 'background-color:red; width:300px; height:300px;';
 
-        // if ('{{item.hyperlink}}' != "") {
-        //     setTimeout(function () {
-        //         var url = "{{item.hyperlink}}";
-        //         var name = "{{item.title}}";
-        //         var option = "width = {{item.pop_width}}, height = {{item.pop_height}}, top = {{item.pop_locationY}}, left = {{item.pop_locationX}}, location = no";
-        //         window.open(url, name, option);
-        //     }, 2000)
-        // }
     </script>
 
     {% endif %}
@@ -182,6 +196,29 @@
 
     <script type="text/javascript">
 
+        let idArr = document.querySelector('#idArr').value;
+        idArr = idArr.split(',');
+        idArr.splice(idArr.length - 1, 1);
+        idArr.forEach(v => {
+            let popupContent = document.querySelector('#popup_content' + v);
+            let closeBtn = document.querySelector('#popup_close' + v);
+            let closeOneday = document.querySelector('#popup_checkbox' + v);
+
+            closeBtn.addEventListener('click', () => {
+                popupContent.setAttribute('style', 'display:none')
+            })
+
+            closeOneday.addEventListener('click', () => {
+                setCookie("popupCookie", "popupEnd", 1);
+            })
+
+        })
+        function setCookie(name, value, expiredays) {
+            var today = new Date();
+            today.setDate(today.getDate() + expiredays); // 현재시간에 하루를 더함 
+            document.cookie = name + '=' + escape(value) + '; expires=' + today.toGMTString();
+        }
+
         const chatBtn = document.querySelector('#cha_btn')
         function popup() {
             let url = 'http://localhost:3000/chat'
@@ -229,7 +266,7 @@
         function apply() {
             if (fleg == '0') {
                 apply_form.style.display = 'block';
-            
+
                 fleg = 1;
             } else {
                 apply_form.style.display = 'none';

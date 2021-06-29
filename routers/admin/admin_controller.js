@@ -72,8 +72,8 @@ let upload_success = async (req, res) => {
 
     if (localUrl == 'hired') {
         let thumbnail = req.file == undefined ? '' : `/uploads/user_image/${req.file.filename}`;
-        let { title, content, writer, type } = req.body;
-        await search[localUrl].create({title,content,writer,type, thumbnail});
+        let { title, content, writer, type, creator } = req.body;
+        await search[localUrl].create({title,content,writer,type, thumbnail, creator});
         res.redirect(`/admin/hired/${type}`);
         return;
     }
