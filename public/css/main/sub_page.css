@@ -224,6 +224,7 @@ textarea{
     box-sizing: border-box;
 }
 #fixed>a{
+    color: #000000;
     display: block;
 }
 #square{
@@ -470,11 +471,18 @@ textarea{
     height: 30px;
     padding: 7px 30px;
     box-sizing: border-box;
-    border: 1px solid black;
+    border: 1px solid #3399dd;
     border-radius: 6px;
     margin: 20px 10px 0 0 ;
     text-align: center;
+     background-color: #fff; 
+     cursor: pointer; 
+     color: #000000; 
+     transition:all 1s, color 1s;
 }
+
+
 .edu_b:hover{
-    background: #006cdb;
+    background: #66aaff;
+    box-shadow:200px 0 0 0 #3399dd inset;
 }
