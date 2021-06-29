@@ -437,7 +437,7 @@ let apply_form = async(req,res)=>{
         name, age, number, content, userdt
     })
     console.log(rst);
-    res.render('/');
+    res.redirect('/');
 }
 module.exports = {
     main,
