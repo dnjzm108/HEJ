@@ -222,6 +222,11 @@ textarea{
     box-shadow: 3px 3px 3px 3px #2222;
     padding: 10px;
     box-sizing: border-box;
+    transition:all 2s, color 2s;
+}
+#fixed:hover{
+    background: #66aaff;
+    box-shadow:0 0 0 0 #3399dd inset;
 }
 #fixed>a{
     color: #000000;
