@@ -1,18 +1,108 @@
-{% include "../layout/top.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/third/find_success.css">
+
+</head>
+<body>
+    
 
 {% if check =='0' %}
 
-회원님의 아이디는 {{userid}}입니다!
-<a href="/user/login">로그인하러가기</a>
-<a href="/">메인페이지</a>
+
+<div id="wrap">
+    <div id="container" style="height:894px">
+        <h1></h1>
+        <div id="content_header">
+            <h5>아이디 찾기</h5>
+        </div>
+            <div class="box">
+                <div id="div_email" class="box_inn selected">
+
+                    <div class="box_inn_sub">
+                        <p class="dsc">고객님의 정보와 일치하는 아이디입니다.</p>
+                        <dl>
+                            <dt>
+                                <label for="phoneNm" class="label_txt">
+                                    아이디:
+                                </label>
+                            </dt>
+
+                            <dd>
+                                <span class="">{{userid}}</span>
+                            </dd>
+                            <dt>
+                                <label for="t_pn1" class="label_txt">
+                                    가입날짜:
+                                </label>
+                            </dt>
+                            <dd>
+                                <span class="" >{{userdt}}</span>
+                            </dd>
+
+                        </dl>
+
+                    </div>
+                </div>
+            </div>
+            <div class="btn_area">
+                <a class="btn2" href="/user/login">로그인</a>
+                <a class="btn3" href="/user/find_info?flag=1">비밀번호 찾기</a>
+    </div>
+</div>
 
 {% endif %}
 
 {% if check =='1' %}
 
-회원님의 비밀번호는 {{userpw}}입니다!
+<!-- 회원님의 비밀번호는 {{userpw}}입니다!
 <a href="/user/login">로그인하러가기</a>
-<a href="/">메인페이지</a>
+<a href="/">메인페이지</a> -->
 
+
+<div id="wrap">
+    <div id="container" style="height:894px">
+        <h1></h1>
+        <div id="content_header">
+            <h5>비밀번호 찾기</h5>
+        </div>
+            <div class="box">
+                <div id="div_email" class="box_inn selected">
+
+                    <div class="box_inn_sub">
+                        <p class="dsc">고객님의 정보와 일치하는 비밀번호입니다.</p>
+                        <dl>
+                            <dt>
+                                <label for="phoneNm" class="label_txt">
+                                    비밀번호:
+                                </label>
+                            </dt>
+
+                            <dd>
+                                <span class="">{{userpw}}</span>
+                            </dd>
+                            <dt>
+                                <label for="t_pn1" class="label_txt">
+                                    가입날짜:
+                                </label>
+                            </dt>
+                            <dd>
+                                <span class="" >{{userdt}}</span>
+                            </dd>
+
+                        </dl>
+
+                    </div>
+                </div>
+            </div>
+            <div class="btn_area">
+                <a class="btn2" href="/user/login">로그인</a>
+                <a class="btn3" href="/user/find_info?flag=0">아이디 찾기</a>
+    </div>
+</div>
 {% endif %}
 {% include "../layout/bottom.html" %}

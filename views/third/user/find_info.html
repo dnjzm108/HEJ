@@ -16,9 +16,9 @@
     {% if flag == '0' %}
     <div id="wrap">
         <div id="container" style="height:894px">
-            <h1>아이디를 잃어버리셨나요? 찾으세요!</h1>
+            <h1>아이디 찾기</h1>
             <div id="content_header">
-                <h5>아이디 찾기</h5>
+                <h5>아이디를 잃어버리셨나요? 찾으세요!</h5>
             </div>
             <form action="/user/find_check?check=0" method="post">
                 <div class="box">
@@ -34,8 +34,7 @@
                                 </dt>
 
                                 <dd>
-                                    <input type="text" maxlength="40"  class="input_txt"
-                                        name="user_name" required>
+                                    <input type="text" maxlength="40" class="input_txt" name="user_name" required>
                                 </dd>
                                 <dt>
                                     <label for="t_pn1" class="label_txt">
@@ -53,14 +52,14 @@
                 </div>
                 <div class="btn_area">
                     <a class="btn2" href="/user/login">취소</a>
-                    <input type="submit" name="search" class="btn2" value="아이디 찾기">
+                    <input type="submit" name="search" class="btn2" value="찾기">
             </form>
         </div>
     </div>
     {% endif %}
 
     {% if flag == '1' %}
-    <div id="wrap">
+    <!-- <div id="wrap">
         <div class="box">
             <form action="/user/find_check?check=1" method="post">
                 <table>
@@ -85,6 +84,56 @@
                 </table>
             </form>
         </div>
+    </div> -->
+
+    <div id="wrap">
+        <div id="container" style="height:894px">
+            <h1>비밀번호 찾기</h1>
+            <div id="content_header">
+                <h5>비밀번호를 잃어버리셨나요? 찾으세요!</h5>
+            </div>
+            <form action="/user/find_check?check=1" method="post">
+                <div class="box">
+                    <div id="div_email" class="box_inn selected">
+
+                        <div class="box_inn_sub">
+                            <p class="dsc">회원정보에 등록한 이름과 이메일이 같아야, 비밀번호를 찾을 수 있습니다.</p>
+                            <dl>
+                                <dt>
+                                    <label for="phoneNm" class="label_txt">
+                                        이름
+                                    </label>
+                                </dt>
+
+                                <dd>
+                                    <input type="text" maxlength="40" class="input_txt" name="user_name" required>
+                                </dd>
+                                <dt>
+                                    <label for="t_pn1" class="label_txt">
+                                        이메일
+                                    </label>
+                                </dt>
+                                <dd>
+                                    <input type="text" class="input_txt" name="user_email" required>
+                                </dd>
+
+                            </dl>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="btn_area">
+                    <a class="btn2" href="/user/login">취소</a>
+                    <input type="submit" name="search" class="btn2" value="찾기">
+            </form>
+        </div>
     </div>
     {% endif %}
+    <script type="text/javascript">
+        let msg = "{{msg}}"
+        if (msg != "") {
+            alert("{{msg}}");
+        }
+
+    </script>
     {% include "../layout/bottom.html" %}

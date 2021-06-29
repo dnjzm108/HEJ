@@ -3,7 +3,6 @@ const moment = require('moment');
 const chash = require('../../chash');
 const token = require('../../jwt');
 const session = require('express-session');
-const { render } = require('nunjucks');
 
 let index = (req, res) => {
     let { uid1: userid } = req.session;
@@ -18,8 +17,8 @@ let join = (req, res) => {
 let login = (req, res) => {
     let { flag } = req.query;
     let { uid1: userid } = req.session;
-    let {msg} = req.query;
-    res.render('./third/user/login.html', { flag, session: session.authData, userid,msg});
+    let { msg } = req.query;
+    res.render('./third/user/login.html', { flag, session: session.authData, userid, msg });
 };
 
 let info = async (req, res) => {
@@ -94,11 +93,11 @@ let login_check = async (req, res) => {
         res.redirect("/user/login?flag=0");
     }
     res.cookie('AccessToken', ctoken, { httpOnly: true, secure: true, })
-    let authData = { 
+    let authData = {
         userid: result.user_name,
         level: result.authority_level
-     }
-     console.log(result.authority_level);
+    }
+    console.log(result.authority_level);
     session.authData = {
         ["local"]: authData
     }
@@ -159,7 +158,7 @@ let userid_check = async (req, res) => {
 
 let info_modify = async (req, res) => {
     let userid = session.authData.local.userid;
-    let result = await user.findOne({ where: { user_name:userid } })
+    let result = await user.findOne({ where: { user_name: userid } })
     let short = result.dataValues;
     let userpw = short.userpw;
     let userimage = `${short.userimage}`;
@@ -171,7 +170,7 @@ let info_modify = async (req, res) => {
     };
     const test = JSON.parse(Buffer.from(userpw, 'base64').toString());
     res.render('./third/user/info_modify.html', {
-        id:short.id,
+        id: short.id,
         userid: short.userid,
         userpw: test,
         gender,
@@ -193,38 +192,56 @@ let info_after_modify = async (req, res) => { //DB 업데이트, findOne 해오�
     let user_addressnew2 = user_addressnew == '' ? user_address : user_addressnew;
 
     await user.update({
-        userpw:hash, gender, user_birth, userimage, user_name, user_number, user_email, user_addressnew2, userdt
+        userpw: hash, gender, user_birth, userimage, user_name, user_number, user_email, user_addressnew2, userdt
     }, { where: { userid } });
 
-  
+
     req.session.userimage = userimage;
     res.redirect('/user/info?checked=1');
 };
 
 let find_info = async (req, res) => {
-    let { flag } = req.query;
-    res.render('./third/user/find_info.html', { flag });
+    let { flag, msg } = req.query;
+    res.render('./third/user/find_info.html', { flag, msg });
 }
 
 let find_check = async (req, res) => {
 
     let { check } = req.query;
-    let { user_name, user_email, } = req.body;
+    let { user_name, user_email } = req.body;
     let result = await user.findOne({
         where: { user_name, user_email }
     })
+    console.log(user_name, user_email);
+
+    console.log(result, "++++++++++++++++++++++++++++++++++++")
+
+
     flag = false;
-    let { userid, userpw } = result.dataValues;
-    const test = JSON.parse(Buffer.from(userpw, 'base64').toString());
-    if (check == "0") {
-        res.render("./third/user/find_success.html", {
-            userid, userpw: test, check: '0'
-        })
+    if (result != null) {
+        let { userid, userpw, userdt } = result.dataValues;
+        console.log(userdt);
+        const test = JSON.parse(Buffer.from(userpw, 'base64').toString());
+        if (check == "0") {
+            res.render("./third/user/find_success.html", {
+                userid, userpw: test, check: '0',
+                userdt: moment(userdt).format('YYYY년 MM월 DD일'),
+            })
+        } else {
+            res.render("./third/user/find_success.html", {
+                userid, userpw: test, check: '1',
+                userdt: moment(userdt).format('YYYY년 MM월 DD일'),
+            })
+        }
     } else {
-        res.render("./third/user/find_success.html", {
-            userid, userpw: test, check: '1'
-        })
+        if(check =="0"){
+            res.redirect("/user/find_info?flag=0&msg=해당정보를 찾을 수 없습니다.")
+        }else{
+            res.redirect("/user/find_info?flag=1&msg=해당정보를 찾을 수 없습니다.")
+
+        }
     }
+
 };
 
 let google = (req, res) => {
