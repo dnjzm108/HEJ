@@ -11,32 +11,62 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Viaoda+Libre&display=swap"
         rel="stylesheet">
-        
+    {% if popup != "" %}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let idArr = document.querySelector('#idArr').value;
             idArr = idArr.split(',');
             idArr.splice(idArr.length - 1, 1);
             idArr.forEach(v => {
+                let type = document.querySelector('#type' + v);
+                let hyperlink = document.querySelector('#hyperlink' + v);
+                let title = document.querySelector('#title' + v);
                 let content = document.querySelector('#content' + v);
-                let pre = document.querySelector('#pre' + v);
-                let setting = document.querySelector('#setting' + v);
-                let popupContent = document.querySelector('#popup_content' + v)
-                popupContent.style.cssText = `${setting.value};border:1px solid #000`;
-                pre.innerHTML = `${content.value}`
-            })
+                let setting2 = document.querySelector('#setting2' + v);
+                
+                if (type.value == 1) {
+                    function normalpopup() {
+                        let url = hyperlink.value;
+                        let name = title.value;
+                        let option = setting2.value;
+                        window.open(url, name, option);
+                    }
+                    normalpopup();
+                }
+                else if (type.value == 0) {
+                    let pre = document.querySelector('#pre' + v);
+                    let setting = document.querySelector('#setting' + v);
+                    let popupContent = document.querySelector('#popup_content' + v);
+                    popupContent.style.cssText = `${setting.value};border:1px solid #000;`;
+                    pre.innerHTML = `${content.value}`;
+
+                    let checkCookie = getCookie('popupCookie');
+                    // console.log(checkCookie)
+                    if (checkCookie == 'popupEnd') {
+                        popupContent.setAttribute('style', 'display:none')
+                    }
+                }
+
+                console.log(getCookie('popupCookie'))
+                function getCookie(name) {
+                    let cookie = document.cookie;
+                    if (document.cookie != "") {
+                        let cookie_array = cookie.split("; ");
+                        console.log(cookie_array)
+                        for (let index in cookie_array) {
+                            let cookie_name = cookie_array[index].split("=");
+                            if (cookie_name[0] == "popupCookie") {
+                                return cookie_name[1];
+                            }
+                        }
+                    }
+                    return;
+                }
+            });
         });
-            // document.querySelector('.abc').style.cssText  = 'background-color:red; width:300px; height:300px;';
+
     </script>
-    {% if popup != "" %}
-    <script type="text/javascript">
-        setTimeout(function () {
-            var url = "https://chlolisher.tistory.com/101";
-            var name = "popup test";
-            var option = "width = 500, height = 500, top = 100, left = 200, location = no";
-            window.open(url, name, option)
-        }, 2000)
-    </script>
+
     {% endif %}
 </head>
 
@@ -51,7 +81,7 @@
         <!-- <div style="background: black; height: 80px; position:absolute; top:-300px; "></div> -->
         <div id="menu">
             <ul>
-                <img id="logo" src="/uploads/logo_bottom_2018.png">
+                <img id="logo" src="/uploads/logo_new_2018.png">
                 <li> <a href="/information">INFORMATION</a> </li>
                 <li> <a href="/education">EDUCATION</a> </li>
                 <li> <a href="/hired">HIRED</a> </li>
@@ -89,10 +119,13 @@
             <a href="/user/info?checked=0" id="user">{{userid}} 님</a>
             {% endif %}
             <div id="text_event">
-                <h1>나는 그저 <span id="question">질문</span> 하는 자다... </h1></br>
-                <h3>알고리즘은 내가 던지는 질문이다</h3>
-                <h5>답은 그대가 찾아라</h5></br>
-                <h5> - 엄익균 </h5>
+                <h1><span id="question">컴퓨터</span>는 거짓말을 하지 않는다  <p class="p_tag">- 곽인구</p></h1>
+               
+                <h3>컴퓨터는 때로는 <span id="question2">거짓말</span>을 하는거 같아요... <p class="p_tag p_tag2" >- 정성진 </p></h3>
+               
+              
+                <h5><span id="question3">콘솔</span>  찍어 봤어요?안찍어봤으면 <span id="question4">말</span>을 하지마세요!<p class="p_tag p_tag3">- 엄익균</p></h5>
+                
             </div>
             <div id="tum">
                 <section id="square">
@@ -124,13 +157,13 @@
                     <h3>97.87%</h3>
                 </div>
             </div> -->
-            <form id="apply_form">
+            <form id="apply_form" method="POST" action="/apply">
                 <label for="name">name</label>
-                <input id="name" type="text"><br />
+                <input id="name" name="name" type="text"><br />
                 <label for="age">age</label>
-                <input id="age" type="text"></br>
+                <input id="age" name="age" type="text"></br>
                 <label for="number">number</label></br>
-                <input id="number" type="text"></br>
+                <input id="number" name="number" type="text"></br>
                 <label for="content">content</label>
                 <textarea name="content" id="content" cols="30" rows="10"></textarea>
                 <input id="" type="submit" value="apply">
@@ -145,14 +178,19 @@
         <textarea style="display: none;" id="content{{item.id}}">{{item.content}}</textarea>
         <pre id="pre{{item.id}}"></pre>
         <textarea style="display: none;"
-            id="setting{{item.id}}">position:absolute;background-color:beige;width:{{item.pop_width}}px;height:{{item.pop_height}}px;top:{{item.pop_locationY}}px;left:{{item.pop_locationX}}px</textarea>
+            id="setting{{item.id}}">position:absolute;width:{{item.pop_width}}px;height:{{item.pop_height}}px;top:{{item.pop_locationY}}px;left:{{item.pop_locationX}}px</textarea>
         <div id="popup_check">
             <input type="checkbox" name="visibility" id="popup_checkbox{{item.id}}">
             <label for="popup_checkbox{{item.id}}">1일동안 이 창 보지않기</label>
             <button
-                style="float:right; color:#fff; background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer"
+                style="float:right; color: #fff; background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer"
                 id="popup_close{{item.id}}">닫기</button>
         </div>
+        <input type="hidden" id="hyperlink{{item.id}}" value="{{item.hyperlink}}">
+        <input type="hidden" id="title{{item.id}}" value="{{item.title}}">
+        <input type="hidden" id="setting2{{item.id}}"
+            value="width = {{item.pop_width}}, height = {{item.pop_height}}, top = {{item.pop_locationY}}, left = {{item.pop_locationX}}, location = no">
+        <input type="hidden" id="type{{item.id}}" value="{{item.type}}">
     </div>
     {% endfor %}
     {% endif %}
@@ -160,6 +198,29 @@
 
 
     <script type="text/javascript">
+
+        let idArr = document.querySelector('#idArr').value;
+        idArr = idArr.split(',');
+        idArr.splice(idArr.length - 1, 1);
+        idArr.forEach(v => {
+            let popupContent = document.querySelector('#popup_content' + v);
+            let closeBtn = document.querySelector('#popup_close' + v);
+            let closeOneday = document.querySelector('#popup_checkbox' + v);
+
+            closeBtn.addEventListener('click', () => {
+                popupContent.setAttribute('style', 'display:none')
+            })
+
+            closeOneday.addEventListener('click', () => {
+                setCookie("popupCookie", "popupEnd", 1);
+            })
+
+        })
+        function setCookie(name, value, expiredays) {
+            var today = new Date();
+            today.setDate(today.getDate() + expiredays); // 현재시간에 하루를 더함 
+            document.cookie = name + '=' + escape(value) + '; expires=' + today.toGMTString();
+        }
 
         const chatBtn = document.querySelector('#cha_btn')
         function popup() {
@@ -170,9 +231,11 @@
             window.open(url, name, option);
         }
         chatBtn.addEventListener('click', popup)
-    </script>
 
-    <script type="text/javascript">
+        let msg = '{{msg}}'
+        if (msg != '') {
+            alert('{{msg}}');
+        }
 
         let a = 0;
         const square = document.querySelector('#square');
@@ -198,8 +261,6 @@
             square.style.animation = 'none'
             square.style.transform = `rotateX(${X}deg) rotateY(${X}deg)`;
         }
-    </script>
-    <script type="text/javascript">
 
         let consult_btn = document.querySelector('#consult_btn');
         let apply_form = document.querySelector('#apply_form');
@@ -208,7 +269,7 @@
         function apply() {
             if (fleg == '0') {
                 apply_form.style.display = 'block';
-            
+
                 fleg = 1;
             } else {
                 apply_form.style.display = 'none';
@@ -216,8 +277,6 @@
             }
         }
         consult_btn.addEventListener('click', apply)
-
-
     </script>
 </body>
 

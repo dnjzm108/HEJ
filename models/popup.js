@@ -20,17 +20,13 @@ module.exports = function(sequelize, DataTypes) {
       type:DataTypes.DATE,
       allowNull:false,
     },
-    type:{
-      type:DataTypes.INTEGER,
-      allowNull:false,
-    },
     visibility:{
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     scroll:{
       type: DataTypes.INTEGER,
-      allowNull:false,
+      allowNull:true,
     },
     pop_width:{
       type: DataTypes.MEDIUMINT,
@@ -55,6 +51,10 @@ module.exports = function(sequelize, DataTypes) {
     content:{
       type: DataTypes.TEXT('long'),
       allowNull:false,
+    },
+    type:{
+      type:DataTypes.INTEGER,
+      allowNull:false
     },
     date:{
       type:Sequelize.DATE,

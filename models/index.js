@@ -15,6 +15,7 @@ let models = initModels(sequelize)
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.admin = models.admin;
+db.apply = models.apply;
 db.community = models.community;
 db.information = models.information;
 db.qanda = models.qanda;

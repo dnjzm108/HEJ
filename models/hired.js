@@ -19,6 +19,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
+    thumbnail:{
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    creator:{
+      type:DataTypes.STRING(50),
+      allowNull: true,
+    },
     date:{
       type:Sequelize.DATE,
       allowfull:true,

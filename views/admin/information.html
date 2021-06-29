@@ -39,12 +39,11 @@
             <div id="infom">
                 <h1>INFORMATION</h1>
                 <div id="atags">
-                    <a class="btn" href="/admin/information">전체</a>
-                    <a class="btn" href="/admin/information/intro">인사말</a>
-                    <a class="btn" href="/admin/information/history">연혁</a>
-                    <a class="btn" href="/admin/information/staff">교직원소개</a>
-                    <a class="btn" href="/admin/information/facility">시설소개</a>
-                    <a class="btn" href="/admin/information/location">오시는 길</a>
+                    <a class="btn atag" href="/admin/information">전체</a>
+                    <a class="btn atag" href="/admin/information/intro">인사말</a>
+                    <a class="btn atag" href="/admin/information/history">연혁</a>
+                    <a class="btn atag" href="/admin/information/staff">교직원소개</a>
+                    <a class="btn atag" href="/admin/information/facility">시설소개</a>
                 </div>
             </div>
             <div id="board" style="margin-bottom: 50px;">
@@ -77,7 +76,9 @@
                                 {% if localUrl != undefined %}
                                 <td><input class="visible" type="radio" name="visibility" value="{{item.id}}"></td>
                                 {% endif %}
-                                <td><a href="/admin/view?id={{item.id}}&table=information&localUrl={{localUrl}}">{{item.title}}</a></td>
+                                <td><a
+                                        href="/admin/view?id={{item.id}}&table=information&localUrl={{item.type}}">{{item.title}}</a>
+                                </td>
                                 {% if localUrl == undefined %}
                                 <td><a href="/admin/information/{{item.type}}">{{item.type}}</a></td>
                                 {% endif %}
@@ -100,7 +101,7 @@
             <div class="footer center">
                 <div id="pagenation">
                     {% for item in pagin %}
-                    <a href="/admin/community/{{localUrl}}?id={{item}}">{{item}}</a>
+                    <a href="/admin/information/{{localUrl}}?id={{item}}">{{item}}</a>
                     {% endfor %}
                 </div>
                 {% if localUrl != undefined %}
@@ -113,20 +114,30 @@
 
     <script type="text/javascript">
         const itemInfo = document.querySelectorAll('.itemInfo');
-        itemInfo.forEach(v=>{
+        itemInfo.forEach(v => {
             let list = v.value.split(",");
-            if(list[1] == 1){
-                return result=list[0]
+            if (list[1] == 1) {
+                return result = list[0]
             }
         })
         const visible = document.querySelectorAll('.visible');
-        visible.forEach(v=>{
-            if(v.value == result){
+        visible.forEach(v => {
+            if (v.value == result) {
                 v.checked = true;
             }
         })
+
+        const atag = document.querySelectorAll('.atag');
+        atag.forEach(v => {
+            let tagName = v.href.replace('http://localhost:3000/admin/information/', '');
+            if (tagName == '{{localUrl}}') {
+                v.setAttribute('style', 'background-color:#ededed;');
+                return;
+            };
+        });
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>
+
 </html>

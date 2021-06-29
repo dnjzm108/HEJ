@@ -12,22 +12,19 @@ a{
 }
 
 .menu{
-    margin-top: 20px;
     width: 250px;
-    height: 800px;
-    padding: 50px 0;
-    text-align: center;
+    height: auto;
+    padding-top: 25px;
+    text-align: left;
     box-sizing: border-box;
-    border-right: 1px solid #000;
+    background-color: #efefef03;
 }
 
-.menu > a{
+.main_menu{
     width: 80px;
     display: block;
-    margin: 50px auto 20px auto;
-    border-bottom: 1px solid #000;
     color: #000;
-    box-sizing: border-box;
+    line-height: 50px;
 }
 
 .menu > a:hover{
@@ -43,4 +40,11 @@ a{
 
 .sub_menu > a:hover{
     color: #16141467;
+}
+
+#menu_footer{
+    height: 100px;
+    width: 100%;
+    margin-bottom: 0px;
+    border-top: 1px solid #000;
 }

@@ -19,7 +19,97 @@
         <div class="container">
             <h1>MODIFY</h1>
             <form action="/admin/modify_success" id="modify_form" method="POST">
+                <input type="text" name="localUrl" style="display:none;" value="{{localUrl}}">
+                <input type="text" name="type" style="display:none;" value="{{table}}">
                 <input type="text" style="display: none;" name="writer" id="writer" value="{{moList.writer}}">
+
+                <div id="typeof" class="input">
+                    {% if table=='information' %}
+                    <select class="form-control" id="type" name="type">
+                        <option class="option" value="intro">인사말</option>
+                        <option class="option" value="history">연혁</option>
+                        <option class="option" value="staff">교직원소개</option>
+                        <option class="option" value="facility">시설소개</option>
+                        <option class="option" value="location">오시는 길</option>
+                    </select>
+                    <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
+                    <script type="text/javascript">
+                        const id = document.getElementById('comid').value;
+                        const option = document.querySelectorAll('.option');
+                        option.forEach(v => {
+                            if (id == v.value) {
+                                v.setAttribute('selected', 'true');
+                            }
+                        })
+                    </script>
+                    {% endif %}
+
+                    {% if table =='hired' %}
+                    <select class="form-control" id="type" name="type">
+                        <option class="option" value="interview">취업자 인터뷰</option>
+                        <option class="option" value="portfolio">포트폴리오</option>
+                    </select>
+                    <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
+                    <script type="text/javascript">
+                        const id = document.getElementById('comid').value;
+                        const option = document.querySelectorAll('.option');
+                        option.forEach(v => {
+                            if (id == v.value) {
+                                v.setAttribute('selected', 'true');
+                            }
+                        })
+                    </script>
+                    {% endif %}
+
+                    {% if table =='community' %}
+                    <select class="form-control" id="type" name="type">
+                        <option class="option" value="notice">공지사항</option>
+                    </select>
+                    <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
+                    <script type="text/javascript">
+                        const id = document.getElementById('comid').value;
+                        const option = document.querySelectorAll('.option');
+                        option.forEach(v => {
+                            if (id == v.value) {
+                                v.setAttribute('selected', 'true');
+                            }
+                        })
+                    </script>
+                    {% endif %}
+
+                    {% if table == "education" %}
+                    <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
+                    <label for="edName">교육과정명</label>
+                    <input type="text" name="edName" id="edName" class="form-control" value="{{moList.edName}}">
+                    <label>교육기간</label>
+                    <div id="date_wrap" class="input">
+                        <input type="date" class="form-control" value="{{moList.ed_start_period}}" style="width: 50%; float: left;" name="edPeriod"
+                            id="period">
+                        <input type="date" class="form-control" value="{{moList.ed_end_period}}" style="width: 50%" name="edPeriod" id="period">
+                    </div>
+                    <label for="time">교육시간</label>
+                    <input type="text" class="form-control" name="time" id="time" value="{{moList.time}}">
+                    <div id="feeSelect">
+                        <label>교육수당</label>
+                        <select class="selectpicker" name="fee">
+                            <option class="fee" value="훈련비 전액지원, 교통비 지급">훈련비 전액지원, 교통비 지급</option>
+                            <option class="fee" value="전액국비지원">전액국비지원</option>
+                            <option class="fee" value="별도문의">별도문의</option>
+                        </select>
+                    </div>
+                    <script type="text/javascript">
+                        const id = document.getElementById('comid').value;
+                        const option = document.querySelectorAll('.fee');
+                        option.forEach(v => {
+                            if (id == v.value) {
+                                v.setAttribute('selected', 'true');
+                            }
+                        })
+                    </script>
+                    {% endif %}
+
+                </div>
+
                 <div id="title_input" class="input">
                     <label for="title">TITLE</label>
                     <input type="text" class="form-control" name="title" id="title" value="{{moList.title}}"><br />
@@ -31,19 +121,35 @@
                 <textarea style="display: none;" id="modifyId" name="modifyId">{{moList.id}}</textarea>
                 <textarea style="display: none;" id="modifyId" name="table">{{table}}</textarea>
 
+                {% if table == "hired" %}
+                <div id="thumbnail_wrap">
+                    <label for="thumbnail">썸네일</label>
+                    <input type="file" id="thumbnail" name="thumbnail">
+                    <label for="creator">이름</label>
+                    <input type="text" id="creator" class="form-control" name="creator" value="{{moList.creator}}">
+                </div>
+                {% endif %}
+
                 <div id="summernote">
                 </div>
-                <input type="submit" class="btn" id="modify_submit" value="MODIFY">
                 <textarea style="display: none;" name="content" id="result"></textarea>
+
+                {% if table == "education" %}
+                <label for="hashtag">해시태그</label>
+                <input type="text" name="hashtag" id="hashtag" class="form-control" placeholder="#" value="{{moList.hashtag}}">
+                {% endif %}
+
+                <input type="submit" class="btn" id="modify_submit" value="MODIFY">
+
             </form>
         </div>
     </div>
     <script type="text/javascript">
-        
+
         $(document).ready(function () {
             $('#summernote').summernote()
         })
-        
+
         $('#summernote').summernote({
             height: 500,
             minHeight: null,
@@ -54,8 +160,8 @@
             }
         });
         const content = document.querySelector('#content').value;
-        $('#summernote').summernote('code',content);
-        
+        $('#summernote').summernote('code', content);
+
         const button = document.querySelector('#modify_submit')
         const modify_form = document.querySelector('#modify_form');
 

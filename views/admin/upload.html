@@ -18,7 +18,7 @@
     <div id="wrap">
         <div class="container">
             <h1>UPLOAD</h1>
-            <form action="/admin/upload_success" id="info_form" method="POST">
+            <form action="/admin/upload_success" id="info_form" method="POST" enctype="multipart/form-data">
                 <input type="text" name="localUrl" style="display:none;" value="{{title}}">
                 <input style="display: none;" type="text" name="writer" id="writer" value="최고관리자">
 
@@ -63,8 +63,6 @@
                     {% if title =='community' %}
                     <select class="form-control" id="type" name="type">
                         <option class="option" value="notice">공지사항</option>
-                        <option class="option" value="board">게시판</option>
-                        <option class="option" value="qanda">Q and A</option>
                     </select>
                     <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
                     <script type="text/javascript">
@@ -104,12 +102,48 @@
 
                 <div id="title_input" class="input">
                     <label for="title">TITLE</label>
-                    <input type="text" class="form-control" name="title" id="title"><br />
+                    <input type="text" class="form-control" name="title" id="title">
                 </div>
 
+                <!-- if localUrl == "staff"  -->
+                <!-- <div id="staff_image_wrap">
+                    <label for="staff_image">직원 사진</label>
+                    <input type="file" id="staff_image" name="thumbnail">
+                </div>
+                <div id="staff_comment_wrap">
+                    <label for="staff_comment">한줄 소개</label>
+                    <input type="text" id="staff_comment" name="staffComment" class="form-control">
+                </div>
+                <div id="staff_position_wrap">
+                    <label for="staff_position">직책</label>
+                    <input type="text" id="staff_position" name="staffPosition" class="form-control">
+                </div>
+                <div id="staff_name_wrap">
+                    <label for="staff_name">이름</label>
+                    <input type="text" id="staff_name" name="staffName" class="form-control">
+                </div>
+                <div id="staff_career_wrap">
+                    <label for="staff_career">경력</label>
+                    <input type="text" class="form-control" id="staff_career" name="staffCareer">
+                </div>
+                <div id="staff_explanation_wrap">
+                    <label for="staff_explanation">설명</label>
+                    <input type="text" id="staff_explanation" name="staffExplanation" class="form-control">
+                </div> -->
+                
+                {% if title == "hired" %}
+                <div id="thumbnail_wrap">
+                    <label for="thumbnail">썸네일</label>
+                    <input type="file" id="thumbnail" name="thumbnail">
+                    <label for="creator">이름</label>
+                    <input type="text" id="creator" name="creator" class="form-control">
+                </div>
+                {% endif %}
+                
                 <div id="summernote">
                 </div>
                 <textarea style="display: none;" name="content" id="result"></textarea>
+                
                 {% if title == "education" %}
                 <label for="hashtag">해시태그</label>
                 <input type="text" name="hashtag" id="hashtag" class="form-control" placeholder="#">
@@ -150,7 +184,9 @@
             //     alert('Enter the content');
             //     return
             // }
-            result.innerHTML = markupStr;
+            if(result != null){
+                result.innerHTML = markupStr;   
+            }
             info_form.submit();
         }
     </script>

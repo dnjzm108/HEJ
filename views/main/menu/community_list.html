@@ -80,7 +80,8 @@
     tags.forEach(v => {
         let tagName = v.href.replace('http://localhost:3000/community/', '');
         if (tagName == localUrl) {
-            v.setAttribute('style', 'background-color:#ededed');
+            v.setAttribute('style', 'border-bottom:1px solid black');
+            v.setAttribute('class','menu_ani')
         }
     })
 </script>

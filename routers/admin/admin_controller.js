@@ -3,6 +3,7 @@ const moment = require('moment');
 const ctoken = require('../../jwt');
 const search = require('../../serach');
 const pagination = require('../../pagination');
+const chash = require('../../chash');
 const router = require('.');
 const { Op } = require("sequelize");
 // const {Sequelize} = require('../../models/index.js');
@@ -30,14 +31,26 @@ let login_success = async (req, res) => {
             authority_level: '3'
         }
     })
-    if (loginSuccess == null) {
-        res.redirect('/admin/admin_login?flag=0&msg=NOT AUTHORIZED.');
-    } else {
+    let userpw = chash(adminpw)
+    let userAdmin = await user.findOne({
+        where: {
+            userid: adminid,
+            userpw,
+            authority_level: '3'
+        }
+    })
+    if (loginSuccess != null || userAdmin != null) {
         let adminToken = ctoken(adminpw);
         res.cookie('AccessToken', adminToken, {});
         res.redirect('/admin/main');
+    } else {
+        res.redirect('/admin/admin_login?flag=0&msg=NOT AUTHORIZED.');
     }
 };
+
+// else if(userAdmin == null){
+//     res.redirect('/admin/admin_login?flag=0&msg=NOT AUTHORIZED.')
+// }
 
 /*========================WRITE PAGE========================*/
 
@@ -48,21 +61,39 @@ let upload = (req, res) => {
 
 let upload_success = async (req, res) => {
     let { localUrl, title, content, writer, type } = req.body;
-    if(localUrl == 'education'){
-        let { edName, edPeriod, time, fee , hashtag, localUrl, title, content, writer } = req.body;
-        let edResult = await search[localUrl].create({edName,ed_start_period:edPeriod[0],ed_end_period:edPeriod[1],time,fee,hashtag,title,content,writer,type});
-        await search[localUrl].update({visibility:1},{where:{id:edResult.id}});
-        await search[localUrl].update({visibility:0},{where:{id:{[Op.ne]:edResult.id}}});
+    if (localUrl == 'education') {
+        let { edName, edPeriod, time, fee, hashtag, localUrl, title, content, writer } = req.body;
+        let edResult = await search[localUrl].create({ edName, ed_start_period: edPeriod[0], ed_end_period: edPeriod[1], time, fee, hashtag, title, content, writer, type });
+        await search[localUrl].update({ visibility: 1 }, { where: { id: edResult.id } });
+        await search[localUrl].update({ visibility: 0 }, { where: { id: { [Op.ne]: edResult.id } } });
         res.redirect('/admin/education');
         return;
     }
 
-    let result = await search[localUrl].create({ title, content, writer, type });
-    if(localUrl == 'information'){
-        await search[localUrl].update({visibility:1},{where:{type,id:result.id}});
-        await search[localUrl].update({visibility:0},{where:{type,id:{[Op.ne]:result.id}}});
+    if (localUrl == 'hired') {
+        let thumbnail = req.file == undefined ? '' : `/uploads/user_image/${req.file.filename}`;
+        let { title, content, writer, type, creator } = req.body;
+        await search[localUrl].create({title,content,writer,type, thumbnail, creator});
+        res.redirect(`/admin/hired/${type}`);
+        return;
     }
+
+    // if(type == 'staff'){
+    //     let thumbnail = req.file == undefined ? '' : `/uploads/user_image/${req.file.filename}`;
+    //     let {title, writer, type, staffComment, staffPosition, staffName, staffCareer, staffExplanation } = req.body;
+    //     await search[localUrl].create({title,writer,type,thumbnail,staffComment,staffPosition,staffName,staffCareer,staffExplanation});
+    //     res.redirect('/admin/information/staff');
+    //     return;
+    // }
+
+    let result = await search[localUrl].create({ title, content, writer, type });
+    if (localUrl == 'information') {
+        await search[localUrl].update({ visibility: 1 }, { where: { type, id: result.id } });
+        await search[localUrl].update({ visibility: 0 }, { where: { type, id: { [Op.ne]: result.id } } });
+    }
+
     /* 각각의 board로 redirect 될 수 있도록 */
+    
     if (type != null) {
         res.redirect(`/admin/${localUrl}/${type}`);
     }
@@ -73,6 +104,7 @@ let upload_success = async (req, res) => {
 
 let view = async (req, res) => {
     let { id, table, localUrl } = req.query;
+    console.log(localUrl)
     let infoView = await search[table].findOne({ where: { id } })
     let infoList = infoView.dataValues;
     let location = 1;
@@ -99,7 +131,6 @@ let view = async (req, res) => {
             
         });
     }
-    
 };
 
 let postDel = async (req, res) => {
@@ -112,20 +143,32 @@ let postDel = async (req, res) => {
     }
 };
 
+/*=======================MODIFY PAGE=======================*/
+
 let modify = async (req, res) => {
-    let { id, table } = req.query;
+    let { id, table, localUrl } = req.query;
     let modify_result = await search[table].findOne({ where: { id } });
     let moList = modify_result.dataValues;
+    if(table == "education"){
+        moList.map(v=>{
+            return{
+                ...v,
+                
+            }
+        })
+    }
     res.render('./admin/modify.html', {
         moList,
         table,
+        localUrl
     });
 };
 
 let modify_success = async (req, res) => {
     let { title, content, modifyId, table } = req.body;
     await search[table].update({ title, content }, { where: { id: modifyId } });
-    res.redirect(`/admin/view?id=${modifyId}&table=${table}`);
+    // res.redirect(`/admin/view?id=${modifyId}&table=${table}`);
+    res.redirect(`/admin/${table}`)
 };
 
 /*========================= 학원소개 ==========================*/
@@ -149,8 +192,8 @@ let Information = async (req, res) => {
 
 let information_update = async (req, res) => {
     let { visibility, local } = req.body;
-    await information.update({ visibility:1 }, { where: {id:visibility} });
-    await information.update({visibility:0},{where:{id :{[Op.ne]: visibility},type:local}});
+    await information.update({ visibility: 1 }, { where: { id: visibility } });
+    await information.update({ visibility: 0 }, { where: { id: { [Op.ne]: visibility }, type: local } });
     res.redirect(`/admin/information/${local}`);
 }
 
@@ -199,10 +242,10 @@ let educationT = async (req, res) => {
     });
 };
 
-let education_update = async (req,res)=>{
-    let {visibility} = req.body;
-    await education.update({visibility:0},{where:{id:{[Op.ne]:null}}});
-    await education.update({visibility:1},{where:{id:visibility}});
+let education_update = async (req, res) => {
+    let { visibility } = req.body;
+    await education.update({ visibility: 0 }, { where: { id: { [Op.ne]: null } } });
+    await education.update({ visibility: 1 }, { where: { id: visibility } });
     res.redirect('/admin/education');
 }
 /*========================= 팝업 게시판 ================================= */
@@ -234,8 +277,8 @@ let popup_upload = (req, res) => {
 };
 
 let popup_upload_success = async (req, res) => {
-    let { writer, visibility, title, period, type, scroll, size, location, hyperlink, content } = req.body;
-    await popupTd.create({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content });
+    let { writer, visibility, title, type, period, scroll, size, location, hyperlink, content } = req.body;
+    await popupTd.create({ writer, visibility, type, title, popup_start_date: period[0], popup_end_date: period[1], scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content });
     res.redirect('/admin/popup');
 };
 
@@ -274,8 +317,8 @@ let popup_modify = async (req, res) => {
 };
 
 let popup_modify_success = async (req, res) => {
-    let { writer, visibility, title, period, type, scroll, size, location, hyperlink, content, modifyId, table } = req.body;
-    await search[table].update({ writer, visibility, title, popup_start_date: period[0], popup_end_date: period[1], type, scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content }, { where: { id: modifyId } });
+    let { writer, visibility, title,type, period, scroll, size, location, hyperlink, content, modifyId, table } = req.body;
+    await search[table].update({ writer, type, visibility, title, popup_start_date: period[0], popup_end_date: period[1], scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content }, { where: { id: modifyId } });
     res.redirect(`/admin/popup_view?id=${modifyId}&table=${table}`);
 };
 
