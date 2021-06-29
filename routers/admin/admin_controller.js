@@ -149,6 +149,14 @@ let modify = async (req, res) => {
     let { id, table, localUrl } = req.query;
     let modify_result = await search[table].findOne({ where: { id } });
     let moList = modify_result.dataValues;
+    if(table == "education"){
+        moList.map(v=>{
+            return{
+                ...v,
+                
+            }
+        })
+    }
     res.render('./admin/modify.html', {
         moList,
         table,
