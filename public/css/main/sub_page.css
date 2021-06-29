@@ -44,7 +44,7 @@ textarea{
 
 #header > ul > li > a{
     font-size: 2.3vh;
-    color: #2e2b2bd7;
+    color:  #003264;
 }
 
 #headerImg{
@@ -53,34 +53,39 @@ textarea{
 #sub_header{
     display: none;
     width: 100vw;
-    height: 100px;
+    height: 180px;
     position: absolute;
     z-index: 1;
-    background: silver;
+    background: rgba(50,50,50,0.9);
 }
 #just{
-    width: 800px;
+    width: 1200px;
+    height: 100%;
     margin: 0 auto;
+    
 }
 
 #just > ul{
     width: 200px;
+    height: 100%;
     float: left;
     margin-right: 40px;
 }
-#just > ul:nth-child(1){
-    margin-left: 160px;
-}
+
 
 #just > ul >li{
     width: 200px;
+    margin-top: 15px;
     text-align: center;
 }
 
 #just > ul > li > a{
     font-size:15px;
+    color: #afafaf;
 }
-
+#just > ul > li > a:hover{
+    color: #fff;
+}
 .header_open{
     animation: headerOpen 2s;
     animation-fill-mode: forwards;
@@ -126,7 +131,6 @@ textarea{
 }
 
 #content > h1{
-    font-size: 5vh;
     margin-left: 60% ;
     transform: translateX(-50%);
     text-align: center;
@@ -138,6 +142,10 @@ textarea{
     height: 60px;
     padding: 10px;
     box-sizing: border-box;
+}
+#list_subject>h1{
+    font-weight: normal;
+    color: #003264;
 }
 #list_subject_law{
     width: 100%;
@@ -287,8 +295,22 @@ textarea{
 }
 #side_menu>a{
     display: block;
-    width: 190px;
+    width: 120px;
     height: 50px;
+    line-height: 50px;
+    color: #003264;
+}
+.menu_ani{
+    animation: 0.3s more;
+    animation-fill-mode: forwards;
+}
+@keyframes more{
+    from{
+        width: 29%;
+    }
+    to{
+        width: 120px;
+    }
 }
 #sub_content{
     width: 905px;
@@ -353,10 +375,106 @@ textarea{
     display: inline-block;
     float: right;
 }
+
+#bottom_tag>a{
+    width: 90px;
+    height: 30px;
+    padding: 7px 0;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #999;
+    border: 1px solid black;
+    display: inline-block;
+    line-height: 15px;
+    text-align: center;
+    box-sizing: border-box;
+}
+#bottom_tag>a:hover{
+    background: black;
+    color: white;
+}
 #foot_ment{
     float: right;
     color: #aeaeae;
 }
 #foot_ment>p:nth-child(4){
     margin-top: 20px;
+}
+
+.send{
+    width: 90px;
+    height: 30px;
+    padding: 7px 0;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #999;
+    border: 1px solid black;
+    display: inline-block;
+    line-height: 15px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.send:hover{
+    background: black;
+    color: white;
+}
+
+/* education start */
+
+#education_box{
+    width: 905px;
+    height: 100%;
+}
+#education_box>div{
+    width: 100%;
+    height: 250px;
+    padding: 30px 0;
+    border-top: 1px solid #ddd;
+}
+#edu_one{
+    width: 220px;
+    height: 250px;
+    background: chartreuse;
+    display: inline-block;
+    float: left;
+}
+#edu_two{
+    width: 520px;
+    height: 250px;
+    margin: 0 0 0 40px;
+    display: inline-block;
+    float: left;
+    font-size: 13px;
+    color: #666;
+    padding: 20px;
+    box-sizing: border-box;
+}
+#edu_two>h2{
+    margin-bottom: 30px;
+}
+#edu_two>span{
+    display: block;
+    margin-top: 10px;
+}
+#edu_two>p{
+    margin-top: 20px;
+
+}
+#edu_two>h2{
+    color: #000000;
+}
+
+.edu_b{
+    display: inline-block;
+    width: 160px;
+    height: 30px;
+    padding: 7px 30px;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 6px;
+    margin: 20px 10px 0 0 ;
+    text-align: center;
+}
+.edu_b:hover{
+    background: #006cdb;
 }

@@ -34,7 +34,9 @@ a{
 }
 
 #logo{
+    position: relative;
     margin: 25% auto 25%;
+    z-index: -2;
 }
 
 #menu>ul{
@@ -49,7 +51,7 @@ a{
     text-align: center;
 }
 #menu>ul>li:hover{
-    transform: scale(1.3);
+    transform: scale(1.1);
     transition: all 1s;
 }
 
@@ -109,7 +111,7 @@ a{
 } */
 #gnb{
     display: inline-block;
-    width: 78vw;
+    width: 80%;
     height: 100vh;
     box-sizing: border-box;
     position: relative;
@@ -131,13 +133,24 @@ a{
     color: #333333;
   
 }
-
+.p_tag{
+    text-indent: 20px;
+    font-size: 17px;
+    font-weight: normal;
+    line-height: 1px;
+    margin-top: 15px;
+}
+.p_tag2{
+    font-size: 14px;
+}
+.p_tag3{
+    font-size: 14px;
+}
 #question{
     color: #339bcd;
     font-size: 3.8vw;
     font-weight: bold;
-}
-#text_event>h1{
+}#text_event>h1{
     font-size: 2.4vw;
     font-weight: normal;
     opacity: 0;
@@ -145,6 +158,22 @@ a{
     animation-delay: 2s;
     animation-fill-mode: forwards;
 }
+#question2{
+    color: #53bcdd;
+    font-size: 2.8vw;
+    font-weight: bold;
+}
+#question3{
+    color: #81cee6;
+    font-size: 2.3vw;
+    font-weight: bold;
+}
+#question4{
+    color: #a7a7a7;
+    font-size: 2.3vw;
+    font-weight: bold;
+}
+
 
 #text_event>h3{
     font-size: 2vw;
@@ -152,6 +181,7 @@ a{
     animation-fill-mode: forwards;
     animation-delay: 4s;
     opacity: 0;
+    margin-top: 30px;
 }
 
 #text_event>h5{
@@ -161,6 +191,7 @@ a{
     animation-fill-mode: forwards;
     animation-delay: 6s;
     opacity: 0;
+    margin-top: 70px;
 }
 @keyframes first{
     from{
@@ -177,7 +208,7 @@ a{
 }
 #tum{
     position: absolute;
-    left: 65%;
+    left: 61%;
     top: 25%;
     transform: translate(-50%);
     animation: 10s square1;

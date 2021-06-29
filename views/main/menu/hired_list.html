@@ -5,13 +5,13 @@
         <h1>HIRED</h1>
         <div id="menu_border">
             <div id="side_menu">
-                <a id="main_tag" href="/education">교육과정</a>
+                <a id="main_tag" href="/hired">취업정보</a>
                 <a class="tags" href="/hired/interview">인터뷰</a>
                 <a class="tags" href="/hired/portfolio">포트폴리오</a>
             </div>
             <div id="sub_content">
                 <div id="list_subject">
-                    <h1>교육과정</h1>
+                    <h1>취업정보</h1>
                     <div id="list_subject_law"></div>
                 </div>
                 <textarea id="localUrl" style="display: none;">{{localUrl}}</textarea>
@@ -47,7 +47,8 @@
     tags.forEach(v => {
         let tagName = v.href.replace('http://localhost:3000/hired/', '');
         if (tagName == localUrl) {
-            v.setAttribute('style', 'background-color:#ededed');
+            v.setAttribute('style', 'border-bottom: 1px solid black');
+            v.setAttribute('class','menu_ani')
         }
     })
 </script>

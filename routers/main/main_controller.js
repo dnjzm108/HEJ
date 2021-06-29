@@ -250,8 +250,9 @@ let community_modify = async (req, res) => {
         where: { id }
     })
     let modify = modi[0].dataValues;
+    console.log(modify);
     res.render('./main/community/write.html', {
-        modify
+        modify,id
     })
 }
 
@@ -261,7 +262,7 @@ let community_modify_send = async (req, res) => {
     let modify = await community.update({
         title, userid, content, community_image, type
     }, { where: { id } });
-    res.redirect(`/community/view?id=${id}`);
+    res.redirect(`/community`);
 };
 
 let community_delete = async (req, res) => {
@@ -372,7 +373,7 @@ let hired = async (req, res) => {
 let education = async (req, res) => {
     let {localUrl} = req.params;
     let { id } = req.query;
-    let page = { id: `${id}`, table: 'education' };
+    let page = { id: `${id}`, table: 'education'};
     let pagin = await pagination(page);
     let result = pagin.result;
     let userid;
@@ -391,9 +392,12 @@ let education = async (req, res) => {
         return {
             ...v,
             date: moment(v.date).format("MMM Do YY"),
+            ed_start_period:moment(v.ed_start_period).format('YYYY-DD-MM'),
+            ed_end_period:moment(v.ed_end_period).format('YYYY-MM-DD'),
             num: v.num
         }
     });
+    console.log(edList)
     let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
     res.render('./main/menu/education.html', {
         edList,

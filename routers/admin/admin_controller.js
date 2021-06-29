@@ -154,7 +154,7 @@ let modify = async (req, res) => {
                 ed_end_period: moment(v.ed_end_period).format('YYYY-MM-DD')
             }
         })
-        console.log(edList, table, localUrl)
+        console.log(table,"======")
         res.render('./admin/modify.html', {
             edList, table, localUrl
         })
@@ -171,12 +171,11 @@ let modify = async (req, res) => {
 
 let modify_success = async (req, res) => {
     let { title, content, modifyId, table } = req.body;
-
     if(table == "education"){
         let {title,content,type,edName,ed_start_period,ed_end_period,time,fee,hashtag} = req.body;
         console.log(title,content,type,edName,ed_start_period,ed_end_period,time,fee,hashtag);
         try{
-        await search['education'].update({title,content,type,edName,ed_start_period,ed_end_period,time,fee,hashtag},{where:{}});
+        await search['education'].update({title,content,type,edName,ed_start_period,ed_end_period,time,fee,hashtag},{where:{id:modifyId}});
         }catch(e){
             console.log(e)
         }

@@ -12,10 +12,8 @@
 <body>
     <div id="wrap">
         <div id="chat">
-            <div id="first_coment">{{name}}님이 입장하셨습니다</div>
+            <div id="first_coment"></div>
             <div>
-                <div>관리자</div>
-
             </div>
             <div>
                 {% if name != undefined %}
@@ -38,7 +36,7 @@
         const chat = document.querySelector('#chat');
         const btn = document.querySelector('#btn');
         const msg = document.querySelector('#msg')
-      
+
 
 
         socket.on('connect', () => {
@@ -60,35 +58,35 @@
         })
 
 
-        btn.addEventListener('click',send)
+        btn.addEventListener('click', send)
         function send() {
             if (msg.value == '') {
                 return;
             } else {
-                socket.emit('send',msg.value);
-                addCard(msg.value,'me',socket.name);
+                socket.emit('send', msg.value);
+                addCard(msg.value, 'me', socket.name);
                 msg.value = '';
                 chat.scrollTop = chat.scrollHeight;
-                console.log(time);                                                                                                                                       
+                console.log(time);
             }
         }
         socket.on('msg', (data) => {
             console.log('name' + data.name + '내용' + data.content);
-            addCard(data.content,'you',data.name)
+            addCard(data.content, 'you', data.name)
             chat.scrollTop = chat.scrollHeight;
         })
-        function addCard(text,type,name) {
+        function addCard(text, type, name) {
             let today = new Date();
-            let time = today.getHours()+':'+today.getMinutes()
+            let time = today.getHours() + ':' + today.getMinutes()
             const div = document.createElement('div');
             const span = document.createElement('span');
             const span2 = document.createElement('span')
             const p = document.createElement('p');
-            if(type == 'you'){
-            span2.innerHTML=name;
-            span2.classList.add('other');
-            div.appendChild(span2);
-          }
+            if (type == 'you') {
+                span2.innerHTML = name;
+                span2.classList.add('other');
+                div.appendChild(span2);
+            }
             span.innerHTML = text;
             span.classList.add(type);
             div.appendChild(span);
@@ -97,7 +95,7 @@
             div.appendChild(p);
             chat.appendChild(div);
             msg.value = '';
-            
+
         }
 
         // 채팅 부분 
