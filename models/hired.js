@@ -23,6 +23,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
+    creator:{
+      type:DataTypes.STRING(50),
+      allowNull: true,
+    },
     date:{
       type:Sequelize.DATE,
       allowfull:true,
