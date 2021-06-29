@@ -45,7 +45,7 @@ router.post('/modify_success',controller.modify_success);
 router.get('/modify',controller.modify);
 router.get('/delete',controller.postDel);
 router.get('/view',controller.view);
-router.post('/upload_success',upload.single('thumbnail'),controller.upload_success);
+router.post('/upload_success',controller.upload_success);
 router.get('/upload',controller.upload);
 router.get('/main',auth,controller.admin_main);
 router.use('/',controller.admin_login);
