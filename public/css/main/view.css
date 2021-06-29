@@ -16,20 +16,8 @@ textarea{
 #wrap{
     width: 100%;
 }
-#side_menu{
-    width: 260px;
-    height: 100%;
-    display: inline-block;
-    float: left;
-    margin-right: 30px;
-    padding: 10px 0 0 20px;
-    box-sizing: border-box;
-}
-#side_menu>a{
-    display: block;
-    width: 190px;
-    height: 50px;
-}
+
+
 #main_tag{
     font-size: 32px;
     position: relative;

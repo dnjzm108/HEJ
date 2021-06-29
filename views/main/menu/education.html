@@ -15,9 +15,25 @@
                     <h1>교육과정</h1>
                     <div id="list_subject_law"></div>
                 </div>
-                {% for item in edList %}
 
-                <td><a href="/admin/view?id={{item.id}}&table=education">{{item.title}}</a>
+                <div id="education_box">
+                    <div>
+                        <div id="edu_one"></div>
+                        <div id="edu_two">
+                            <h2>제목 (증강현실)가상증강현실 응용SW개발자 양성과정</h2>
+                            <span>교육시간  09:00 ~ 18:00</span>
+                            <span>교육시간  개강일로부터 5개월</span>
+                            <span>수당   100% 전액국비지원</span>
+                            <p>hashtag 가상증강현실# AR/VR# 게임개발# 4차산업혁명</p>
+                            <a class="edu_b" href="/"> 과정 자세히 보기</a>
+                        </div>
+                    </div>
+
+                   
+                </div>
+                {% for item in edList %}
+                <td>
+                    <a href="/admin/view?id={{item.id}}&table=education">{{item.title}}</a>
                 </td>
                 <td>writer</td>
                 <td>{{item.date}}</td>
@@ -35,27 +51,28 @@
                 <p>TEL : 02-479-4050 FAX : 02-479-4056 대표자 : 박병준 개인정보관리책임자 : 서혁준 </p>
                 <p>사업자번호 : 212-81-89247</p>
                 <p>Copyright © 2016. Kyungil Technical College. All rights reserved. </p>
-           
+
+            </div>
         </div>
     </div>
-</div>
-<script type="text/javascript">
-    const tags = document.querySelectorAll('.tags');
-    const localUrl = document.querySelector('#localUrl').innerHTML;
+    <script type="text/javascript">
+        const tags = document.querySelectorAll('.tags');
+        const localUrl = document.querySelector('#localUrl').innerHTML;
 
-    tags.forEach(v => {
-        let tagName = v.href.replace('http://localhost:3000/hired/', '');
-        if (tagName == localUrl) {
-            v.setAttribute('style', 'background-color:#ededed');
-        }
-    })
-</script>
-<script type="text/javascript">
-const tags = document.querySelectorAll('.tags');
-    tags.forEach(v=>{
-        if(v.innerHTML == "{{localUrl}}"){
-            v.setAttribute('style','background-color:#ededed');
-        }
-    })
-</script>
-{% include "../template/bottom.html" %}
+        tags.forEach(v => {
+            let tagName = v.href.replace('http://localhost:3000/hired/', '');
+            if (tagName == localUrl) {
+                v.setAttribute('style', 'background-color:#ededed');
+            }
+        })
+    </script>
+    <script type="text/javascript">
+        const tags = document.querySelectorAll('.tags');
+        tags.forEach(v => {
+            if (v.innerHTML == "{{localUrl}}") {
+                v.setAttribute('style', 'boder-bottom: 1px solid black');
+                v.setAttribute('class', 'menu_ani')
+            }
+        })
+    </script>
+    {% include "../template/bottom.html" %}

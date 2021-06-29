@@ -250,8 +250,9 @@ let community_modify = async (req, res) => {
         where: { id }
     })
     let modify = modi[0].dataValues;
+    console.log(modify);
     res.render('./main/community/write.html', {
-        modify
+        modify,id
     })
 }
 
@@ -261,7 +262,7 @@ let community_modify_send = async (req, res) => {
     let modify = await community.update({
         title, userid, content, community_image, type
     }, { where: { id } });
-    res.redirect(`/community/view?id=${id}`);
+    res.redirect(`/community`);
 };
 
 let community_delete = async (req, res) => {
