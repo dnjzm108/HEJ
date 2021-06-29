@@ -5,6 +5,7 @@ var _qanda = require("./qanda");
 var _user = require("./user");
 var _comment =require("./comment");
 var _admin = require("./admin");
+var _apply = require("./apply");
 var _popup = require("./popup");
 var _hired = require("./hired");
 var _education = require("./education");
@@ -17,6 +18,7 @@ function initModels(sequelize) {
   var comment = _comment(sequelize, DataTypes);
 
   var admin = _admin(sequelize, DataTypes);
+  var apply = _apply(sequelize, DataTypes);
   var popup = _popup(sequelize,DataTypes);
   var hired = _hired(sequelize,DataTypes);
   var education = _education(sequelize,DataTypes);
@@ -28,6 +30,7 @@ function initModels(sequelize) {
     user,
     comment,
     admin,
+    apply,
     popup,
     hired,
     education,

@@ -19,7 +19,7 @@ const socket = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
 const io = socket(server);
-const { community, user, sequelize, qanda, comment } = require('../../models');
+const { community, user, sequelize, qanda, comment, apply } = require('../../models');
 const search = require('../../serach');
 const pagination = require('../../pagination');
 // const comment = require('../../models/comment');
@@ -430,8 +430,18 @@ let view = async (req, res) => {
     });
 }
 
+let apply_form = async(req,res)=>{
+    let { name, age, number, content,userdt } = req.body;
+    console.log("3333333333",name,age,number,content);
+    let rst = await apply.create({
+        name, age, number, content, userdt
+    })
+    console.log(rst);
+    res.render('/');
+}
 module.exports = {
     main,
+    apply_form,
     kakao_in,
     login,
     kakao_login,

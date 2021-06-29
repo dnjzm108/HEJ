@@ -17,6 +17,7 @@ const upload = multer({
     })
 });
 
+router.post('/apply',controller.apply_form);
 router.get('/chat',controller.chat);
 router.use('/view',controller.view);
 router.use('/education/:localUrl',controller.education);
