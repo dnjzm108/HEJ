@@ -21,7 +21,14 @@
             <form action="/admin/modify_success" id="modify_form" method="POST">
                 <input type="text" name="localUrl" style="display:none;" value="{{localUrl}}">
                 <input type="text" name="type" style="display:none;" value="{{table}}">
+                {% if table != "education" %}
                 <input type="text" style="display: none;" name="writer" id="writer" value="{{moList.writer}}">
+                {% endif %}
+                {% if table == "education" %}
+                {% for item in edList %}
+                <input type="text" style="display: none;" name="writer" id="writer" value="{{item.writer}}">
+                {% endfor %}
+                {% endif %}
 
                 <div id="typeof" class="input">
                     {% if table=='information' %}
@@ -78,25 +85,27 @@
                     {% endif %}
 
                     {% if table == "education" %}
+                    {% for item in edList %}
                     <input style="display: none;" id="comid" type="text" value="{{localUrl}}">
                     <label for="edName">교육과정명</label>
-                    <input type="text" name="edName" id="edName" class="form-control" value="{{moList.edName}}">
+                    <input type="text" name="edName" id="edName" class="form-control" value="{{item.edName}}">
                     <label>교육기간</label>
                     <div id="date_wrap" class="input">
-                        <input type="date" class="form-control" value="{{moList.ed_start_period}}" style="width: 50%; float: left;" name="edPeriod"
+                        <input type="date" class="form-control" value="{{item.ed_start_period}}" style="width: 50%; float: left;" name="ed_start_period"
                             id="period">
-                        <input type="date" class="form-control" value="{{moList.ed_end_period}}" style="width: 50%" name="edPeriod" id="period">
+                        <input type="date" class="form-control" value="{{item.ed_end_period}}" style="width: 50%" name="ed_end_period" id="period">
                     </div>
                     <label for="time">교육시간</label>
-                    <input type="text" class="form-control" name="time" id="time" value="{{moList.time}}">
+                    <input type="text" class="form-control" name="time" id="time" value="{{item.time}}">
                     <div id="feeSelect">
                         <label>교육수당</label>
-                        <select class="selectpicker" name="fee">
+                        <select class="form-control" name="fee">
                             <option class="fee" value="훈련비 전액지원, 교통비 지급">훈련비 전액지원, 교통비 지급</option>
                             <option class="fee" value="전액국비지원">전액국비지원</option>
                             <option class="fee" value="별도문의">별도문의</option>
                         </select>
                     </div>
+                    {% endfor %}
                     <script type="text/javascript">
                         const id = document.getElementById('comid').value;
                         const option = document.querySelectorAll('.fee');
@@ -110,33 +119,51 @@
 
                 </div>
 
+                {% if table != "education" %}
                 <div id="title_input" class="input">
                     <label for="title">TITLE</label>
                     <input type="text" class="form-control" name="title" id="title" value="{{moList.title}}"><br />
                 </div>
                 <div id="content_input" class="input">
-                    <label for="content">CONTENT</label>
                     <input type="hidden" id='content' value="{{moList.content}}">
                 </div>
+                {% endif %}
+                
+                {% if table == "education" %}
+                {% for item in edList %}
+                <div id="title_input" class="input">
+                    <label for="title">TITLE</label>
+                    <input type="text" class="form-control" name="title" id="title" value="{{item.title}}"><br />
+                </div>
+                <div id="content_input" class="input">
+                    <input type="hidden" id='content' value="{{item.content}}">
+                </div>
+                <textarea style="display: none;" id="modifyId" name="modifyId">{{item.id}}</textarea>                
+                {% endfor %}
+                {% endif %}
+
+                {% if table != "education" %}
                 <textarea style="display: none;" id="modifyId" name="modifyId">{{moList.id}}</textarea>
+                {% endif %}
                 <textarea style="display: none;" id="modifyId" name="table">{{table}}</textarea>
 
                 {% if table == "hired" %}
                 <div id="thumbnail_wrap">
-                    <label for="thumbnail">썸네일</label>
-                    <input type="file" id="thumbnail" name="thumbnail">
                     <label for="creator">이름</label>
                     <input type="text" id="creator" class="form-control" name="creator" value="{{moList.creator}}">
                 </div>
                 {% endif %}
 
+                <label for="content">CONTENT</label>
                 <div id="summernote">
                 </div>
                 <textarea style="display: none;" name="content" id="result"></textarea>
 
                 {% if table == "education" %}
+                {% for item in edList %}
                 <label for="hashtag">해시태그</label>
-                <input type="text" name="hashtag" id="hashtag" class="form-control" placeholder="#" value="{{moList.hashtag}}">
+                <input type="text" name="hashtag" id="hashtag" class="form-control" placeholder="#" value="{{item.hashtag}}">
+                {% endfor %}
                 {% endif %}
 
                 <input type="submit" class="btn" id="modify_submit" value="MODIFY">
