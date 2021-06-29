@@ -52,6 +52,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT('long'),
       allowNull:false,
     },
+    type:{
+      type:DataTypes.INTEGER,
+      allowNull:false
+    },
     date:{
       type:Sequelize.DATE,
       allowfull:true,

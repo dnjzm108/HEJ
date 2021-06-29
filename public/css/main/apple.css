@@ -488,3 +488,11 @@ to{top: -100vh;} */
      width: 100px;
  }
  /* lodding end */
+
+ #popup_check{
+     width: 100%;
+     background-color: #000;
+     color: #fff;
+     position: absolute;
+     bottom: 0px;
+ }

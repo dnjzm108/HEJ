@@ -161,12 +161,12 @@
         <textarea style="display: none;" id="content{{item.id}}">{{item.content}}</textarea>
         <pre id="pre{{item.id}}"></pre>
         <textarea style="display: none;"
-            id="setting{{item.id}}">position:absolute;background-color:beige;width:{{item.pop_width}}px;height:{{item.pop_height}}px;top:{{item.pop_locationY}}px;left:{{item.pop_locationX}}px</textarea>
+            id="setting{{item.id}}">position:absolute;width:{{item.pop_width}}px;height:{{item.pop_height}}px;top:{{item.pop_locationY}}px;left:{{item.pop_locationX}}px</textarea>
         <div id="popup_check">
             <input type="checkbox" name="visibility" id="popup_checkbox{{item.id}}">
             <label for="popup_checkbox{{item.id}}">1일동안 이 창 보지않기</label>
             <button
-                style="float:right; color:#fff; background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer"
+                style="float:right; color: #fff; background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer"
                 id="popup_close{{item.id}}">닫기</button>
         </div>
         <input type="hidden" id="hyperlink{{item.id}}" value="{{item.hyperlink}}">
