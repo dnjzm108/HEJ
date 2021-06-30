@@ -301,7 +301,7 @@ textarea{
 }
 #side_menu>a{
     display: block;
-    width: 120px;
+    width: 150px;
     height: 50px;
     line-height: 50px;
     color: #003264;
@@ -359,7 +359,7 @@ textarea{
 #cont{
     width: 745px;
     height: 250px;
-    margin: 10px 20px;
+    margin: 10px 40px;
 }
 .mar20{
     margin-top: 20px;
