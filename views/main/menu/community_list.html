@@ -29,10 +29,10 @@
                     {% for item in commList %}
                     <tr>
                         <td>{{item.num}}</td>
-                        <td><a href="/view?id={{item.id}}&table=community&localUrl={{item.type}}">{{item.title}}</a>
+                        <td><a style="color: #666" href="/view?id={{item.id}}&table=community&localUrl={{item.type}}">{{item.title}}</a>
                         </td>
                         {% if localUrl == undefined %}
-                        <td><a href="/community/{{item.type}}">{{item.type}}</a></td>
+                        <td><a style="color: #666" href="/community/{{item.type}}">{{item.type}}</a></td>
                         {% endif %}
                         <td>{{item.writer}}</td>
                         <td>{{item.write_date}}</td>

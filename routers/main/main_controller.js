@@ -360,7 +360,6 @@ let hired = async (req, res) => {
             date: moment(v.date).format("MMM Do YY")
         }
     })
-    console.log(hireList)
     let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
     res.render('./main/menu/hired_list.html', {
         pagin: pagin.page_hired,
@@ -428,7 +427,7 @@ let view = async (req, res) => {
         where: { id }
     })
     let view = result[0].dataValues;
-    let hitNum = await community.update({
+    let hitNum = await search[table].update({
         hit: view.hit + 1
     }, { where: { id } });
     let location = 0;

@@ -515,14 +515,16 @@ textarea{
     border-radius: 6px;
     margin: 20px 10px 0 0 ;
     text-align: center;
-     background-color: #fff; 
-     cursor: pointer; 
-     color: #000000; 
-     transition:all 1s, color 1s;
+    background-color: #fff; 
+    cursor: pointer; 
+    color: #000000; 
+    transition:all 1s, color 1s;
+    font-size: 12px;
 }
 
 
 .edu_b:hover{
     background: #66aaff;
     box-shadow:200px 0 0 0 #3399dd inset;
+    color: #fff;
 }
