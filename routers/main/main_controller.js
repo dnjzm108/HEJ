@@ -209,9 +209,9 @@ let community_write = (req, res) => {
 }
 let community_write_send = async (req, res) => {
     let { title, userid, content, type } = req.body;
-    let community_image = req.file == undefined ? '' : `/uploads/community/${req.file.filename}`;
+    // let community_image = req.file == undefined ? '' : `/uploads/community/${req.file.filename}`;
     let write = await community.create({
-        title, userid, content, community_image, type,writer:userid,
+        title, userid, content, type,writer:userid,
         hit: 0,
     });
     res.redirect('/community')
@@ -240,7 +240,7 @@ let community_view = async (req, res) => {
     }
 
     res.render('./main/community/view.html', {
-        view, id, userid, see, dt
+        view, id, userid, see, dt ,
     })
 }
 
@@ -250,18 +250,18 @@ let community_modify = async (req, res) => {
         where: { id }
     })
     let modify = modi[0].dataValues;
-    console.log(modify);
     res.render('./main/community/write.html', {
         modify,id
     })
 }
 
 let community_modify_send = async (req, res) => {
-    let { title, userid, content, type, id, community_image1 } = req.body;
-    let community_image = req.file == undefined ? community_image1 : `/uploads/community/${req.file.filename}`;
+    let { title, userid, content, type, id } = req.body;
+    console.log(title, userid, content, type, id);
     let modify = await community.update({
-        title, userid, content, community_image, type
+        title, userid, content, type
     }, { where: { id } });
+   
     res.redirect(`/community`);
 };
 
@@ -331,9 +331,9 @@ let information = async (req, res) => {
     infoList.forEach(v => {
         idArr += v.id + ','
     })
-    let edList = await search['education'].findAll({ where: { visibility: 1 } });
+    let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
     res.render('./main/menu/information_list.html', {
-         infoList, idArr, localUrl, edList,userid,session:session.authData })
+         infoList, idArr, localUrl, edMenu,userid,session:session.authData })
 }
 
 let hired = async (req, res) => {
@@ -360,6 +360,7 @@ let hired = async (req, res) => {
             date: moment(v.date).format("MMM Do YY")
         }
     })
+    console.log(hireList)
     let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
     res.render('./main/menu/hired_list.html', {
         pagin: pagin.page_hired,
@@ -373,7 +374,7 @@ let hired = async (req, res) => {
 let education = async (req, res) => {
     let {localUrl} = req.params;
     let { id } = req.query;
-    let page = { id: `${id}`, table: 'education' };
+    let page = { id: `${id}`, table: 'education'};
     let pagin = await pagination(page);
     let result = pagin.result;
     let userid;
@@ -392,6 +393,8 @@ let education = async (req, res) => {
         return {
             ...v,
             date: moment(v.date).format("MMM Do YY"),
+            ed_start_period:moment(v.ed_start_period).format('YYYY-DD-MM'),
+            ed_end_period:moment(v.ed_end_period).format('YYYY-MM-DD'),
             num: v.num
         }
     });
@@ -402,6 +405,16 @@ let education = async (req, res) => {
         edMenu,
         localUrl,
         userid,session:session.authData
+    })
+}
+
+let ed_view = async(req,res)=>{
+    let { id } = req.query;
+    let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
+    let edItem = await search['education'].findAll({where:{id}});
+    res.render('./main/menu/education_view',{
+        edMenu,
+        edItem
     })
 }
 
@@ -419,6 +432,16 @@ let view = async (req, res) => {
         hit: view.hit + 1
     }, { where: { id } });
     let location = 0;
+    let userid;
+    if(session.authData != null){
+    if (session.authData.kakao != null) {
+        userid = session.authData.kakao.properties.nickname;
+    } else if (session.authData.local != null) {
+        userid = session.authData.local.userid
+    } else if (session.authData.google != null) {
+        userid = session.authData.google.username
+    }
+}
     let infoList = infoView.dataValues;
     let infodate = moment(infoList.date).format("MMM Do YY");
     res.render('./main/menu/menu_view.html', {
@@ -427,7 +450,7 @@ let view = async (req, res) => {
         table,
         localUrl,
         see,
-        id,location
+        id,location,userid
     });
 }
 
@@ -465,4 +488,5 @@ module.exports = {
     hired,
     education,
     view,
+    ed_view
 }

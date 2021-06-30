@@ -301,7 +301,7 @@ textarea{
 }
 #side_menu>a{
     display: block;
-    width: 120px;
+    width: 150px;
     height: 50px;
     line-height: 50px;
     color: #003264;
@@ -359,7 +359,7 @@ textarea{
 #cont{
     width: 745px;
     height: 250px;
-    margin: 10px 20px;
+    margin: 10px 40px;
 }
 .mar20{
     margin-top: 20px;
@@ -430,6 +430,7 @@ textarea{
 #education_box{
     width: 905px;
     height: 100%;
+    border-bottom: 1px solid #a7a7a7;
 }
 #education_box>div{
     width: 100%;
@@ -438,16 +439,50 @@ textarea{
     border-top: 1px solid #ddd;
 }
 #edu_one{
-    width: 220px;
+    width: 300px;
     height: 250px;
-    background: chartreuse;
+    background-image:url('https://blog.kakaocdn.net/dn/4Gddy/btqEZ0AA8DU/y1kcR0rb2BVXiGxY7ivKck/img.png');
+    background-repeat: no-repeat;
+    background-size: 300px 250px;
+    box-sizing: border-box;
     display: inline-block;
-    float: left;
+    position:absolute;
+    z-index: 1;
+    border-radius: 5px;
 }
+
+#background{
+    width: 100%;
+    height: 100%;
+    background-color:rgba(50,50,50,0.9);
+    position:absolute;
+    padding: 15px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 0.3px solid #00ffff;
+    z-index: 5;
+}
+
+.ed_wrap{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #00ffff;
+}
+
+.ed_wrap > span{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:#00ffff;
+    text-shadow: 2px 2px #000;
+    font-size: 30px;
+}
+
 #edu_two{
     width: 520px;
     height: 250px;
-    margin: 0 0 0 40px;
+    margin: 0 0 0 330px;
     display: inline-block;
     float: left;
     font-size: 13px;

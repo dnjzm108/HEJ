@@ -35,7 +35,7 @@
 </head>
 
 <body>
-    {% endif %}
+{% endif %}
 
     <div id="content">
         <h1>COMMUNITY</h1>
@@ -50,16 +50,22 @@
                 <p class="w800">제목 : <span>{{infoList.title}}</span></p>
                 <p class="w800">작성자 : {{infoList.writer}}</p>
                 <p class="w800">작성일 : {{infodate}}</p>
-                <p class="con">{{infoList.content}}</p>
+                <pre id="pre"class="con">{{infoList.content}}</pre>
+                <textarea style="display: none;" id="content_contain">{{infoList.content}}</textarea>
                 <div id="footer" class="center">
                     <div id="menu_box">
                         {% if location == 0 %}
-                        <a href="/community">MENU</a>
+                        {% if infoList.writer == userid %}
+                        
                         <a href="/community/delete?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">DELETE</a>
                         <a href="/community/modify?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">MODIFY</a>
+                        {% endif %}
+                        <a href="/community">MENU</a>
                         {% else %}
                         <a href="/admin/community">MENU</a>
                         {% endif %}
+                        
+
                     </div>
                     <table id="comment">
                         {% for item in see %}

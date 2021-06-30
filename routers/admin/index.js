@@ -16,6 +16,10 @@ const upload = multer({
     }),
 });
 
+router.post('/apply_update',controller.apply_update);
+router.use('/apply/:localUrl',controller.applyT);
+router.use('/apply',controller.applyT);
+
 router.use('/community/:localUrl',controller.community);
 router.use('/community',controller.community);
 
@@ -45,7 +49,7 @@ router.post('/modify_success',controller.modify_success);
 router.get('/modify',controller.modify);
 router.get('/delete',controller.postDel);
 router.get('/view',controller.view);
-router.post('/upload_success',upload.single('thumbnail'),controller.upload_success);
+router.post('/upload_success',controller.upload_success);
 router.get('/upload',controller.upload);
 router.get('/main',auth,controller.admin_main);
 router.use('/',controller.admin_login);

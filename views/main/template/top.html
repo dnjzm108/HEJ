@@ -5,19 +5,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFORMATION</title>
+    <title>DOCUMENT</title>
     <link rel="stylesheet" href="/css/main/sub_page.css">
     <link rel="stylesheet" href="/css/main/view.css">
     <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                let idArr = document.querySelector('#idArr').value;
+                idArr = idArr.split(',');
+                idArr.splice(idArr.length - 1, 1);
+                idArr.forEach(v => {
+                    let content = document.querySelector('#content' + v);
+                    let pre = document.querySelector('#pre' + v);
+                    pre.innerHTML = `${content.value}`
+                })
+            });
+
         document.addEventListener("DOMContentLoaded", () => {
-            let idArr = document.querySelector('#idArr').value;
-            idArr = idArr.split(',');
-            idArr.splice(idArr.length - 1, 1);
-            idArr.forEach(v => {
-                let content = document.querySelector('#content' + v);
-                let pre = document.querySelector('#pre' + v);
-                pre.innerHTML = `${content.value}`
-            })
+            let content_contain = document.querySelector('#content_contain');
+            let pre = document.querySelector('#pre');
+            pre.innerHTML = `${content_contain.value}`
         });
 
     </script>
@@ -68,9 +74,9 @@
                         <li>
                             <a href="/information/popup">교직원소개</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="/information/facility">시설소개</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="/information/location">오시는 길</a>
                         </li>
@@ -78,7 +84,7 @@
                     <ul>
                         {% for item in edMenu %}
                         <li>
-                            <a href="/information/education/{{item.title}}">{{item.title}}</a>
+                            <a href="/education/ed_view?id={{item.id}}">{{item.edName}}</a>
                         </li>
                         {% endfor %}
                     </ul>
@@ -104,6 +110,7 @@
                 </div>
             </div>
         </div>
+
         <section class="logo" id="square">
             <div>
             </div>

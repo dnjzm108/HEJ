@@ -9,7 +9,7 @@
                 <a class="tags" href="/information/intro">인사말</a>
                 <a class="tags" href="/information/history">연혁</a>
                 <a class="tags" href="/information/staff">교직원소개</a>
-                <a class="tags" href="/information/facility">시설소개</a>
+                <!-- <a class="tags" href="/information/facility">시설소개</a> -->
                 <a class="tags" href="/information/location">오시는 길</a>
             </div>
             <div id="sub_content">
@@ -17,14 +17,39 @@
                     <h1>학원소개</h1>
                     <div id="list_subject_law"></div>
                 </div>
+
+                {% if localUrl != "location" %}
                 <input type="hidden" value="{{idArr}}" id="idArr">
                 {% for item in infoList %}
-                <h2>{{item.title}}</h2>
-                <pre id="pre{{item.id}}"></pre>
+                <!-- <h2>{{item.title}}</h2> -->
+                <pre style="margin-top:50px" id="pre{{item.id}}"></pre>
                 <textarea id="content{{item.id}}" style="display: none;">{{item.content}}</textarea>
                 {% endfor %}
                 <textarea id="localUrl" style="display: none;">{{localUrl}}</textarea>
-                
+                {% endif %}
+
+
+
+                {% if localUrl == "location" %}
+                <div id="map_wrap">
+                    <div class="map_box">
+                    <div class="map">
+                        {% include "../../third/user/map.html" %}
+                    </div>
+                    <div class="map_content">
+                        <span> 서울특별시 강동구 천호대로 995 금복빌딩 3,4층 경일게임아카데미(지하철 5,8호선 1번출구 10m이내)</span>
+                        <p>Tel. 02-479-4050 / Fax. 02-479-4056</p>
+                        <p>Email. kigsnet@naver.com</p>
+                        <p>지하철 5,8호선 1번 출구로 올라오셔서 10m이내 금복빌딩 3층으로 올라오시면 됩니다.</p>
+                    </div>
+                </div>
+                </div> 
+                {% endif %}
+
+
+
+
+
             </div>
         </div>
         {% include "../template/fixed.html" %}
@@ -37,21 +62,21 @@
                 <p>TEL : 02-479-4050 FAX : 02-479-4056 대표자 : 박병준 개인정보관리책임자 : 서혁준 </p>
                 <p>사업자번호 : 212-81-89247</p>
                 <p>Copyright © 2016. Kyungil Technical College. All rights reserved. </p>
-           
+
+            </div>
         </div>
     </div>
-</div>
-<script type="text/javascript">
-    const tags = document.querySelectorAll('.tags');
-    const localUrl = document.querySelector('#localUrl').innerHTML;
-    console.log(localUrl)
-    
-    tags.forEach(v => {
-        let tagName = v.href.replace('http://localhost:3000/information/', '');
-        if (tagName == localUrl) {
-            v.setAttribute('style', 'border-bottom:1px solid black');
-            v.setAttribute('class','menu_ani')
-        }
-    })
-</script>
-{% include "../template/bottom.html" %}
+    <script type="text/javascript">
+        const tags = document.querySelectorAll('.tags');
+        const localUrl = document.querySelector('#localUrl').innerHTML;
+        console.log(localUrl)
+
+        tags.forEach(v => {
+            let tagName = v.href.replace('http://localhost:3000/information/', '');
+            if (tagName == localUrl) {
+                v.setAttribute('style', 'border-bottom:1px solid black');
+                v.setAttribute('class', 'menu_ani')
+            }
+        })
+    </script>
+    {% include "../template/bottom.html" %}

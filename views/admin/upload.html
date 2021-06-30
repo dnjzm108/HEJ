@@ -18,8 +18,8 @@
     <div id="wrap">
         <div class="container">
             <h1>UPLOAD</h1>
-            <form action="/admin/upload_success" id="info_form" method="POST" enctype="multipart/form-data">
-                <input type="text" name="localUrl" style="display:none;" value="{{title}}">
+            <form action="/admin/upload_success" id="info_form" method="POST">
+                <input type="text" style="display: none;" name="localUrl" value="{{title}}">
                 <input style="display: none;" type="text" name="writer" id="writer" value="최고관리자">
 
                 <div id="typeof" class="input">
@@ -133,8 +133,6 @@
                 
                 {% if title == "hired" %}
                 <div id="thumbnail_wrap">
-                    <label for="thumbnail">썸네일</label>
-                    <input type="file" id="thumbnail" name="thumbnail">
                     <label for="creator">이름</label>
                     <input type="text" id="creator" name="creator" class="form-control">
                 </div>

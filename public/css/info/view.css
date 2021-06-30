@@ -19,7 +19,7 @@ a{
 }
 
 #content_wrap{
-    height: 500px;
+    min-height: 500px;
     margin-top: 30px;
     background-color: #ededed;
 }
@@ -39,4 +39,3 @@ a{
     margin-top:30px;
     background-color: #ededed;
 }
-#

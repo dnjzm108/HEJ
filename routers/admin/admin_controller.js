@@ -1,4 +1,4 @@
-const { comment,information, admin, hired: hiredTd, education, popup: popupTd, user, community: communityTd } = require('../../models/index');
+const { comment, information, admin, hired: hiredTd, education, popup: popupTd, user, community: communityTd, apply } = require('../../models/index');
 const moment = require('moment');
 const ctoken = require('../../jwt');
 const search = require('../../serach');
@@ -71,9 +71,8 @@ let upload_success = async (req, res) => {
     }
 
     if (localUrl == 'hired') {
-        let thumbnail = req.file == undefined ? '' : `/uploads/user_image/${req.file.filename}`;
         let { title, content, writer, type, creator } = req.body;
-        await search[localUrl].create({title,content,writer,type, thumbnail, creator});
+        await search[localUrl].create({ title, content, writer, type, creator });
         res.redirect(`/admin/hired/${type}`);
         return;
     }
@@ -93,7 +92,7 @@ let upload_success = async (req, res) => {
     }
 
     /* 각각의 board로 redirect 될 수 있도록 */
-    
+
     if (type != null) {
         res.redirect(`/admin/${localUrl}/${type}`);
     }
@@ -104,16 +103,15 @@ let upload_success = async (req, res) => {
 
 let view = async (req, res) => {
     let { id, table, localUrl } = req.query;
-    console.log(localUrl)
     let infoView = await search[table].findOne({ where: { id } })
     let infoList = infoView.dataValues;
     let location = 1;
     let see = await comment.findAll({
-        where:{idx:id}
+        where: { idx: id }
     })
     let infodate = moment(infoList.date).format("MMM Do YY");
-    if(localUrl == 'qanda' || localUrl =='board'){
-        res.render('./main/menu/menu_view.html',{
+    if (localUrl == 'qanda' || localUrl == 'board') {
+        res.render('./main/menu/menu_view.html', {
             infoList,
             infodate,
             table,
@@ -121,14 +119,14 @@ let view = async (req, res) => {
             see,
             id
         })
-    }else{
+    } else {
         res.render('./admin/view.html', {
             infoList,
             infodate,
             table,
             localUrl,
             location,
-            
+
         });
     }
 };
@@ -147,28 +145,47 @@ let postDel = async (req, res) => {
 
 let modify = async (req, res) => {
     let { id, table, localUrl } = req.query;
-    let modify_result = await search[table].findOne({ where: { id } });
-    let moList = modify_result.dataValues;
-    if(table == "education"){
-        moList.map(v=>{
-            return{
+    if (table == "education") {
+        let ed_modify = await search[table].findAll({ where: { id }, raw: true })
+        let edList = ed_modify.map(v => {
+            return {
                 ...v,
-                
+                ed_start_period: moment(v.ed_start_period).format('YYYY-MM-DD'),
+                ed_end_period: moment(v.ed_end_period).format('YYYY-MM-DD')
             }
         })
+        console.log(table,"======")
+        res.render('./admin/modify.html', {
+            edList, table, localUrl
+        })
+    } else {
+        let modify_result = await search[table].findOne({ where: { id } });
+        let moList = modify_result.dataValues;
+        res.render('./admin/modify.html', {
+            moList,
+            table,
+            localUrl
+        });
     }
-    res.render('./admin/modify.html', {
-        moList,
-        table,
-        localUrl
-    });
 };
 
 let modify_success = async (req, res) => {
     let { title, content, modifyId, table } = req.body;
-    await search[table].update({ title, content }, { where: { id: modifyId } });
-    // res.redirect(`/admin/view?id=${modifyId}&table=${table}`);
-    res.redirect(`/admin/${table}`)
+    if(table == "education"){
+        let {title,content,type,edName,ed_start_period,ed_end_period,time,fee,hashtag} = req.body;
+        console.log(title,content,type,edName,ed_start_period,ed_end_period,time,fee,hashtag);
+        try{
+        await search['education'].update({title,content,type,edName,ed_start_period,ed_end_period,time,fee,hashtag},{where:{id:modifyId}});
+        }catch(e){
+            console.log(e)
+        }
+        res.redirect(`/admin/${table}`)
+        return
+    }else{
+        await search[table].update({ title, content }, { where: { id: modifyId } });
+        // res.redirect(`/admin/view?id=${modifyId}&table=${table}`);
+        res.redirect(`/admin/${table}`)
+    }
 };
 
 /*========================= 학원소개 ==========================*/
@@ -317,7 +334,7 @@ let popup_modify = async (req, res) => {
 };
 
 let popup_modify_success = async (req, res) => {
-    let { writer, visibility, title,type, period, scroll, size, location, hyperlink, content, modifyId, table } = req.body;
+    let { writer, visibility, title, type, period, scroll, size, location, hyperlink, content, modifyId, table } = req.body;
     await search[table].update({ writer, type, visibility, title, popup_start_date: period[0], popup_end_date: period[1], scroll, pop_width: size[0], pop_height: size[1], pop_locationX: location[0], pop_locationY: location[1], hyperlink, content }, { where: { id: modifyId } });
     res.redirect(`/admin/popup_view?id=${modifyId}&table=${table}`);
 };
@@ -387,6 +404,23 @@ let community = async (req, res) => {
     });
 };
 
+let applyT = async(req,res)=>{
+    let result = await apply.findAll({raw:true});
+    let applyList = result.map(v=>{
+        return{
+            ...v,
+            userdt:moment(v.userdt).format('YYYY-MM-DD')
+        }
+    })
+    res.render('./admin/apply.html',{applyList});
+}
+
+let apply_update = async(req,res)=>{
+    let { replied } = req.body;
+    await apply.update({ replied: 1 }, { where: { id: replied } });
+    res.redirect('/admin/apply');
+}
+
 module.exports = {
     admin_main,
     upload,
@@ -412,4 +446,6 @@ module.exports = {
     authority,
     community,
     popup_modify_success,
+    applyT,
+    apply_update,
 }
