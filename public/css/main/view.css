@@ -97,3 +97,22 @@ textarea{
 #menu_box>a:nth-child(3){
     float: right;
 }
+
+/* ////////////지도//////////// */
+
+#map_wrap{
+    width:100%;
+}
+
+.map_box{
+    padding: 50px 20px;
+}
+
+.map_content{
+    margin-top:50px;
+    line-height: 30px;
+    padding-left: 20px;
+    font-size:15px;
+    color:#666666;
+    border-left:1px solid #006cdc;
+}
