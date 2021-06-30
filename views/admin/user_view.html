@@ -6,38 +6,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USER INFORMATION</title>
+    <link rel="stylesheet" href="/css/info/user.css">
 </head>
 
 <body>
-    <form action="/admin/authority" method="POST">
-        <ul>
-            <select id="authority_level" name="authority_level">
-                <option class="authority_option" value="1">1</option>
-                <option class="authority_option" value="2">2</option>
-                <option class="authority_option" value="3">3</option>
-            </select>
-            <li>{{userList.userid}}</li>
-            <li>{{userList.userpw}}</li>
-            <li>{{userList.user_name}}</li>
-            <li>{{userList.gender}}</li>
-            <li>{{userList.user_email}}</li>
-            <li>{{userList.user_address}}</li>
-            <li><img style="width: 300px; height: 150px;" src="{{userList.userimage}}"></li>
-            <li>{{userList.user_birth}}</li>
-            <li>{{userList.userdt}}</li>
-        </ul>
-        <textarea style="display: none;" name="userid">{{userList.userid}}</textarea>
-        <input type="submit" value="저장">
-        <a href="/admin/user" class="btn">목록</a>
-    </form>
-    <script type="text/javascript">
-        const authorityOption = document.querySelectorAll('.authority_option');
-        authorityOption.forEach(v=>{
-            if(v.value == "{{userList.authority_level}}"){
-                v.selected = true;
-            }
-        })
-    </script>
+    <div id="wrap">
+        <div id="user_header">
+            <h1>USER INFORMATION</h1>
+        </div>
+        <form action="/admin/authority" method="POST">
+            <div class="box">
+                <table>
+                    <tr>
+                        <td class="info_title">authority_level</td>
+                        <td>
+                            <select name="authority_level">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info_title">id</td>
+                        <td>{{userList.userid}}</td>
+                    </tr>
+                    <tr>
+                        <td class="info_title">pw</td>
+                        <td>{{userList.userpw}}</td>
+                    </tr>
+                    <tr>
+                        <td class="info_title">name</td>
+                        <td>{{userList.user_name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="info_title">gender</td>
+                        <td>{{userList.gender}}</td>
+                    </tr>
+                    <tr>
+                        <td class="info_title">email</td>
+                        <td>{{userList.user_email}}</td>
+                    </tr>
+                    <tr>
+                        <td class="info_title">address</td>
+                        <td>{{userList.user_address}}</td>
+                    </tr>
+                    <tr>
+                        <td class="info_title">image</td>
+                        <td><img style="width: 300px; height: 150px;" src="{{userList.userimage}}"></td>
+                    </tr>
+                    <tr>
+                        <td class="info_title">birth</td>
+                        <td>{{userList.user_birth}}</td>
+                    </tr>
+                    <tr>
+                        <td class="info_title">date</td>
+                        <td>{{userList.userdt}}</td>
+                    </tr>
+                </table>
+                <div class="btn">
+                    <textarea style="display: none;" name="userid">{{userList.userid}}</textarea>
+                    <input type="submit" class="btn2">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4./jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 </body>
 
 </html>

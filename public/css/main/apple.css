@@ -19,7 +19,7 @@ a{
     position: relative;
     display: inline-block;
     float: left;
-    width: 20vw;
+    width: 20%;
     height: 100vh;
     text-align: center;
     box-sizing: border-box;
@@ -121,6 +121,7 @@ a{
     position: absolute;
     top: 10px;
     right: 10px;
+    color: #000000;
 }
 #text_event{
     position: relative;

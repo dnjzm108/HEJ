@@ -222,8 +222,14 @@ textarea{
     box-shadow: 3px 3px 3px 3px #2222;
     padding: 10px;
     box-sizing: border-box;
+    transition:all 2s, color 2s;
+}
+#fixed:hover{
+    background: #66aaff;
+    box-shadow:0 0 0 0 #3399dd inset;
 }
 #fixed>a{
+    color: #000000;
     display: block;
 }
 #square{
@@ -295,7 +301,7 @@ textarea{
 }
 #side_menu>a{
     display: block;
-    width: 120px;
+    width: 150px;
     height: 50px;
     line-height: 50px;
     color: #003264;
@@ -353,7 +359,7 @@ textarea{
 #cont{
     width: 745px;
     height: 250px;
-    margin: 10px 20px;
+    margin: 10px 40px;
 }
 .mar20{
     margin-top: 20px;
@@ -505,11 +511,18 @@ textarea{
     height: 30px;
     padding: 7px 30px;
     box-sizing: border-box;
-    border: 1px solid black;
+    border: 1px solid #3399dd;
     border-radius: 6px;
     margin: 20px 10px 0 0 ;
     text-align: center;
+     background-color: #fff; 
+     cursor: pointer; 
+     color: #000000; 
+     transition:all 1s, color 1s;
 }
+
+
 .edu_b:hover{
-    background: #006cdb;
+    background: #66aaff;
+    box-shadow:200px 0 0 0 #3399dd inset;
 }
