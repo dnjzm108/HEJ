@@ -37,7 +37,7 @@
                     let pre = document.querySelector('#pre' + v);
                     let setting = document.querySelector('#setting' + v);
                     let popupContent = document.querySelector('#popup_content' + v);
-                    popupContent.style.cssText = `${setting.value};border:1px solid #000;`;
+                    popupContent.style.cssText = `${setting.value};border:1px solid #000;background-color:#fff`;
                     pre.innerHTML = `${content.value}`;
 
                     let checkCookie = getCookie('popupCookie');

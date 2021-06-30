@@ -14,6 +14,32 @@
                     <h1>취업정보</h1>
                     <div id="list_subject_law"></div>
                 </div>
+                <table id="board_list">
+                    <tr>
+                        <td>No.</td>
+                        <td>title</td>
+                        {% if localUrl == undefined %}
+                        <td>Category</td>
+                        {% endif %}
+                        <td>Writer</td>
+                        <td>Date</td>
+                        <td>Hit</td>
+                    </tr>
+                    {% for item in hireList %}
+                    <tr>
+                        <td>{{item.num}}</td>
+                        <td><a href="/view?id={{item.id}}&table=community&localUrl={{item.type}}">{{item.title}}</a>
+                        </td>
+                        {% if localUrl == undefined %}
+                        <td><a href="/community/{{item.type}}">{{item.type}}</a></td>
+                        {% endif %}
+                        <td>{{item.writer}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.hit}}</td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
                 <textarea id="localUrl" style="display: none;">{{localUrl}}</textarea>
             </div>
         </div>
@@ -33,24 +59,24 @@
                     <p>TEL : 02-479-4050 FAX : 02-479-4056 대표자 : 박병준 개인정보관리책임자 : 서혁준 </p>
                     <p>사업자번호 : 212-81-89247</p>
                     <p>Copyright © 2016. Kyungil Technical College. All rights reserved. </p>
-               
+
+                </div>
             </div>
         </div>
+
     </div>
 
-</div>
+    <script type="text/javascript">
+        const tags = document.querySelectorAll('.tags');
+        const localUrl = document.querySelector('#localUrl').innerHTML;
 
-<script type="text/javascript">
-    const tags = document.querySelectorAll('.tags');
-    const localUrl = document.querySelector('#localUrl').innerHTML;
+        tags.forEach(v => {
+            let tagName = v.href.replace('http://localhost:3000/hired/', '');
+            if (tagName == localUrl) {
+                v.setAttribute('style', 'border-bottom: 1px solid black');
+                v.setAttribute('class', 'menu_ani')
+            }
+        })
+    </script>
 
-    tags.forEach(v => {
-        let tagName = v.href.replace('http://localhost:3000/hired/', '');
-        if (tagName == localUrl) {
-            v.setAttribute('style', 'border-bottom: 1px solid black');
-            v.setAttribute('class','menu_ani')
-        }
-    })
-</script>
-
-{% include "../template/bottom.html" %}
+    {% include "../template/bottom.html" %}

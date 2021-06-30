@@ -9,7 +9,7 @@
                 <a class="tags" href="/information/intro">인사말</a>
                 <a class="tags" href="/information/history">연혁</a>
                 <a class="tags" href="/information/staff">교직원소개</a>
-                <a class="tags" href="/information/facility">시설소개</a>
+                <!-- <a class="tags" href="/information/facility">시설소개</a> -->
                 <a class="tags" href="/information/location">오시는 길</a>
             </div>
             <div id="sub_content">
@@ -19,7 +19,7 @@
                 </div>
                 <input type="hidden" value="{{idArr}}" id="idArr">
                 {% for item in infoList %}
-                <h2>{{item.title}}</h2>
+                <!-- <h2>{{item.title}}</h2> -->
                 <pre id="pre{{item.id}}"></pre>
                 <textarea id="content{{item.id}}" style="display: none;">{{item.content}}</textarea>
                 {% endfor %}

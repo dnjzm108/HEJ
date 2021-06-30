@@ -20,11 +20,6 @@
 
 <body>
     <div id="wrap" class="w100">
-        <div id="footer" class="center">
-            <a href="/admin/education">MENU</a>
-            <a href="/admin/delete?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">DELETE</a>
-            <a href="/admin/modify?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">MODIFY</a>
-        </div>
         <div id="info_header" class="center">
             <h1>{{infoList.title}}</h1>
         </div>
@@ -38,6 +33,11 @@
             <pre id="pre"></pre>
         </div>
         <textarea style="display: none;" id="content">{{infoList.content}}</textarea>
+        <div id="footer" class="center">
+            <a href="/admin/education">MENU</a>
+            <a href="/admin/delete?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">DELETE</a>
+            <a href="/admin/modify?id={{infoList.id}}&table={{table}}&localUrl={{localUrl}}">MODIFY</a>
+        </div>
     </div>
 </body>
 

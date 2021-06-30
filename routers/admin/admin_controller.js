@@ -1,4 +1,4 @@
-const { comment, information, admin, hired: hiredTd, education, popup: popupTd, user, community: communityTd } = require('../../models/index');
+const { comment, information, admin, hired: hiredTd, education, popup: popupTd, user, community: communityTd, apply } = require('../../models/index');
 const moment = require('moment');
 const ctoken = require('../../jwt');
 const search = require('../../serach');
@@ -404,6 +404,23 @@ let community = async (req, res) => {
     });
 };
 
+let applyT = async(req,res)=>{
+    let result = await apply.findAll({raw:true});
+    let applyList = result.map(v=>{
+        return{
+            ...v,
+            userdt:moment(v.userdt).format('YYYY-MM-DD')
+        }
+    })
+    res.render('./admin/apply.html',{applyList});
+}
+
+let apply_update = async(req,res)=>{
+    let { replied } = req.body;
+    await apply.update({ replied: 1 }, { where: { id: replied } });
+    res.redirect('/admin/apply');
+}
+
 module.exports = {
     admin_main,
     upload,
@@ -429,4 +446,6 @@ module.exports = {
     authority,
     community,
     popup_modify_success,
+    applyT,
+    apply_update,
 }

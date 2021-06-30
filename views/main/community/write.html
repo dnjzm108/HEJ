@@ -12,17 +12,17 @@
         </div>
         <div id="sub_content">
             <div id="write_box">
-                <form id="form" action="/community/write" method="POST" enctype="multipart/form-data">
+                <form id="form" action="/community/write" method="POST">
                     <table id="write_table">
                         <div id="write_table_law"></div>
                         <tr class="first">
                             <td>제목</td>
                             <td><input class="w500" type="text" name="title" id="title"></td>
                         </tr>
-                        <tr class="first">
+                        <!-- <tr class="first">
                             <td>이미지</td>
                             <td><input class="w500" type="file" name="community_image" id="community_image"></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td>내용</td>
                             <td><textarea id="cont" name="content" id="" cols="30" rows="10"></textarea></td>
@@ -68,9 +68,9 @@
                     <input class="w500" type="text" name="title" id="title" value="{{modify.title}}">
                     <p style="display: none;">작성자 : {{modify.userid}} 님</p>
                     <input class="w500" type="hidden" name="userid" id="userid" value="{{modify.userid}}">
-                    <p>이미지</p>
+                    <!-- <p>이미지</p>
                     <input class="w500" type="file" name="community_image" id="community_image"
-                        value="{{modify.community_image}}">
+                        value="{{modify.community_image}}"> -->
                     <p style="display: none;">쓰는곳 : {{modify.type}}</p>
                     <input type="hidden" name="type" value="{{modify.type}}">
                     <p>내용</p>

@@ -16,6 +16,10 @@ const upload = multer({
     }),
 });
 
+router.post('/apply_update',controller.apply_update);
+router.use('/apply/:localUrl',controller.applyT);
+router.use('/apply',controller.applyT);
+
 router.use('/community/:localUrl',controller.community);
 router.use('/community',controller.community);
 
