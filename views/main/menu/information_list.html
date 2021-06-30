@@ -22,7 +22,7 @@
                 <input type="hidden" value="{{idArr}}" id="idArr">
                 {% for item in infoList %}
                 <!-- <h2>{{item.title}}</h2> -->
-                <pre id="pre{{item.id}}"></pre>
+                <pre style="margin-top:50px" id="pre{{item.id}}"></pre>
                 <textarea id="content{{item.id}}" style="display: none;">{{item.content}}</textarea>
                 {% endfor %}
                 <textarea id="localUrl" style="display: none;">{{localUrl}}</textarea>
