@@ -27,6 +27,11 @@ module.exports = function(sequelize, DataTypes) {
       type:DataTypes.STRING(50),
       allowNull: true,
     },
+    hit:{
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      defaultValue:0,
+    },
     date:{
       type:Sequelize.DATE,
       allowfull:true,

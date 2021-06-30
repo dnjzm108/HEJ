@@ -9,7 +9,8 @@
                 <a class="tags" href="/information/intro">인사말</a>
                 <a class="tags" href="/information/history">연혁</a>
                 <a class="tags" href="/information/staff">교직원소개</a>
-                <a class="tags" href="/information/facility">시설소개</a>
+                <!-- <a class="tags" href="/information/facility">시설소개</a> -->
+                <a class="tags" href="/information/location">오시는 길</a>
             </div>
             <div id="sub_content">
                 <div id="list_subject">
@@ -20,8 +21,8 @@
                 {% if localUrl != "location" %}
                 <input type="hidden" value="{{idArr}}" id="idArr">
                 {% for item in infoList %}
-                <h2>{{item.title}}</h2>
-                <pre id="pre{{item.id}}"></pre>
+                <!-- <h2>{{item.title}}</h2> -->
+                <pre style="margin-top:50px" id="pre{{item.id}}"></pre>
                 <textarea id="content{{item.id}}" style="display: none;">{{item.content}}</textarea>
                 {% endfor %}
                 <textarea id="localUrl" style="display: none;">{{localUrl}}</textarea>

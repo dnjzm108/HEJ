@@ -17,6 +17,11 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.TEXT('long'),
         allowNull: false
     },
+    replied:{
+      type:DataTypes.INTEGER,
+      allowNull:true,
+      defaultValue:0,
+    },
     userdt:{
         type:Sequelize.DATE,
         allowNull:true,

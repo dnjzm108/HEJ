@@ -209,9 +209,9 @@ let community_write = (req, res) => {
 }
 let community_write_send = async (req, res) => {
     let { title, userid, content, type } = req.body;
-    let community_image = req.file == undefined ? '' : `/uploads/community/${req.file.filename}`;
+    // let community_image = req.file == undefined ? '' : `/uploads/community/${req.file.filename}`;
     let write = await community.create({
-        title, userid, content, community_image, type,writer:userid,
+        title, userid, content, type,writer:userid,
         hit: 0,
     });
     res.redirect('/community')
@@ -250,17 +250,16 @@ let community_modify = async (req, res) => {
         where: { id }
     })
     let modify = modi[0].dataValues;
-    console.log(modify);
     res.render('./main/community/write.html', {
         modify,id
     })
 }
 
 let community_modify_send = async (req, res) => {
-    let { title, userid, content, type, id, community_image1 } = req.body;
-    let community_image = req.file == undefined ? community_image1 : `/uploads/community/${req.file.filename}`;
+    let { title, userid, content, type, id } = req.body;
+    // let community_image = req.file == undefined ? community_image1 : `/uploads/community/${req.file.filename}`;
     let modify = await community.update({
-        title, userid, content, community_image, type
+        title, userid, content, type
     }, { where: { id } });
     res.redirect(`/community`);
 };
@@ -331,9 +330,9 @@ let information = async (req, res) => {
     infoList.forEach(v => {
         idArr += v.id + ','
     })
-    let edList = await search['education'].findAll({ where: { visibility: 1 } });
+    let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
     res.render('./main/menu/information_list.html', {
-         infoList, idArr, localUrl, edList,userid,session:session.authData })
+         infoList, idArr, localUrl, edMenu,userid,session:session.authData })
 }
 
 let hired = async (req, res) => {
@@ -373,7 +372,7 @@ let hired = async (req, res) => {
 let education = async (req, res) => {
     let {localUrl} = req.params;
     let { id } = req.query;
-    let page = { id: `${id}`, table: 'education' };
+    let page = { id: `${id}`, table: 'education'};
     let pagin = await pagination(page);
     let result = pagin.result;
     let userid;
@@ -392,6 +391,8 @@ let education = async (req, res) => {
         return {
             ...v,
             date: moment(v.date).format("MMM Do YY"),
+            ed_start_period:moment(v.ed_start_period).format('YYYY-DD-MM'),
+            ed_end_period:moment(v.ed_end_period).format('YYYY-MM-DD'),
             num: v.num
         }
     });
@@ -405,6 +406,16 @@ let education = async (req, res) => {
     })
 }
 
+let ed_view = async(req,res)=>{
+    let { id } = req.query;
+    let edMenu = await search['education'].findAll({ where: { visibility: 1 } });
+    let edItem = await search['education'].findAll({where:{id}});
+    res.render('./main/menu/education_view',{
+        edMenu,
+        edItem
+    })
+}
+
 let view = async (req, res) => {
     let { id, table, localUrl } = req.query;
     let infoView = await search[table].findOne({ where: { id } })
@@ -415,7 +426,7 @@ let view = async (req, res) => {
         where: { id }
     })
     let view = result[0].dataValues;
-    let hitNum = await community.update({
+    let hitNum = await search[table].update({
         hit: view.hit + 1
     }, { where: { id } });
     let location = 0;
@@ -465,4 +476,5 @@ module.exports = {
     hired,
     education,
     view,
+    ed_view
 }

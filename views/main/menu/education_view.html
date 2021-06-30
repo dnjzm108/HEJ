@@ -7,7 +7,7 @@
             <div id="side_menu">
                 <a id="main_tag" href="/education">교육과정</a>
                 {% for item in edMenu %}
-                <a class="tags" href="/education/ed_view?id={{item.edName}}">{{item.edName}}</a>
+                <a class="tags" href="/education/ed_view?id={{item.id}}">{{item.edName}}</a>
                 {% endfor %}
             </div>
             <div id="sub_content">
@@ -16,25 +16,12 @@
                     <div id="list_subject_law"></div>
                 </div>
 
-                {% for item in edList %}
-                <div id="education_box">
-                    <div>
-                        <div id="edu_one">
-                            <div id="background">
-                                <div class="ed_wrap">
-                                    <span>{{item.edName}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="edu_two">
-                            <h2>{{item.edName}}</h2>
-                            <span>교육기간 {{item.ed_start_period}} ~ {{item.ed_end_period}}</span>
-                            <span>교육시간 {{item.time}}</span>
-                            <span>수당 {{item.fee}}</span>
-                            <p>{{item.hashtag}}</p>
-                            <a class="edu_b" href="/education/ed_view?id={{item.id}}"> 과정 자세히 보기</a>
-                        </div>
-                    </div>
+                {% for item in edItem %}
+                <textarea style="display: none;" id="content_contain">{{item.content}}</textarea>
+                <div id="education_container">
+                    <pre id="pre">
+
+                    </pre>
                 </div>
                 {% endfor %}
             </div>
