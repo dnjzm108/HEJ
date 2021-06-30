@@ -27,7 +27,7 @@ app.use(express.static('node_modules/socket.io/client-dist'));
 app.use(express.static('public'));
 app.use(cookieParser());
 
-sequelize.sync({force:false})
+sequelize.sync({force:true})
 .then(()=>{
     console.log('접속이 완료 되었습니다');
 })
